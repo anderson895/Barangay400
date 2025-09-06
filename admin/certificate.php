@@ -926,6 +926,12 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                                                        class="btn btn-success btn-lg">
                                                                                         <i class="fas fa-download mr-2"></i> Download Certificate
                                                                                     </a>
+
+                                                                                     <button type="button" 
+                                                                                            class="btn btn-primary generate-cert btn-lg" 
+                                                                                            data-id="<?php echo $certification_id; ?>">
+                                                                                        <i class="fas fa-redo mr-2"></i>Re Generate Certificate Now
+                                                                                    </button>
                                                                                     
                                                                                     <a href="<?php echo $relativePath . '/' . $filename; ?>" 
                                                                                        target="_blank" 
@@ -1365,7 +1371,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 
-$('.generate-cert').on("click",function (e) {
+                                                                                $('.generate-cert').on("click",function (e) {
                                                                                     e.preventDefault();
 
                                                                                     var $btn = $(this);
@@ -1458,7 +1464,7 @@ $('.generate-cert').on("click",function (e) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Add SweetAlert script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- <script src="../dist/assets/vendors/js/vendor.bundle.base.js"></script> -->
+    <script src="../dist/assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
 
     <!-- <script src="../dist/assets/vendors/datatables.net/jquery.dataTables.js"></script> -->

@@ -36,7 +36,7 @@ if (!file_exists($font)) {
 if (isset($_POST['BID_id'])) {
     $BID_id = intval($_POST['BID_id']);
 
-    $res = mysqli_query($conn, "SELECT * FROM `tbl_bid` WHERE `BID_id` = $BID_id AND `status` = 'Approved'");
+    $res = mysqli_query($conn, "SELECT * FROM `tbl_bid` WHERE `BID_id` = $BID_id ");
     if (!$res || mysqli_num_rows($res) == 0) {
         die("No approved request found for the given ID.");
     }

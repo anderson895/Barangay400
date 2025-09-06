@@ -108,6 +108,7 @@ $_SESSION['status'] = $status;
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../dist/assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- endinject -->
     <link rel="shortcut icon" href="../dist/assets/images/logos.png" />
 </head>
@@ -894,7 +895,12 @@ LIMIT ? OFFSET ?";
                                                                                 <div class="col-md-6">
                                                                                     <div class="info-group mb-3">
                                                                                         <label class="text-muted small text-uppercase">Full Name</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($detail['name']); ?></p>
+                                                                                        <p class="font-weight-bold mb-2">
+                                                                                            <?php 
+                                                                                                echo htmlspecialchars($detail['first_name'] . ' ' . $detail['middle_name'] . ' ' . $detail['last_name']); 
+                                                                                            ?>
+                                                                                        </p>
+
                                                                                     </div>
                                                                                     <div class="info-group mb-3">
                                                                                         <label class="text-muted small text-uppercase">Address</label>
@@ -1113,8 +1119,9 @@ LIMIT ? OFFSET ?";
 
 
 
-
-                                                                    <form action="update_BID.php" method="POST">
+                                                                     <!-- <form action="update_BID.php" method="POST"> -->
+                                                                    <form action="gen_id.php" method="POST">
+                                                                    
                                                                         <div class="modal-body py-4">
                                                                             <input type="hidden" name="BID_id"
                                                                                 value="<?php echo $row['BID_id']; ?>">
@@ -1147,7 +1154,7 @@ LIMIT ? OFFSET ?";
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer bg-light">
-                                                                            <button type="submit" class="btn btn-success">
+                                                                            <button type="submit" class="btn btn-success generate-id" data-id="<?= $row['BID_id']; ?>" >
                                                                                 <i class="fas fa-save mr-1"></i> Update Request
                                                                             </button>
 
@@ -1157,32 +1164,15 @@ LIMIT ? OFFSET ?";
                                                                                 $isApproved = ($status === 'approved');
                                                                                 $isDenied = ($status === 'denied');
                                                                             ?>
-                                                                            <button type="button" class="btn btn-success" 
+                                                                            <!-- <button type="button" class="btn btn-success" 
                                                                                 onclick="generateCertificate(<?php echo $row['BID_id']; ?>)" 
                                                                                 <?php echo (!$isApproved || $isDenied) ? 'disabled' : ''; ?>>
                                                                                 <i class="fas fa-save mr-1"></i> 
                                                                                 <?php echo $isApproved ? 'Generate' : 'Waiting for Approval'; ?>
-                                                                            </button>
+                                                                            </button> -->
 
 
-                                                                            <script>
-                                                                                function generateCertificate(BID_id) {
-                                                                                    // Send an AJAX request to the server to generate the certificate
-                                                                                    var xhr = new XMLHttpRequest();
-                                                                                    xhr.open("POST", "gen_id.php", true);
-                                                                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                                                                    xhr.onload = function() {
-                                                                                        if (xhr.status == 200) {
-                                                                                            // Handle success (e.g., show a success message or update the UI)
-                                                                                            alert("Certificate generated successfully!");
-                                                                                            
-                                                                                        } else {
-                                                                                            alert("An error occurred while generating the certificate.");
-                                                                                        }
-                                                                                    };
-                                                                                    xhr.send("BID_id=" + BID_id);
-                                                                                }
-                                                                            </script>
+                                                                           
 
 
 
@@ -1273,7 +1263,7 @@ LIMIT ? OFFSET ?";
     <!-- container-scroller -->
     <!-- plugins:js -->
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');
