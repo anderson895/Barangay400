@@ -808,6 +808,17 @@ LIMIT ? OFFSET ?";
                                                                                 <i class="fas fa-download"></i> Download Certificate
                                                                             </a>
 
+
+                                                                           <a href="<?php echo $relativePath . '/' . $filename; ?>" 
+                                                                            download 
+                                                                            class="btn btn-warning mt-2 generate-id" 
+                                                                            data-id="<?= $row['BID_id']; ?>">
+                                                                                <i class="fas fa-sync-alt"></i> Re-Generate ID
+                                                                            </a>
+
+                                                                          
+
+
                                                                             <?php
                                                                         } else {
                                                                             echo "<p class='text-danger'>No certificate image found for this ID (BID_id: $certification_id).</p>";
@@ -1119,9 +1130,9 @@ LIMIT ? OFFSET ?";
 
 
 
-                                                                     <!-- <form action="update_BID.php" method="POST"> -->
-                                                                    <form action="gen_id.php" method="POST">
-                                                                    
+
+                                                                    <!-- <form action="update_BID.php" method="POST"> -->
+                                                                    <form method="POST">
                                                                         <div class="modal-body py-4">
                                                                             <input type="hidden" name="BID_id"
                                                                                 value="<?php echo $row['BID_id']; ?>">
@@ -1173,7 +1184,6 @@ LIMIT ? OFFSET ?";
 
 
                                                                            
-
 
 
 
@@ -1265,6 +1275,58 @@ LIMIT ? OFFSET ?";
     <!-- jQuery -->
   
     <script>
+
+    
+                                                                                $('.generate-id').on("click",function (e) {
+                                                                                    e.preventDefault();
+
+                                                                                    var $btn = $(this);
+                                                                                    var certification_id = $btn.data("id");
+
+                                                                                    // Get form values
+                                                                                    var status = $("#status" + certification_id).val();
+                                                                                    console.log(status);
+
+                                                                                    if(status=="Approved"){
+
+                                                                                         var originalText = $btn.html();
+                                                                                    $btn.html('<i class="fas fa-spinner fa-spin mr-1"></i> Processing...');
+                                                                                    $btn.prop("disabled", true);
+
+                                                                                    // AJAX request
+                                                                                    $.ajax({
+                                                                                        url: "gen_id.php",
+                                                                                        type: "POST",
+                                                                                        dataType: "json", 
+                                                                                        data: {
+                                                                                            BID_id: certification_id,
+                                                                                        },
+                                                                                      success: function (response) {
+                                                                                        console.log(response); 
+                                                                                        if (response.success) {
+                                                                                            alert(response.message);
+
+                                                                                           location.reload(); 
+                                                                                        } else {
+                                                                                            alert("Error: " + response.message + 
+                                                                                                (response.error ? "\nDetails: " + response.error : ""));
+                                                                                        }
+                                                                                    },
+                                                                                        error: function (xhr, status, error) {
+                                                                                            alert("Network error: " + error);
+                                                                                        },
+                                                                                        complete: function () {
+                                                                                            // Reset button state kahit success or fail
+                                                                                            $btn.html(originalText);
+                                                                                            $btn.prop("disabled", false);
+                                                                                        }
+                                                                                    });
+
+                                                                                    }
+                                                                                    // Show loading state
+                                                                                   
+                                                                                });
+
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');
             var searchInput = document.getElementById('searchInput');

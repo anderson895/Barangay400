@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+header('Content-Type: application/json'); // ✅ Force JSON response
+
 include '../connection/config.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -10,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $barangayIdFields = [
     'template' => 'temp-id.jpg',
-    'folder' => 'BarangayIdCert',
+    'folder'   => 'BarangayIdCert',
     'name_pos' => [190, 233],
     'address_pos' => [190, 253],
     'precinct_pos' => [730, 60],
@@ -30,15 +32,17 @@ $barangayIdFields = [
 $font = __DIR__ . '/generate_certificate/fonts/TimesNewRoman.ttf';
 
 if (!file_exists($font)) {
-    die("Font not found.");
+    echo json_encode(["success" => false, "message" => "Font not found."]);
+    exit;
 }
 
 if (isset($_POST['BID_id'])) {
     $BID_id = intval($_POST['BID_id']);
 
-    $res = mysqli_query($conn, "SELECT * FROM `tbl_bid` WHERE `BID_id` = $BID_id ");
+    $res = mysqli_query($conn, "SELECT * FROM `tbl_bid` WHERE `BID_id` = $BID_id");
     if (!$res || mysqli_num_rows($res) == 0) {
-        die("No approved request found for the given ID.");
+        echo json_encode(["success" => false, "message" => "No approved request found for the given ID."]);
+        exit;
     }
 
     $row = mysqli_fetch_assoc($res);
@@ -46,15 +50,15 @@ if (isset($_POST['BID_id'])) {
     // Combine full name
     $name = trim($row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'] . ' ' . $row['suffix']);
     $address = $row['address'];
-    $precinctNumber = $row['precinctNumber']; // Corrected spelling
+    $precinctNumber = $row['precinctNumber'];
     $bloodType = $row['bloodType'];
-    $birthdate = $row['birthdate'];
+    $birthdate = $row['birthday'];
     $birthplace = $row['birthplace'];
     $height = $row['height'];
     $weight = $row['weight'];
     $SSSGSIS_Number = $row['SSSGSIS_Number'];
     $TIN_number = $row['TIN_number'];
-    $marital_status = $row['marital_status'];
+    $marital_status = $row['civilStatus'];
     $personTwoName = $row['personTwoName'];
     $personTwoContactInfo = $row['personTwoContactInfo'];
     $personTwoAddress = $row['personTwoAddress'];
@@ -63,7 +67,8 @@ if (isset($_POST['BID_id'])) {
     $savePath = __DIR__ . '/generate_certificate/' . $barangayIdFields['folder'];
 
     if (!file_exists($templatePath)) {
-        die("Template not found.");
+        echo json_encode(["success" => false, "message" => "Template not found."]);
+        exit;
     }
 
     if (!is_dir($savePath)) {
@@ -83,7 +88,7 @@ if (isset($_POST['BID_id'])) {
         ['text' => $address, 'key' => 'address_pos'],
         ['text' => $precinctNumber, 'key' => 'precinct_pos'],
         ['text' => $bloodType, 'key' => 'blood_type_pos'],
-        ['text' => $birthdate, 'key' => 'birthdate_pos', 'size' => 15], // Custom font size
+        ['text' => $birthdate, 'key' => 'birthdate_pos', 'size' => 15],
         ['text' => $birthplace, 'key' => 'birthplace_pos'],
         ['text' => $height, 'key' => 'height_pos'],
         ['text' => $weight, 'key' => 'weight_pos'],
@@ -105,8 +110,11 @@ if (isset($_POST['BID_id'])) {
     imagejpeg($image, $filename);
     imagedestroy($image);
 
-    echo "ID certificate generated successfully! Saved to: $filename";
+    echo json_encode([
+        "success" => true,
+        "message" => "ID certificate generated successfully!",
+        "file"    => $filename
+    ]);
 } else {
-    echo "Invalid request or missing certification ID.";
+    echo json_encode(["success" => false, "message" => "Invalid request or missing certification ID."]);
 }
-?>

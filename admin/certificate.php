@@ -927,7 +927,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                                                         <i class="fas fa-download mr-2"></i> Download Certificate
                                                                                     </a>
 
-                                                                                     <button type="button" 
+                                                                                    <button type="button" 
                                                                                             class="btn btn-primary generate-cert btn-lg" 
                                                                                             data-id="<?php echo $certification_id; ?>">
                                                                                         <i class="fas fa-redo mr-2"></i>Re Generate Certificate Now
@@ -1371,7 +1371,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 
-                                                                                $('.generate-cert').on("click",function (e) {
+                                                                                    $('.generate-cert').on("click",function (e) {
                                                                                     e.preventDefault();
 
                                                                                     var $btn = $(this);
