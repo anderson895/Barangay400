@@ -49,12 +49,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 /**
  * Generate Certificate Image File
  */
+
+
 function generateCertificateFile($certification_id, $conn) {
     try {
-        $stmt = $conn->prepare("SELECT * FROM tbl_certification 
-        LEFT JOIN tbl_user
-        ON tbl_user.user_id = tbl_certification.user_id
-        WHERE certification_id = ? AND status = 'Approved'");
+      $stmt = $conn->prepare("
+            SELECT c.*, u.*,
+                (SELECT CONCAT_WS(' ', bo.first_name, bo.middle_name, bo.last_name)
+                    FROM tbl_brgyofficer bo
+                    WHERE bo.position = 'BarangayCaptain' 
+                    AND bo.status = 'Active'
+                    LIMIT 1) AS barangay_captain,
+
+                (SELECT CONCAT_WS(' ', bo.first_name, bo.middle_name, bo.last_name)
+                    FROM tbl_brgyofficer bo
+                    WHERE bo.position = 'BarangayTreasurer' 
+                    AND bo.status = 'Active'
+                    LIMIT 1) AS barangay_treasurer
+            FROM tbl_certification c
+            LEFT JOIN tbl_user u 
+                ON u.user_id = c.user_id
+            WHERE c.certification_id = ? 
+            AND c.status = 'Approved'
+        ");
         $stmt->bind_param("i", $certification_id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -99,7 +116,10 @@ function generateCertificateFile($certification_id, $conn) {
                 'day_pos' => [500, 1260],   
                 'date_issued_pos' => [650, 1260], 
                 'valid_until_pos' => [740, 1330], 
-                'witness_pos' => [250, 900],  // Witness signature (you may need to add this field)
+                'authorize_person' => [1150,1500],  
+                'witness_pos' => [1100,1800],  
+                'author_date' => [1150,1600],  
+                'witness_date' => [1150,1900],  
             ],
            'Calamity' => [
                 'template' => 'temp_calamity.jpg',
@@ -141,18 +161,23 @@ function generateCertificateFile($certification_id, $conn) {
         }
 
         $black = imagecolorallocate($image, 0, 0, 0);
-        $name = $row['name'];
-        $address = $row['address'];
+                // Existing variables
+        $name     = $row['name'];
+        $address  = $row['address'];
         $birthday = $row['birthday'];
-        $purpose = trim($row['purpose']);
-        $date = date("F d, Y");
+        $purpose  = trim($row['purpose']);
+        $date     = date("F d, Y");
+
+        // Barangay officers
+        $captain   = $row['barangay_captain'];
+        $treasurer = $row['barangay_treasurer'];
 
         // Draw name and address (common to all certificates)
         if (isset($data['name_pos'])) {
             imagettftext($image, 20, 0, $data['name_pos'][0], $data['name_pos'][1], $black, $font, $name);
         }
         if (isset($data['address_pos'])) {
-            imagettftext($image, 20, 0, $data['address_pos'][0], $data['address_pos'][1], $black, $font, $address);
+            imagettftext($image, 20, 0, $data['address_pos'][0], $data['address_pos'][1], $black, $font, ucfirst($address));
         }
 
         // Good Moral Certificate Processing
@@ -183,8 +208,8 @@ function generateCertificateFile($certification_id, $conn) {
 
         // First Time Job Seeker Certificate Processing
         if ($type === 'First Time Job Seeker') {
-            // Age field (you might need to add this to your database)
-           $birthday = $row['birthday'];
+            // Age field
+            $birthday = $row['birthday'];
             // compute age
             if (!empty($birthday)) {
                 $birthDate = new DateTime($birthday);
@@ -197,7 +222,8 @@ function generateCertificateFile($certification_id, $conn) {
             if (isset($data['age_pos'])) {
                 imagettftext($image, 20, 0, $data['age_pos'][0], $data['age_pos'][1], $black, $font, $age);
             }
-                        // Purpose
+
+            // Purpose
             if (isset($data['purpose_pos']) && !empty($purpose)) {
                 imagettftext($image, 20, 0, $data['purpose_pos'][0], $data['purpose_pos'][1], $black, $font, $purpose);
             }
@@ -208,13 +234,17 @@ function generateCertificateFile($certification_id, $conn) {
                 imagettftext($image, 20, 0, $data['date_pos'][0], $data['date_pos'][1], $black, $font, $today);
             }
 
-            // Witness (you might need to add this field to your database)
-            if (isset($data['witness_pos'])) {
-                $witness = !empty($row['witness']) ? $row['witness'] : '';
-                imagettftext($image, 18, 0, $data['witness_pos'][0], $data['witness_pos'][1], $black, $font, $witness);
+            // authorizing person (Barangay Captain)
+            if (isset($data['authorize_person'])) {
+                imagettftext($image, 20, 0, $data['authorize_person'][0], $data['authorize_person'][1], $black, $font, $captain);
             }
 
-              // Date certificate was issued
+             // witness (Barangay Treasurer)
+            if (isset($data['witness_pos'])) {
+                imagettftext($image, 20, 0, $data['witness_pos'][0], $data['witness_pos'][1], $black, $font, $treasurer);
+            }
+
+            // Date certificate was issued (Month, Year only)
             if (isset($data['date_issued_pos'])) {
                 $today = date("F, Y");
                 imagettftext($image, 20, 0, $data['date_issued_pos'][0], $data['date_issued_pos'][1], $black, $font, $today);
@@ -226,8 +256,7 @@ function generateCertificateFile($certification_id, $conn) {
                 imagettftext($image, 20, 0, $data['day_pos'][0], $data['day_pos'][1], $black, $font, $day);
             }
 
-
-                        // Valid until 1 year
+            // Valid until 1 year
             if (isset($data['valid_until_pos'])) {
                 $valid_until = date("F d, Y", strtotime("+1 year")); 
                 imagettftext(
@@ -243,7 +272,40 @@ function generateCertificateFile($certification_id, $conn) {
             }
 
 
+            if (isset($data['author_date'])) {
+                $author_date = date("F d, Y"); 
+                imagettftext(
+                    $image,
+                    20,
+                    0,
+                    $data['author_date'][0],
+                    $data['author_date'][1],
+                    $black,
+                    $font,
+                    $author_date
+                );
+            }
+
+
+            if (isset($data['witness_date'])) {
+                $witness_date = date("F d, Y"); 
+                imagettftext(
+                    $image,
+                    20,
+                    0,
+                    $data['witness_date'][0],
+                    $data['witness_date'][1],
+                    $black,
+                    $font,
+                    $witness_date
+                );
+            }
+
+           
+
+           
         }
+
 
         // Calamity Certificate Processing
         if ($type === 'Calamity') {
