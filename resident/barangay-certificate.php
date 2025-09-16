@@ -475,8 +475,14 @@ function getNotificationStyle($type) {
                                     <div id="calamityDetails" class="border rounded p-3 mt-3 hidden-section bg-light">
                                         <div class="form-group">
                                             <label for="calamityType">Type of Calamity</label>
-                                            <input type="text" class="form-control" id="calamityType" name="calamityType" placeholder="e.g., Typhoon, Earthquake">
+                                            <!-- <input type="text" class="form-control" id="calamityType" name="calamityType" placeholder="e.g., Typhoon"> -->
+                                             <select class="form-control" name="calamityType" id="calamityType">
+                                                <option value="Typhoon">Typhoon</option>
+                                                <option value="Fire">Fire</option>
+                                             </select>
                                         </div>
+
+                                        
                                         <div class="form-group">
                                             <label for="calamityDate">When did it happen?</label>
                                             <input type="date" class="form-control" id="calamityDate" name="calamityDate">
@@ -489,6 +495,27 @@ function getNotificationStyle($type) {
                                             <label for="calamityNotes">Additional Notes (Optional)</label>
                                             <textarea class="form-control" id="calamityNotes" name="calamityNotes" rows="3" placeholder="Any other relevant information"></textarea>
                                         </div>
+
+                                         <div class="form-group">
+                                            <label for="calamityCaused">What is a caused?</label>
+                                          <textarea class="form-control" name="calamityCaused" id="calamityCaused" cols="30" rows="10"></textarea>
+                                        </div>
+
+
+                                        <!-- 
+                                        Certification for Calamity(Calamity Claim Purposes, Calamity Leave Purposes, and SELA).png
+                                        -->
+                                        <div class="form-group">
+                                            <label for="calamityPurpose">Purpose</label>
+                                             <select class="form-control" name="calamityPurpose" id="calamityType">
+                                                <option value="Calamity Claim Purposes">Calamity Claim Purposes </option>
+                                                <option value="Calamity Leave Purposes">Calamity Leave Purposes</option>
+                                                <option value="SELA">SELA</option>
+                                                <option value="Supporting Document For Submmission">Supporting Document For Submmission</option>
+                                                <option value="Fire Victim Purposes">Fire Victim Purposes</option>
+                                             </select>
+                                        </div>
+
                                     </div>
 
                                     <br>
@@ -768,8 +795,9 @@ $count_stmt->close();
 $sql = "SELECT c.certification_id, c.res_id, c.user_id, c.name, 
         c.address, c.purpose, c.registeredVoter, c.resident_status, 
         c.dateApplied, c.document_path, c.certificationType,
-        c.status, c.created_at, c.remarks
+        c.status, c.created_at, c.remarks,u.*
         FROM tbl_certification c
+        left join tbl_residents u on c.user_id = u.user_id
         WHERE $where_clause
         ORDER BY c.created_at DESC 
         LIMIT ? OFFSET ?";
@@ -839,7 +867,7 @@ $stmt->close();
                                                 <?php while ($row = $result->fetch_assoc()): ?>
                                                     <tr>
                                                         <td><?php echo htmlspecialchars($row['certification_id']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                                        <td><?= htmlspecialchars(implode(' ', [$row['first_name'], $row['middle_name'], $row['last_name']])) ?></td>
                                                         <td><?php echo htmlspecialchars($row['certificationType']); ?></td>
                                                         <td><?php echo htmlspecialchars($row['purpose']); ?></td>
                                                         <td><?php echo date('F d, Y h:i A', strtotime($row['dateApplied'])); ?></td>

@@ -16,183 +16,6 @@ include '../connection/config.php';
 
 
 
-// // Add this at the top of certificate.php, after the session_start() and before the HTML
-
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $certification_id = intval($_POST['certification_id']);
-//     $status = $_POST['status'];
-//     $remarks = $_POST['remarks'];
-
-//     // Update status + remarks
-//     $stmt = $conn->prepare("UPDATE tbl_certification SET status = ?, remarks = ? WHERE certification_id = ?");
-//     $stmt->bind_param("ssi", $status, $remarks, $certification_id);
-//     $updateResult = $stmt->execute();
-//     $stmt->close();
-
-//     if ($updateResult && strtolower($status) === 'approved') {
-//         // Generate certificate immediately after successful update
-//         $generateResult = generateCertificateFile($certification_id, $conn);
-        
-//         if ($generateResult['success']) {
-//             header("Location: certificate.php?msg=approved_and_generated");
-//         } else {
-//             header("Location: certificate.php?msg=approved_but_generation_failed&error=" . urlencode($generateResult['error']));
-//         }
-//     } else {
-//         header("Location: certificate.php?msg=updated");
-//     }
-//     exit;
-// }
-
-// // Add this function before your HTML starts
-// function generateCertificateFile($certification_id, $conn) {
-//     try {
-//         // Get the certification data
-//         $stmt = $conn->prepare("SELECT * FROM tbl_certification WHERE certification_id = ? AND status = 'Approved'");
-//         $stmt->bind_param("i", $certification_id);
-//         $stmt->execute();
-//         $result = $stmt->get_result();
-        
-//         if ($result->num_rows === 0) {
-//             return ['success' => false, 'error' => 'No approved certification found'];
-//         }
-        
-//         $row = $result->fetch_assoc();
-//         $type = $row['certificationType'];
-//         $stmt->close();
-        
-//         // Certificate type mapping
-//         $certificateTypes = [
-//             'Good Moral' => [
-//                 'template' => 'temp-gm.jpg',
-//                 'folder' => 'GoodMoralCert',
-//                 'name_pos' => [550, 680],
-//                 'address_pos' => [750, 730],
-//                 'other_purpose_pos' => [1110, 1650],
-//                 'checkbox_positions' => [
-//                     'Local Employment' => [250, 1075],
-//                     'PWD ID' => [250, 1130],
-//                     'Hospital Requirement' => [250, 1185],
-//                     'Transfer Residency' => [250, 1240],
-//                     'Bank Transaction' => [250, 1295],
-//                     'Proof Of Indigency' => [250, 1350],
-//                     'Financial Assistance' => [950, 1075],
-//                     'Maynilad Requirement' => [950, 1130],
-//                     'School Requirement' => [950, 1180],
-//                     'Proof Of Residency' => [950, 1240],
-//                     'Medical Assistance' => [950, 1295],
-//                 ]
-//             ],
-//             'First Time Job Seeker' => [
-//                 'template' => 'temp-ftjs.jpg',
-//                 'folder' => 'FirstTimeJobSeekerCert',
-//                 'name_pos' => [550, 680],
-//                 'address_pos' => [750, 730]
-//             ],
-//             'Calamity' => [
-//                 'template' => 'temp-calamity.jpg',
-//                 'folder' => 'CalamityCert',
-//                 'name_pos' => [550, 680],
-//                 'address_pos' => [750, 730]
-//             ]
-//         ];
-        
-//         if (!array_key_exists($type, $certificateTypes)) {
-//             return ['success' => false, 'error' => 'Invalid certificate type'];
-//         }
-        
-//         $data = $certificateTypes[$type];
-//         $templatePath = __DIR__ . '/generate_certificate/templates/' . $data['template'];
-//         $savePath = __DIR__ . '/generate_certificate/' . $data['folder'];
-//         $font = __DIR__ . '/generate_certificate/fonts/TimesNewRoman.ttf';
-//         $checkmarkImagePath = __DIR__ . '/generate_certificate/icons/checkmark.png';
-        
-//         // Validate required files
-//         if (!file_exists($templatePath)) {
-//             return ['success' => false, 'error' => "Template not found: {$data['template']}"];
-//         }
-        
-//         if (!file_exists($font)) {
-//             return ['success' => false, 'error' => 'Font file not found'];
-//         }
-        
-//         // Create directory if it doesn't exist
-//         if (!is_dir($savePath)) {
-//             if (!mkdir($savePath, 0777, true)) {
-//                 return ['success' => false, 'error' => 'Failed to create directory'];
-//             }
-//         }
-        
-//         // Load template image
-//         $image = imagecreatefromjpeg($templatePath);
-//         if (!$image) {
-//             return ['success' => false, 'error' => 'Failed to load template image'];
-//         }
-        
-//         $black = imagecolorallocate($image, 0, 0, 0);
-//         $name = $row['name'];
-//         $address = $row['address'];
-//         $purpose = trim($row['purpose']);
-        
-//         // Draw name and address
-//         if (isset($data['name_pos'])) {
-//             imagettftext($image, 20, 0, $data['name_pos'][0], $data['name_pos'][1], $black, $font, $name);
-//         }
-//         if (isset($data['address_pos'])) {
-//             imagettftext($image, 20, 0, $data['address_pos'][0], $data['address_pos'][1], $black, $font, $address);
-//         }
-        
-//         // Handle checkboxes for Good Moral certificates
-//         if ($type === 'Good Moral' && isset($data['checkbox_positions'])) {
-//             $matchedKey = null;
-//             foreach ($data['checkbox_positions'] as $key => $coords) {
-//                 if (strcasecmp($key, $purpose) === 0) {
-//                     $matchedKey = $key;
-//                     break;
-//                 }
-//             }
-            
-//             if ($matchedKey && file_exists($checkmarkImagePath)) {
-//                 [$x, $y] = $data['checkbox_positions'][$matchedKey];
-//                 $checkmark = imagecreatefrompng($checkmarkImagePath);
-//                 if ($checkmark) {
-//                     imagealphablending($image, true);
-//                     imagesavealpha($image, true);
-//                     $resized = imagescale($checkmark, 30, 30);
-//                     imagecopy($image, $resized, $x, $y, 0, 0, 30, 30);
-//                     imagedestroy($checkmark);
-//                     imagedestroy($resized);
-//                 }
-//             } elseif (!empty($purpose) && isset($data['other_purpose_pos'])) {
-//                 imagettftext($image, 20, 0, $data['other_purpose_pos'][0], $data['other_purpose_pos'][1], $black, $font, $purpose);
-//             }
-//         }
-        
-//         // Generate filename and save
-//         $safeName = preg_replace('/\s+/', '_', $name);
-//         $filename = $savePath . '/' . $safeName . '_' . $certification_id . '_' . time() . '.jpg';
-        
-//         $saveResult = imagejpeg($image, $filename, 90); // 90% quality
-//         imagedestroy($image);
-        
-//         if (!$saveResult) {
-//             return ['success' => false, 'error' => 'Failed to save certificate image'];
-//         }
-        
-//         // Verify file was created
-//         if (!file_exists($filename)) {
-//             return ['success' => false, 'error' => 'Certificate file was not created'];
-//         }
-        
-//         return ['success' => true, 'filename' => basename($filename)];
-        
-//     } catch (Exception $e) {
-//         return ['success' => false, 'error' => 'Exception: ' . $e->getMessage()];
-//     }
-// }
-
-
-
 
 
 // Fetch the user's data from the tbl_user table based on the user ID
@@ -739,8 +562,9 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 $sql = "SELECT c.certification_id, c.res_id, c.user_id, c.name, 
         c.address, c.purpose, c.registeredVoter, c.resident_status, 
         c.dateApplied, c.document_path, c.certificationType,
-        c.status, c.created_at, c.remarks
+        c.status, c.created_at, c.remarks,u.*
         FROM tbl_certification c
+        left join tbl_residents u on c.user_id = u.user_id
         WHERE $where_clause
         ORDER BY c.created_at DESC 
         LIMIT ? OFFSET ?";
@@ -812,7 +636,8 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                 <?php while ($row = $result->fetch_assoc()): ?>
                                                     <tr>
                                                         <td><?php echo htmlspecialchars($row['certification_id']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                                        <td><?= htmlspecialchars(implode(' ', [$row['first_name'], $row['middle_name'], $row['last_name']])) ?></td>
+
                                                         <td><?php echo htmlspecialchars($row['certificationType']); ?></td>
                                                         <td><?php echo htmlspecialchars($row['purpose']); ?></td>
                                                         <td><?php echo date('F d, Y h:i A', strtotime($row['dateApplied'])); ?>
@@ -839,8 +664,8 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                         <td>
                                                             <!-- View button for all positions -->
                                                             <?php if ($row['status'] === 'Approved'): ?>
-                                                                <button class="btn btn-info btn-sm" data-toggle="modal" title="View"
-                                                                    data-target="#viewModal<?php echo $row['certification_id']; ?>">
+                                                                <button class="btn btn-info btn-sm viewCert" data-certification_id=<?= $row['certification_id']; ?> data-toggle="modal" title="View"
+                                                                    data-target="#viewCertificateModal">
                                                                     <i class="fa-solid fa-eye"></i>
                                                                 </button>
                                                             <?php endif; ?>
@@ -854,147 +679,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                         </td>
                                                     </tr>
 
-                                                    <!-- View Modal -->
-                                                    <?php if ($row['status'] === 'Approved'): ?>
-                                                    <div class="modal fade" id="viewModal<?php echo $row['certification_id']; ?>" tabindex="-1"
-                                                        role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                            <div class="modal-content shadow-lg border-0">
-                                                                <div class="modal-header bg-gradient-warning text-white py-3">
-                                                                    <h5 class="modal-title font-weight-bold" id="editModalLabel">
-                                                                        <i class="fas fa-edit mr-2"></i> View Certificate
-                                                                    </h5>
-                                                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                    
-                                                                <div class="modal-body text-center">
-                                                                    <?php
-                                                                    $certification_id = $row['certification_id'];
-                                                                    $type = $row['certificationType'];
-                                                    
-                                                                    $folderMap = [
-                                                                        'Good Moral' => 'GoodMoralCert',
-                                                                        'First Time Job Seeker' => 'FirstTimeJobSeekerCert',
-                                                                        'Calamity' => 'CalamityCert'
-                                                                    ];
-                                                    
-                                                                    if (isset($folderMap[$type])) {
-                                                                        $folder = $folderMap[$type];
-                                                                        $relativePath = "generate_certificate/$folder";
-                                                                        $absolutePath = __DIR__ . "/$relativePath";
-                                                    
-                                                                        if (is_dir($absolutePath)) {
-                                                                            // Multiple glob patterns to catch different naming conventions
-                                                                            $patterns = [
-                                                                                "$absolutePath/*_{$certification_id}_*.jpg",
-                                                                                "$absolutePath/*{$certification_id}*.jpg",
-                                                                                "$absolutePath/{$certification_id}_*.jpg"
-                                                                            ];
-                                                                            
-                                                                            $images = [];
-                                                                            foreach ($patterns as $pattern) {
-                                                                                $found = glob($pattern, GLOB_BRACE);
-                                                                                if (!empty($found)) {
-                                                                                    $images = array_merge($images, $found);
-                                                                                }
-                                                                            }
-                                                                            
-                                                                            // Remove duplicates
-                                                                            $images = array_unique($images);
-                                                    
-                                                                            if (!empty($images)) {
-                                                                                // Sort by file modification time (descending - newest first)
-                                                                                usort($images, function($a, $b) {
-                                                                                    return filemtime($b) - filemtime($a);
-                                                                                });
-                                                                                $latestImage = $images[0];
-                                                                                $filename = basename($latestImage);
-                                                                                ?>
-                                                    
-                                                                                <div class="certificate-container mb-3">
-                                                                                    <img src="<?php echo $relativePath . '/' . $filename; ?>" 
-                                                                                         class="img-fluid border shadow-sm" 
-                                                                                         style="max-height: 600px; max-width: 100%;"
-                                                                                         alt="Certificate for <?php echo htmlspecialchars($row['name']); ?>">
-                                                                                </div>
-                                                                                
-                                                                                <div class="certificate-actions">
-                                                                                    <a href="<?php echo $relativePath . '/' . $filename; ?>" 
-                                                                                       download="Certificate_<?php echo $certification_id; ?>.jpg" 
-                                                                                       class="btn btn-success btn-lg">
-                                                                                        <i class="fas fa-download mr-2"></i> Download Certificate
-                                                                                    </a>
-
-                                                                                    <button type="button" 
-                                                                                            class="btn btn-primary generate-cert btn-lg" 
-                                                                                            data-id="<?php echo $certification_id; ?>">
-                                                                                        <i class="fas fa-redo mr-2"></i>Re Generate Certificate Now
-                                                                                    </button>
-                                                                                    
-                                                                                    <a href="<?php echo $relativePath . '/' . $filename; ?>" 
-                                                                                       target="_blank" 
-                                                                                       class="btn btn-info btn-lg ml-2">
-                                                                                        <i class="fas fa-external-link-alt mr-2"></i> Open in New Tab
-                                                                                    </a>
-                                                                                </div>
-                                                    
-                                                                                <div class="mt-3">
-                                                                                    <small class="text-muted">
-                                                                                        Certificate generated on: <?php echo date('F d, Y h:i A', filemtime($latestImage)); ?>
-                                                                                    </small>
-                                                                                </div>
-                                                    
-                                                                                <?php
-                                                                            } else {
-                                                                                ?>
-                                                                                <div class="alert alert-warning">
-                                                                                    <h5><i class="fas fa-exclamation-triangle mr-2"></i> Certificate Not Generated</h5>
-                                                                                    <p>The certificate for this request has not been generated yet.</p>
-                                                                                    <p><strong>Certification ID:</strong> <?php echo $certification_id; ?><br>
-                                                                                       <strong>Type:</strong> <?php echo htmlspecialchars($type); ?><br>
-                                                                                       <strong>Status:</strong> <?php echo htmlspecialchars($row['status']); ?></p>
-                                                                                    
-                                                                                    <button type="button" 
-                                                                                            class="btn btn-primary generate-cert" 
-                                                                                            data-id="<?php echo $certification_id; ?>">
-                                                                                        <i class="fas fa-redo mr-2"></i> Generate Certificate Now
-                                                                                    </button>
-
-                                                                                </div>
-                                                                                <?php
-                                                                            }
-                                                                        } else {
-                                                                            ?>
-                                                                            <div class="alert alert-danger">
-                                                                                <h5><i class="fas fa-folder-open mr-2"></i> Directory Not Found</h5>
-                                                                                <p>The certificate directory does not exist: <code><?php echo htmlspecialchars($relativePath); ?></code></p>
-                                                                                <p>Please ensure the certificate generation system is properly configured.</p>
-                                                                            </div>
-                                                                            <?php
-                                                                        }
-                                                                    } else {
-                                                                        ?>
-                                                                        <div class="alert alert-danger">
-                                                                            <h5><i class="fas fa-times-circle mr-2"></i> Invalid Certificate Type</h5>
-                                                                            <p>Unknown certificate type: <strong><?php echo htmlspecialchars($type); ?></strong></p>
-                                                                            <p>Supported types: Good Moral, First Time Job Seeker, Calamity</p>
-                                                                        </div>
-                                                                        <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                    
-                                                                <div class="modal-footer bg-light">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                                        <i class="fas fa-times mr-1"></i> Close
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php endif; ?>
+                                                  
 
                                                    
 
@@ -1265,8 +950,8 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer bg-light">
-                                                                       <button type="button" 
-                                                                                class="btn btn-success generate-cert" 
+                                                                       <button type="submit" 
+                                                                                class="btn btn-success" 
                                                                                 data-id="<?php echo $row['certification_id']; ?>">
                                                                             <i class="fas fa-save mr-1"></i> Update
                                                                         </button>
@@ -1367,56 +1052,115 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
     <!-- container-scroller -->
     <!-- plugins:js -->
+
+    <div class="modal fade" id="viewCertificateModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content shadow-lg border-0">
+            <div class="modal-header bg-gradient-warning text-white py-3">
+                <h5 class="modal-title font-weight-bold" id="viewModalLabel">
+                <i class="fas fa-edit mr-2"></i> View Certificate
+                </h5>
+                <button type="button" class="close text-white btn-close-modal" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-center"> 
+                <div id="certificateContent">
+                <!-- Certificate content will be loaded here via AJAX -->
+                </div>
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-primary btn-print">
+                <i class="fas fa-print mr-1"></i> Print
+                </button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">
+                <i class="fas fa-times mr-1"></i> Close
+                </button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+
+
     <script>
+// Close modal
+$(".btn-close-modal").on("click", function () {
+  $("#viewCertificateModal").modal("hide");
+});
+
+$(".btn-print").on("click", function () {
+  var printContents = document.getElementById("certificateContent").innerHTML;
+  var printWindow = window.open("", "", "width=900,height=650");
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Certificate</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <style>
+          body { padding: 20px; text-align: center; }
+        </style>
+      </head>
+      <body>
+        ${printContents}
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+
+  // Hintayin mag-load bago mag print
+  printWindow.onload = function () {
+    printWindow.focus();
+    printWindow.print();
+    // Huwag agad i-close para makita ang print dialog
+    // Kung gusto mo auto-close pagkatapos mag print:
+    // printWindow.onafterprint = function() { printWindow.close(); };
+  };
+});
 
 
+// Load certificate via AJAX
+$('.viewCert').on("click", function (e) {
+  e.preventDefault();
 
-                                                                                    $('.generate-cert').on("click",function (e) {
-                                                                                    e.preventDefault();
+  var $btn = $(this);
+  var certification_id = $btn.data("certification_id");
 
-                                                                                    var $btn = $(this);
-                                                                                    var certification_id = $btn.data("id");
+  if (!certification_id) {
+    console.error("Missing certification_id");
+    return;
+  }
 
-                                                                                    // Get form values
-                                                                                    var status = $("#status" + certification_id).val();
-                                                                                    var remarks = $("#remarks" + certification_id).val();
+  var originalText = $btn.html();
+  $btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Processing...');
+  $btn.prop("disabled", true);
 
-                                                                                    // Show loading state
-                                                                                    var originalText = $btn.html();
-                                                                                    $btn.html('<i class="fas fa-spinner fa-spin mr-1"></i> Processing...');
-                                                                                    $btn.prop("disabled", true);
+  $.ajax({
+    url: "generate_certificate.php",
+    type: "GET",
+    data: { certification_id: certification_id },
+    success: function (response) {
+      $("#certificateContent").html(response);
+      $("#viewCertificateModal").modal("show");
+    },
+    error: function (xhr, status, error) {
+      console.error("❌ AJAX Error:", status, error);
+      console.error("Response:", xhr.responseText);
+      alert("Network error: " + error);
+    },
+    complete: function () {
+      $btn.html(originalText);
+      $btn.prop("disabled", false);
+    }
+  });
+});
 
-                                                                                    // AJAX request
-                                                                                    $.ajax({
-                                                                                        url: "generate_certificate.php",
-                                                                                        type: "POST",
-                                                                                        dataType: "json", 
-                                                                                        data: {
-                                                                                            certification_id: certification_id,
-                                                                                            status: status,
-                                                                                            remarks: remarks
-                                                                                        },
-                                                                                      success: function (response) {
-                                                                                        console.log(response); // For debugging
-                                                                                        if (response.success) {
-                                                                                            alert(response.message);
 
-                                                                                           location.reload(); // Reload the page to reflect changes
-                                                                                        } else {
-                                                                                            alert("Error: " + response.message + 
-                                                                                                (response.error ? "\nDetails: " + response.error : ""));
-                                                                                        }
-                                                                                    },
-                                                                                        error: function (xhr, status, error) {
-                                                                                            alert("Network error: " + error);
-                                                                                        },
-                                                                                        complete: function () {
-                                                                                            // Reset button state kahit success or fail
-                                                                                            $btn.html(originalText);
-                                                                                            $btn.prop("disabled", false);
-                                                                                        }
-                                                                                    });
-                                                                                });
 
 
 

@@ -51,6 +51,7 @@ if ($result && $result->num_rows > 0) {
     $birthday = $row["birthday"];
     $birthplace = $row["birthplace"];
     $civilStatus = $row["civilStatus"];
+    $residentStatus = $row["residentStatus"];
     $gender = $row["gender"];
     $precinctNumber = $row["precinctNumber"];
     $residency_tenure = $row["residency_tenure"];

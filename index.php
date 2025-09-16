@@ -64,7 +64,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             <li>
                 <a href="https://barangay400.com/WEBSITE/a&e.php">Events</a>
             </li>
-            <li><a href="https://barangay400.com/login.php">Login</a></li>
+            <li><a href="login.php">Login</a></li>
         </ul>
     </header>
 

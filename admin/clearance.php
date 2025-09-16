@@ -581,8 +581,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 $sql = "SELECT c.clearance_id, c.res_id, c.user_id, c.name, 
 c.address, c.purpose, c.registeredVoter,
 c.birthday, c.dateApplied, c.document_path, c.clearanceType,
-c.status, c.created_at, c.remarks, c.dateToday
+c.status, c.created_at, c.remarks, c.dateToday,u.*
 FROM tbl_clearance c
+left join tbl_residents u on c.user_id = u.user_id
 WHERE $where_clause
 ORDER BY c.created_at DESC 
 LIMIT ? OFFSET ?";
@@ -656,7 +657,7 @@ LIMIT ? OFFSET ?";
                                                 <?php while ($row = $result->fetch_assoc()): ?>
                                                     <tr>
                                                         <td><?php echo htmlspecialchars($row['clearance_id']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                                        <td><?= htmlspecialchars(implode(' ', [$row['first_name'], $row['middle_name'], $row['last_name']])) ?></td>
                                                         <td><?php echo htmlspecialchars($row['clearanceType']); ?></td>
                                                         <td><?php echo htmlspecialchars($row['purpose']); ?></td>
                                                         <td><?php echo date('F d, Y h:i A', strtotime($row['dateApplied'])); ?>
@@ -681,11 +682,12 @@ LIMIT ? OFFSET ?";
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <!-- View button for all positions -->
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" title="View"
-                                                                data-target="#viewModal<?php echo $row['clearance_id']; ?>">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </button>
+                                                            <?php if ($row['status'] === 'Approved'): ?>
+                                                                <button class="btn btn-info btn-sm viewCert" data-clearance_id=<?= $row['clearance_id']; ?> data-toggle="modal" title="View"
+                                                                    data-target="#viewCertificateModal">
+                                                                    <i class="fa-solid fa-eye"></i>
+                                                                </button>
+                                                            <?php endif; ?>
 
                                                             <!-- Edit/Update button only for Barangay Secretary -->
                                                                 <button class="btn btn-warning btn-sm" data-toggle="modal" title="Update"
@@ -697,76 +699,32 @@ LIMIT ? OFFSET ?";
                                                     </tr>
 
                                                     <!-- View Modal -->
-                                                    <div class="modal fade"
-                                                        id="viewModal<?php echo $row['clearance_id']; ?>" tabindex="-1"
-                                                        role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="viewCertificateModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content shadow-lg border-0">
-                                                                <!-- Enhanced Header with gradient background -->
-                                                                <div class="modal-header bg-gradient-primary text-white py-3">
-                                                                    <h5 class="modal-title font-weight-bold" id="editModalLabel">
-                                                                        <i class="fas fa-edit mr-2"></i> View Clearance
-                                                                    </h5>
-                                                                    
-                                                                    <button type="button" class="close text-white"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
+                                                            <div class="modal-header bg-gradient-warning text-white py-3">
+                                                                <h5 class="modal-title font-weight-bold" id="viewModalLabel">
+                                                                <i class="fas fa-edit mr-2"></i> View Certificate
+                                                                </h5>
+                                                                <button type="button" class="close text-white btn-close-modal" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="modal-body text-center"> 
+                                                                <div id="certificateContent">
+                                                                <!-- Certificate content will be loaded here via AJAX -->
                                                                 </div>
+                                                            </div>
 
-                                                                <div class="modal-body text-center">
-                                                                    <?php
-                                                                    $certification_id = $row['clearance_id'];
-                                                                    $type = $row['clearanceType'];
-
-                                                                    $folderMap = [
-                                                                        'Barangay Clearance' => 'BarangayClearance',
-                                                                        'Declogging' => 'DecloggingClearance',
-                                                                        'Garbage Disposal' => 'GarbageDisposalClearance'
-                                                                    ];
-
-                                                                    if (isset($folderMap[$type])) {
-                                                                        $folder = $folderMap[$type];
-                                                                        $relativePath = "generate_certificate/$folder";
-                                                                        $absolutePath = __DIR__ . "/$relativePath";
-
-                                                                        if (is_dir($absolutePath)) {
-                                                                            // Find all matching images for this certification ID
-                                                                            $images = glob("$absolutePath/*_{$certification_id}_*.jpg", GLOB_BRACE);
-
-                                                                            if (!empty($images)) {
-                                                                                // Sort by file modification time (descending)
-                                                                                usort($images, fn($a, $b) => filemtime($b) - filemtime($a));
-                                                                                $latestImage = $images[0];
-                                                                                $filename = basename($latestImage);
-                                                                                ?>
-
-                                                                                <img src="<?php echo $relativePath . '/' . $filename; ?>" class="img-fluid mb-3" style="max-height: 500px;">
-                                                                                <br>
-                                                                                <a href="<?php echo $relativePath . '/' . $filename; ?>" download class="btn btn-success mt-2">
-                                                                                    <i class="fas fa-download"></i> Download Certificate
-                                                                                </a>
-
-                                                                                <?php
-                                                                            } else {
-                                                                                echo "<p class='text-danger'>No certificate image found for this request (ID: $certification_id).</p>";
-                                                                            }
-                                                                        } else {
-                                                                            echo "<p class='text-danger'>Folder does not exist: $absolutePath</p>";
-                                                                        }
-                                                                    } else {
-                                                                        echo "<p class='text-danger'>Invalid certification type: $type</p>";
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                                
-
-                                                                <div class="modal-footer bg-light">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">
-                                                                        <i class="fas fa-times mr-1"></i> Close
-                                                                    </button>
-                                                                </div>
+                                                            <div class="modal-footer bg-light">
+                                                                <button type="button" class="btn btn-primary btn-print">
+                                                                <i class="fas fa-print mr-1"></i> Print
+                                                                </button>
+                                                                <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">
+                                                                <i class="fas fa-times mr-1"></i> Close
+                                                                </button>
+                                                            </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1046,12 +1004,12 @@ LIMIT ? OFFSET ?";
                                                                                 $isApproved = ($status === 'approved');
                                                                                 $isDenied = ($status === 'denied');
                                                                             ?>
-                                                                            <button type="button" class="btn btn-success" 
+                                                                            <!-- <button type="button" class="btn btn-success" 
                                                                                 onclick="generateCertificate(<?php echo $row['clearance_id']; ?>)" 
                                                                                 <?php echo (!$isApproved || $isDenied) ? 'disabled' : ''; ?>>
                                                                                 <i class="fas fa-save mr-1"></i> 
                                                                                 <?php echo $isApproved ? 'Generate' : 'Waiting for Approval'; ?>
-                                                                            </button>
+                                                                            </button> -->
 
 
 
@@ -1142,6 +1100,85 @@ LIMIT ? OFFSET ?";
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+
+// Close modal
+$(".btn-close-modal").on("click", function () {
+  $("#viewCertificateModal").modal("hide");
+});
+
+$(".btn-print").on("click", function () {
+  var printContents = document.getElementById("certificateContent").innerHTML;
+  var printWindow = window.open("", "", "width=900,height=650");
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Certificate</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <style>
+          body { padding: 20px; text-align: center; }
+        </style>
+      </head>
+      <body>
+        ${printContents}
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+
+  // Hintayin mag-load bago mag print
+  printWindow.onload = function () {
+    printWindow.focus();
+    printWindow.print();
+    // Huwag agad i-close para makita ang print dialog
+    // Kung gusto mo auto-close pagkatapos mag print:
+    // printWindow.onafterprint = function() { printWindow.close(); };
+  };
+});
+
+
+// Load certificate via AJAX
+$('.viewCert').on("click", function (e) {
+  e.preventDefault();
+
+  var $btn = $(this);
+  var clearance_id = $btn.data("clearance_id");
+
+  if (!clearance_id) {
+    console.error("Missing clearance_id");
+    return;
+  }
+
+  var originalText = $btn.html();
+  $btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Processing...');
+  $btn.prop("disabled", true);
+
+  $.ajax({
+    url: "generate_certificate.php",
+    type: "GET",
+    data: { clearance_id: clearance_id },
+    success: function (response) {
+      $("#certificateContent").html(response);
+      $("#viewCertificateModal").modal("show");
+    },
+    error: function (xhr, status, error) {
+      console.error("❌ AJAX Error:", status, error);
+      console.error("Response:", xhr.responseText);
+      alert("Network error: " + error);
+    },
+    complete: function () {
+      $btn.html(originalText);
+      $btn.prop("disabled", false);
+    }
+  });
+});
+
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');
             var searchInput = document.getElementById('searchInput');
