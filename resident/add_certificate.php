@@ -93,53 +93,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // ===== Step 3: Calamity-specific =====
-    if ($certificationType === 'Calamity') {
-        $calamityType    = trim($_POST['calamityType'] ?? '');
-        $calamityDate    = trim($_POST['calamityDate'] ?? '');
-        $calamityTime    = trim($_POST['calamityTimeFire'] ?? '');
-        $requestedBy     = trim($_POST['requestedBy'] ?? '');
-        $calamityPurpose = trim($_POST['calamityPurpose'] ?? '');
+if ($certificationType === 'Calamity') {
+    $calamityType     = trim($_POST['calamityType'] ?? '');
+    $calamityDate     = trim($_POST['calamityDate'] ?? '');
+    $calamityTime     = trim($_POST['calamityTimeFire'] ?? '');
+    $calamityLocation = trim($_POST['calamityLocation'] ?? '');
+    $calamityCause    = trim($_POST['calamityCause'] ?? '');
+    $requestedBy      = trim($_POST['requestedBy'] ?? '');
+    $calamityPurpose  = trim($_POST['calamityPurpose'] ?? '');
 
-        if (empty($calamityType)) {
-            echo "<script>
-                    alert('❌ Please select the Type of Calamity.');
-                    history.back();
-                  </script>";
-            exit();
-        }
+    if (empty($calamityType)) {
+        echo "<script>
+                alert('❌ Please select the Type of Calamity.');
+                history.back();
+              </script>";
+        exit();
+    }
 
-        if (empty($calamityDate)) {
-            echo "<script>
-                    alert('❌ Please provide the Date of the Calamity.');
-                    history.back();
-                  </script>";
-            exit();
-        }
+    if (empty($calamityDate)) {
+        echo "<script>
+                alert('❌ Please provide the Date of the Calamity.');
+                history.back();
+              </script>";
+        exit();
+    }
 
-        if (empty($requestedBy)) {
-            echo "<script>
-                    alert('❌ Please enter who requested the Calamity certificate.');
-                    history.back();
-                  </script>";
-            exit();
-        }
+    if (empty($requestedBy)) {
+        echo "<script>
+                alert('❌ Please enter who requested the Calamity certificate.');
+                history.back();
+              </script>";
+        exit();
+    }
 
-        if ($calamityType === 'Fire' && empty($calamityTime)) {
+    // Fire-specific validations
+    if ($calamityType === 'Fire') {
+        if (empty($calamityTime)) {
             echo "<script>
                     alert('❌ Please provide the Time of the Fire incident.');
                     history.back();
                   </script>";
             exit();
         }
-
-        if ($calamityType !== 'Fire' && empty($calamityPurpose)) {
+        if (empty($calamityLocation)) {
             echo "<script>
-                    alert('❌ Please select a Purpose for your Calamity request.');
+                    alert('❌ Please provide the Location of the Fire incident.');
+                    history.back();
+                  </script>";
+            exit();
+        }
+        if (empty($calamityCause)) {
+            echo "<script>
+                    alert('❌ Please specify what the Fire incident caused.');
                     history.back();
                   </script>";
             exit();
         }
     }
+
+    // Non-Fire calamities must have purpose
+    if ($calamityType !== 'Fire' && empty($calamityPurpose)) {
+        echo "<script>
+                alert('❌ Please select a Purpose for your Calamity request.');
+                history.back();
+              </script>";
+        exit();
+    }
+}
+
 
 
 

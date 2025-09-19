@@ -487,10 +487,11 @@ function getNotificationStyle($type) {
                                             <label for="calamityDate">When did it happen? (Date)</label>
                                             <input type="date" class="form-control mb-2" id="calamityDate" name="calamityDate">
 
-                                            <div class="form-group" id="fireTimeWrapper" style="display:none;">
-                                                <label for="calamityTimeFire">When did it happen? (Time)</label>
-                                                <input type="time" class="form-control" id="calamityTimeFire" name="calamityTimeFire">
-                                            </div>
+                                          <div class="form-group" id="fireTimeWrapper" style="display:none;">
+                                            <label for="calamityTimeFire">When did it happen? (Time)</label>
+                                            <input type="time" class="form-control" id="calamityTimeFire" name="calamityTimeFire">
+                                        </div>
+
                                         </div>
 
 
@@ -505,27 +506,26 @@ function getNotificationStyle($type) {
                                             <textarea class="form-control" id="calamityNotes" name="calamityNotes" rows="3" placeholder="Any other relevant information"></textarea>
                                         </div>
 
-                                         <div class="form-group">
-                                            <label for="calamityCaused">What is a caused?</label>
-                                          <textarea class="form-control" name="calamityCaused" id="calamityCaused" cols="30" rows="10"></textarea>
+                                        <div class="form-group" id="causeWrapper" style="display:none;">
+                                            <label for="calamityCause">What is caused?</label>
+                                            <input type="text" class="form-control" id="calamityCause" name="calamityCause">
                                         </div>
 
 
-                                         <div class="form-group">
-                                            <label for="calamityLocationFire">Location</label>
-                                          <textarea class="form-control" name="calamityLocationFire" id="calamityLocationFire" cols="30" rows="10"></textarea>
+                                        <div class="form-group" id="locationWrapper" style="display:none;">
+                                            <label for="calamityLocation">Location</label>
+                                            <input type="text" class="form-control" id="calamityLocation" name="calamityLocation">
                                         </div>
 
 
                                         <div class="form-group" id="purposeWrapper">
-                                        <label for="calamityPurpose">Purpose</label>
-                                        <select class="form-control" name="calamityPurpose" id="calamityPurpose">
-                                            <option value="Calamity Claim Purposes">Calamity Claim Purposes</option>
-                                            <option value="Calamity Leave Purposes">Calamity Leave Purposes</option>
-                                            <option value="SELA">SELA</option>
-                                            <option value="Supporting Document For Submmission">Supporting Document For Submmission</option>
-                                            <option value="Fire Victim Purposes">Fire Victim Purposes</option>
-                                        </select>
+                                            <label for="calamityPurpose">Purpose</label>
+                                            <select class="form-control" id="calamityPurpose" name="calamityPurpose">
+                                                <option value="">-- Select Purpose --</option>
+                                                <option value="Insurance">Insurance</option>
+                                                <option value="Aid Assistance">Aid Assistance</option>
+                                                <option value="Relocation">Relocation</option>
+                                            </select>
                                         </div>
 
 
@@ -1157,29 +1157,38 @@ $stmt->close();
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $("#calamityType").on("change", function(){
-                if($(this).val() === "Fire"){
-                // Show time input
-                $("#fireTimeWrapper").show();
+        $(document).ready(function () {
+            $("#calamityType").on("change", function () {
+                if ($(this).val() === "Fire") {
+                    // Show time input
+                    $("#fireTimeWrapper").show();
 
-                // Auto-select "Fire Victim Purposes"
-                $("#calamityPurpose").val("Fire Victim Purposes");
+                    // Show Location & Cause fields
+                    $("#locationWrapper").show();
+                    $("#causeWrapper").show();
 
-                // Hide Purpose dropdown
-                $("#purposeWrapper").hide();
+                    // Auto-select "Fire Victim Purposes"
+                    $("#calamityPurpose").val("Fire Victim Purposes");
+
+                    // Hide Purpose dropdown
+                    $("#purposeWrapper").hide();
                 } else {
-                // Hide time input
-                $("#fireTimeWrapper").hide();
+                    // Hide time input
+                    $("#fireTimeWrapper").hide();
 
-                // Reset Purpose dropdown
-                $("#calamityPurpose").val("");
+                    // Hide Location & Cause fields
+                    $("#locationWrapper").hide();
+                    $("#causeWrapper").hide();
 
-                // Show Purpose dropdown again
-                $("#purposeWrapper").show();
+                    // Reset Purpose dropdown
+                    $("#calamityPurpose").val("");
+
+                    // Show Purpose dropdown again
+                    $("#purposeWrapper").show();
                 }
             });
-            });
+        });
+
 
         
         document.addEventListener('DOMContentLoaded', function() {
