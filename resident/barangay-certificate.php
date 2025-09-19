@@ -520,12 +520,13 @@ function getNotificationStyle($type) {
 
                                         <div class="form-group" id="purposeWrapper">
                                             <label for="calamityPurpose">Purpose</label>
-                                            <select class="form-control" id="calamityPurpose" name="calamityPurpose">
-                                                <option value="">-- Select Purpose --</option>
-                                                <option value="Insurance">Insurance</option>
-                                                <option value="Aid Assistance">Aid Assistance</option>
-                                                <option value="Relocation">Relocation</option>
-                                            </select>
+                                            <select class="form-control" name="calamityPurpose" id="calamityType">
+                                                <option value="Calamity Claim Purposes">Calamity Claim Purposes </option>
+                                                <option value="Calamity Leave Purposes">Calamity Leave Purposes</option>
+                                                <option value="SELA">SELA</option>
+                                                <option value="Supporting Document For Submmission">Supporting Document For Submmission</option>
+                                                <option value="Fire Victim Purposes" style="display:none;">Fire Victim Purposes</option>
+                                             </select>
                                         </div>
 
 
