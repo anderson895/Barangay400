@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $calamity_notes   = $_POST['calamityNotes'] ?? null;
 
         // New fields
-        $calamity_time    = $_POST['calamity_time'] ?? null;
+        $calamity_time    = $_POST['calamityTimeFire'] ?? null;
         $what_is_caused    = $_POST['calamityCaused'] ?? null;
         $location    = $_POST['calamityLocationFire'] ?? null;
         $calamity_purpose    = $_POST['calamityPurpose'] ?? null;
