@@ -344,6 +344,13 @@ function getNotificationStyle($type) {
             .page-item.active .page-link:hover {
                 background-color: #0e1624 !important;
             }
+
+            .hidden-section {
+                visibility: hidden;
+                position: absolute;
+                left: -9999px;
+            }
+
         </style>
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
@@ -463,30 +470,32 @@ function getNotificationStyle($type) {
                                         </div>
                                     </div>
 
-                                    <style>
-                                        .hidden-section {
-                                            visibility: hidden;
-                                            position: absolute;
-                                            left: -9999px;
-                                        }
-
-                                    </style>
 
                                     <div id="calamityDetails" class="border rounded p-3 mt-3 hidden-section bg-light">
+                                        
                                         <div class="form-group">
                                             <label for="calamityType">Type of Calamity</label>
-                                            <!-- <input type="text" class="form-control" id="calamityType" name="calamityType" placeholder="e.g., Typhoon"> -->
-                                             <select class="form-control" name="calamityType" id="calamityType">
+                                            <select class="form-control" name="calamityType" id="calamityType">
                                                 <option value="Typhoon">Typhoon</option>
                                                 <option value="Fire">Fire</option>
-                                             </select>
+                                            </select>
                                         </div>
 
                                         
+                                      <!-- Date + Conditional Time -->
                                         <div class="form-group">
-                                            <label for="calamityDate">When did it happen?</label>
-                                            <input type="date" class="form-control" id="calamityDate" name="calamityDate">
+                                            <label for="calamityDate">When did it happen? (Date)</label>
+                                            <input type="date" class="form-control mb-2" id="calamityDate" name="calamityDate">
+
+                                            <div class="form-group" id="fireTimeWrapper" style="display:none;">
+                                                <label for="calamityTimeFire">When did it happen? (Time)</label>
+                                                <input type="time" class="form-control" id="calamityTimeFire" name="calamityTimeFire">
+                                            </div>
                                         </div>
+
+
+                                        
+
                                         <div class="form-group">
                                             <label for="requestedBy">Requested By</label>
                                             <input type="text" class="form-control" id="requestedBy" name="requestedBy" placeholder="Name of person requesting">
@@ -502,19 +511,23 @@ function getNotificationStyle($type) {
                                         </div>
 
 
-                                        <!-- 
-                                        Certification for Calamity(Calamity Claim Purposes, Calamity Leave Purposes, and SELA).png
-                                        -->
-                                        <div class="form-group">
-                                            <label for="calamityPurpose">Purpose</label>
-                                             <select class="form-control" name="calamityPurpose" id="calamityType">
-                                                <option value="Calamity Claim Purposes">Calamity Claim Purposes </option>
-                                                <option value="Calamity Leave Purposes">Calamity Leave Purposes</option>
-                                                <option value="SELA">SELA</option>
-                                                <option value="Supporting Document For Submmission">Supporting Document For Submmission</option>
-                                                <option value="Fire Victim Purposes">Fire Victim Purposes</option>
-                                             </select>
+                                         <div class="form-group">
+                                            <label for="calamityLocationFire">Location</label>
+                                          <textarea class="form-control" name="calamityLocationFire" id="calamityLocationFire" cols="30" rows="10"></textarea>
                                         </div>
+
+
+                                        <div class="form-group" id="purposeWrapper">
+                                        <label for="calamityPurpose">Purpose</label>
+                                        <select class="form-control" name="calamityPurpose" id="calamityPurpose">
+                                            <option value="Calamity Claim Purposes">Calamity Claim Purposes</option>
+                                            <option value="Calamity Leave Purposes">Calamity Leave Purposes</option>
+                                            <option value="SELA">SELA</option>
+                                            <option value="Supporting Document For Submmission">Supporting Document For Submmission</option>
+                                            <option value="Fire Victim Purposes">Fire Victim Purposes</option>
+                                        </select>
+                                        </div>
+
 
                                     </div>
 
@@ -1144,6 +1157,31 @@ $stmt->close();
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $("#calamityType").on("change", function(){
+                if($(this).val() === "Fire"){
+                // Show time input
+                $("#fireTimeWrapper").show();
+
+                // Auto-select "Fire Victim Purposes"
+                $("#calamityPurpose").val("Fire Victim Purposes");
+
+                // Hide Purpose dropdown
+                $("#purposeWrapper").hide();
+                } else {
+                // Hide time input
+                $("#fireTimeWrapper").hide();
+
+                // Reset Purpose dropdown
+                $("#calamityPurpose").val("");
+
+                // Show Purpose dropdown again
+                $("#purposeWrapper").show();
+                }
+            });
+            });
+
+        
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');
             var searchInput = document.getElementById('searchInput');
