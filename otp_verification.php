@@ -22,9 +22,9 @@ if (isset($_POST['verify'])) {
         $user_data = $_SESSION['user_data'];
 
 
-        echo "<pre>";
-        print_r($user_data);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($user_data);
+        // echo "</pre>";
 
         $user_id = $user_data['user_id'];
         
@@ -140,8 +140,8 @@ if (isset($_POST['verify'])) {
                 }
     
                 logActivity($user_id, 'Resident', 'Registered in tbl_user and tbl_resident');
-                // unset($_SESSION['otp'], $_SESSION['user_data']);
-                // header('Location: login.php');
+                unset($_SESSION['otp'], $_SESSION['user_data']);
+                header('Location: login.php');
                 exit();
             } else {
                 $error[] = 'Registration to tbl_resident failed. Try again.';
