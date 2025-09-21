@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2025 at 04:42 PM
+-- Generation Time: Sep 21, 2025 at 06:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -396,7 +396,30 @@ INSERT INTO `tbl_audit` (`audit_id`, `res_id`, `brgyOfficer_id`, `requestType`, 
 (1165, NULL, NULL, '', '1', 'Registratio', 'Registration Initiated', '', '2025-09-21 22:33:20', '', '2025-09-21 22:33:20'),
 (1166, NULL, NULL, '', '1', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 22:34:32', '', '2025-09-21 22:34:32'),
 (1167, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 22:40:57', '', '2025-09-21 22:40:57'),
-(1168, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 22:41:44', '', '2025-09-21 22:41:44');
+(1168, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 22:41:44', '', '2025-09-21 22:41:44'),
+(1169, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 22:51:11', '', '2025-09-21 22:51:11'),
+(1170, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 22:51:43', '', '2025-09-21 22:51:43'),
+(1171, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 22:55:26', '', '2025-09-21 22:55:26'),
+(1172, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 22:57:33', '', '2025-09-21 22:57:33'),
+(1173, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:01:02', '', '2025-09-21 23:01:02'),
+(1174, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:01:25', '', '2025-09-21 23:01:25'),
+(1175, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:03:05', '', '2025-09-21 23:03:05'),
+(1176, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:03:21', '', '2025-09-21 23:03:21'),
+(1177, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:08:06', '', '2025-09-21 23:08:06'),
+(1178, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:09:57', '', '2025-09-21 23:09:57'),
+(1179, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:10:35', '', '2025-09-21 23:10:35'),
+(1180, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:11:20', '', '2025-09-21 23:11:20'),
+(1181, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:12:38', '', '2025-09-21 23:12:38'),
+(1182, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:12:52', '', '2025-09-21 23:12:52'),
+(1183, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:14:26', '', '2025-09-21 23:14:26'),
+(1184, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:14:46', '', '2025-09-21 23:14:46'),
+(1185, NULL, NULL, '', '2', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:19:31', '', '2025-09-21 23:19:31'),
+(1186, NULL, NULL, '', '2', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:19:44', '', '2025-09-21 23:19:44'),
+(1187, NULL, NULL, '', '3', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:22:13', '', '2025-09-21 23:22:13'),
+(1188, NULL, NULL, '', '3', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:23:28', '', '2025-09-21 23:23:28'),
+(1189, NULL, NULL, '', '3', 'Registratio', 'Registration Initiated', '', '2025-09-21 23:23:56', '', '2025-09-21 23:23:56'),
+(1190, NULL, NULL, '', '3', 'Resident', 'Registered in tbl_user and tbl_resident', '', '2025-09-21 23:24:11', '', '2025-09-21 23:24:11'),
+(1191, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-09-21 23:25:20', '', '2025-09-21 23:25:20');
 
 -- --------------------------------------------------------
 
@@ -753,7 +776,8 @@ CREATE TABLE `tbl_household_head` (
 --
 
 INSERT INTO `tbl_household_head` (`household_head_id`, `user_id`, `date_created`) VALUES
-(9, '1', '2025-09-21 22:34:32');
+(9, '1', '2025-09-21 22:34:32'),
+(11, '3', '2025-09-21 23:24:11');
 
 -- --------------------------------------------------------
 
@@ -773,7 +797,7 @@ CREATE TABLE `tbl_household_relation` (
 --
 
 INSERT INTO `tbl_household_relation` (`thr_id`, `thr_head_id`, `thr_user_id`, `thr_relationship`) VALUES
-(1, 9, 2, '');
+(13, 9, 2, 'Relative');
 
 -- --------------------------------------------------------
 
@@ -1167,8 +1191,9 @@ CREATE TABLE `tbl_residents` (
 --
 
 INSERT INTO `tbl_residents` (`res_id`, `user_id`, `household_id`, `first_name`, `middle_name`, `last_name`, `birthday`, `birthplace`, `civilStatus`, `mobile`, `gender`, `address`, `precinctNumber`, `residentStatus`, `voterStatus`, `bloodType`, `height`, `weight`, `typeOfID`, `IDNumber`, `SSSGSIS_Number`, `TIN_number`, `barangay_number`, `is_senior`, `is_pwd`, `is_4ps_member`, `suffix`, `is_household_head`, `household_head_name`, `relationship_to_head`, `senior_document`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency_document`, `residency_tenure`, `occupation`, `email`, `image`, `created_at`, `updated_at`) VALUES
-(51, '1', 0, 'john', '', 'doe', '2025-09-11', '', 'Single', '09454454744', 'Female', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'Yes', '', '', '', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', NULL, 'N/A', 'rodriguezryan325@gmail.com', NULL, '2025-09-21 14:34:32', '2025-09-21 14:34:32'),
-(52, '2', 0, 'Joshua', 'Anderson', 'Padilla', '2025-09-21', '', 'Single', '09454454741', 'Male', 'marilao bulacan', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'No', '9', '', '', '', 'No', '', 'uploads/68d00e757be70__101539981_lebronjames.jpg.webp', NULL, 'N/A', 'padillajoshuaanderson.pdm@gmail.com', NULL, '2025-09-21 14:41:44', '2025-09-21 14:41:44');
+(51, '1', 0, 'john', '', 'doe', '2020-09-21', '', 'Single', '09454454744', 'Female', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'Yes', '', '', '', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', NULL, 'N/A', 'rodriguezryan325@gmail.com', NULL, '2025-09-21 14:34:32', '2025-09-21 16:27:24'),
+(60, '2', 0, 'Joshua', 'Anderson', 'doe', '2000-09-21', '', 'Single', '09454454744', 'Male', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'No', '9', 'Relative', '', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', NULL, 'N/A', 'padillajoshuaanderson.pdm@gmail.com', NULL, '2025-09-21 15:19:44', '2025-09-21 16:27:55'),
+(61, '3', 0, 'cevin', '', 'garnet', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-09-21 16:27:26');
 
 -- --------------------------------------------------------
 
@@ -1218,13 +1243,14 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `password`, `image`, `email`, `mobile`, `address`, `account_status`, `role`, `is_logged_in`, `is_logged_in_time`, `remember_token`, `reset_token`, `reset_token_expiry`, `terms`, `suffix`, `gender`, `civilStatus`, `household_head_id`, `is_household_head`, `household_head_name`, `relationship_to_head`, `is_senior`, `senior_document`, `is_pwd`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency`, `occupation`, `birthday`) VALUES
-(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 0, NULL, NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-09-21 23:25:20', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 1, '2025-09-21 23:25:20', NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-09-21 23:25:20', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-09-21 23:25:20', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-09-21 23:25:20', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (143, '1', 'john', '', 'doe', '$2y$10$VPQp5ETg9Yd06dUXPIpER.GjC0IkOEhro2iwt6t51l7RN7hQ.q4Ka', NULL, 'rodriguezryan325@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Female', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', 'N/A', '2025-09-11'),
-(144, '2', 'Joshua', 'Anderson', 'Padilla', '$2y$10$IR04eHMVetLrnXYHHklGCeMAd2.SnJ/EaUD5CbNk7J47sFTee8b5i', NULL, 'padillajoshuaanderson.pdm@gmail.com', '09454454741', 'marilao bulacan', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'No', '9', '', 'No', '', 'No', '', 'No', '', 'uploads/68d00e757be70__101539981_lebronjames.jpg.webp', 'N/A', '2025-09-21');
+(153, '2', 'Joshua', 'Anderson', 'doe', '$2y$10$ohpLW.fZhfVG9wkSZhTMp.uv5gEIzTyJjk.FydGt3/2ZcMDMBRB..', NULL, 'padillajoshuaanderson.pdm@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'No', '9', 'Relative', 'No', '', 'No', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', 'N/A', '2025-09-21'),
+(155, '3', 'cevin', '', 'garnet', '$2y$10$hSu03t9KPk3PRZjDrA6JdulAlsl7CcM7FcEWoRx.NHqzXuo5u1oj.', NULL, 'masterparj@gmail.com', '09454454744', 'sta.rosa 2 marilao', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Married', 0, 'Yes', '', '', '', '', 'No', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', 'N/A', '2025-09-21');
 
 -- --------------------------------------------------------
 
@@ -1546,7 +1572,7 @@ ALTER TABLE `web_services`
 -- AUTO_INCREMENT for table `tbl_audit`
 --
 ALTER TABLE `tbl_audit`
-  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1169;
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1192;
 
 --
 -- AUTO_INCREMENT for table `tbl_banned_users`
@@ -1618,13 +1644,13 @@ ALTER TABLE `tbl_generated_documents`
 -- AUTO_INCREMENT for table `tbl_household_head`
 --
 ALTER TABLE `tbl_household_head`
-  MODIFY `household_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `household_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_household_relation`
 --
 ALTER TABLE `tbl_household_relation`
-  MODIFY `thr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `thr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_notifications`
@@ -1642,13 +1668,13 @@ ALTER TABLE `tbl_residentcop`
 -- AUTO_INCREMENT for table `tbl_residents`
 --
 ALTER TABLE `tbl_residents`
-  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_cop`
@@ -1690,12 +1716,6 @@ ALTER TABLE `tbl_event_comments`
 ALTER TABLE `tbl_generated_documents`
   ADD CONSTRAINT `tbl_generated_documents_ibfk_1` FOREIGN KEY (`resident_id`) REFERENCES `tbl_residentcop` (`resident_id`),
   ADD CONSTRAINT `tbl_generated_documents_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `tbl_user_cop` (`userID`);
-
---
--- Constraints for table `tbl_household_relation`
---
-ALTER TABLE `tbl_household_relation`
-  ADD CONSTRAINT `tbl_household_relation_ibfk_1` FOREIGN KEY (`thr_head_id`) REFERENCES `tbl_household_head` (`household_head_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
