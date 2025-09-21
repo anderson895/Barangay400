@@ -36,7 +36,6 @@ if ($result && $result->num_rows > 0) {
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
     $address = $row["address"];
-    $phone_number = $row["phone_number"];
     $email = $row["email"];
     $is_logged_in = $row['is_logged_in'];
     $account_status = $row["account_status"];
@@ -241,33 +240,31 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                     </div>
                 </div>
                 <?php
-                    include '../connection/config.php';
+                include '../connection/config.php';
 
-                    // Check for success messages
-                    if (isset($_GET['success'])) {
-                        $successMessages = [
-                            1 => "Clearance Request Submitted Successfully",
-                            2 => "Clearance Request Updated Successfully",
-                            3 => "Feedback Action Updated Successfully"
-                        ];
-
-                        if (isset($successMessages[$_GET['success']])) {
-                            echo '<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        Swal.fire({
-                            icon: "success",
-                            title: "' . $successMessages[$_GET['success']] . '",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    });
-                    </script>';
-                        }
-                    }
-
-                    // Check for error messages
-                    if (isset($_GET['error'])) {
+                // ✅ Success/Error Alerts
+                if (isset($_GET['success'])) {
+                    $successMessages = [
+                        1 => "Clearance Request Submitted Successfully",
+                        2 => "Clearance Request Updated Successfully",
+                        3 => "Feedback Action Updated Successfully"
+                    ];
+                    if (isset($successMessages[$_GET['success']])) {
                         echo '<script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                                icon: "success",
+                                title: "' . $successMessages[$_GET['success']] . '",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                        </script>';
+                    }
+                }
+
+                if (isset($_GET['error'])) {
+                    echo '<script>
                     document.addEventListener("DOMContentLoaded", function() {
                         Swal.fire({
                             icon: "error",
@@ -277,87 +274,99 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                         });
                     });
                     </script>';
+                }
+
+                // ✅ Variables
+                $user_id = $_SESSION['user_id'] ?? '';
+                $search   = $_GET['search'] ?? '';
+                $page     = (int)($_GET['page'] ?? 1);
+                $limit    = 10;
+                $offset   = ($page - 1) * $limit;
+
+                // ✅ Date filters (optional)
+                $date_from = $_GET['date_from'] ?? '';
+                $date_to   = $_GET['date_to'] ?? '';
+
+                // ✅ WHERE clause
+                $where_conditions = [];
+                $params = [];
+                $types  = "";
+
+                // 🔎 Searchable fields (from both tables)
+                $searchFields = [
+                    "tr.first_name",
+                    "tr.middle_name",
+                    "tr.last_name",
+                    "tr.suffix",
+                    "tr.address",
+                    "tr.mobile",
+                    "tr.email",
+                    "tr.occupation",
+                    "thh.user_id"
+                ];
+
+                if (!empty($search)) {
+                    $searchConditions = [];
+                    foreach ($searchFields as $field) {
+                        $searchConditions[] = "$field LIKE ?";
+                        $params[] = "%" . $search . "%";
+                        $types   .= "s";
                     }
+                    $where_conditions[] = "(" . implode(" OR ", $searchConditions) . ")";
+                }
 
-                    // Initialize variables
-                    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-                    $search = $_GET['search'] ?? '';
-                    $page = $_GET['page'] ?? 1;
-                    $limit = 10;
-                    $offset = ($page - 1) * $limit;
+                // ✅ Add date filter if provided
+                if (!empty($date_from) && !empty($date_to)) {
+                    $where_conditions[] = "DATE(thh.date_created) BETWEEN ? AND ?";
+                    $params[] = $date_from;
+                    $params[] = $date_to;
+                    $types   .= "ss";
+                }
 
-                    // Date filter variables
-                    $date_from = $_GET['date_from'] ?? '';
-                    $date_to = $_GET['date_to'] ?? '';
+                $where_clause = !empty($where_conditions) ? implode(" AND ", $where_conditions) : "1=1";
 
-                    // Build WHERE clause based on search for feedback table
-                    $where_conditions = [];
-                    $params = [];
-                    $types = "";
+                // ✅ Count total records
+                $count_sql = "SELECT COUNT(*) as total 
+                            FROM tbl_household_head thh
+                            LEFT JOIN tbl_residents tr ON thh.user_id = tr.user_id
+                            WHERE $where_clause";
 
-                    // Get all column names from the tbl_feedback table for search
-                    $columnsQuery = "SHOW COLUMNS FROM tbl_feedback";
-                    $columnsResult = $conn->query($columnsQuery);
-                    $searchFields = [];
+                if (!empty($params)) {
+                    $count_stmt = $conn->prepare($count_sql);
+                    $count_stmt->bind_param($types, ...$params);
+                    $count_stmt->execute();
+                    $count_result = $count_stmt->get_result();
+                    $total_rows   = $count_result->fetch_assoc()['total'];
+                    $count_stmt->close();
+                } else {
+                    $count_result = $conn->query($count_sql);
+                    $total_rows   = $count_result->fetch_assoc()['total'];
+                }
 
-                    if ($columnsResult) {
-                        while ($column = $columnsResult->fetch_assoc()) {
-                            $searchFields[] = "f." . $column['Field'];
-                        }
-                    }
+                $total_pages = ceil($total_rows / $limit);
 
-                    if (!empty($search) && !empty($searchFields)) {
-                        $searchConditions = [];
-                        foreach ($searchFields as $field) {
-                            $searchConditions[] = "$field LIKE ?";
-                            $params[] = "%" . $search . "%";
-                            $types .= "s";
-                        }
-                        $where_conditions[] = "(" . implode(" OR ", $searchConditions) . ")";
-                    }
+                // ✅ Fetch data
+                $sql = "SELECT thh.*, tr.*
+                        FROM tbl_household_head thh
+                        LEFT JOIN tbl_residents tr ON thh.user_id = tr.user_id
+                        WHERE $where_clause
+                        ORDER BY thh.date_created DESC 
+                        LIMIT ? OFFSET ?";
 
-                    // Combine WHERE conditions
-                    $where_clause = !empty($where_conditions) ? implode(" AND ", $where_conditions) : "1=1"; // 1=1 ensures valid SQL if no conditions
+                // Add pagination separately
+                $params_with_pagination = $params;
+                $params_with_pagination[] = $limit;
+                $params_with_pagination[] = $offset;
+                $types_with_pagination = $types . "ii";
 
-                    // Count total records for pagination
-                    $count_sql = "SELECT COUNT(*) as total FROM tbl_feedback f WHERE $where_clause";
+                $stmt = $conn->prepare($sql);
+                if (!empty($params_with_pagination)) {
+                    $stmt->bind_param($types_with_pagination, ...$params_with_pagination);
+                }
+                $stmt->execute();
+                $result = $stmt->get_result();
+                ?>
 
-                    if (!empty($params)) {
-                        $count_stmt = $conn->prepare($count_sql);
-                        $count_stmt->bind_param($types, ...$params);
-                        $count_stmt->execute();
-                        $count_result = $count_stmt->get_result();
-                        $total_rows = $count_result->fetch_assoc()['total'];
-                        $count_stmt->close();
-                    } else {
-                        $count_result = $conn->query($count_sql);
-                        $total_rows = $count_result->fetch_assoc()['total'];
-                    }
-
-                    $total_pages = ceil($total_rows / $limit);
-
-                    // Fetch feedback data query
-                    $sql = "SELECT f.feedback_id, f.res_id, f.user_id, f.brgyOfficer_id, 
-                            f.feedback, f.action, f.action_by, f.dateCreated, f.lastEdited
-                            FROM tbl_feedback f
-                            WHERE $where_clause
-                            ORDER BY f.dateCreated DESC 
-                            LIMIT ? OFFSET ?";
-
-                    // Add limit and offset params
-                    $params[] = $limit;
-                    $params[] = $offset;
-                    $types .= "ii";
-
-                    // Prepare and execute statement
-                    $stmt = $conn->prepare($sql);
-                    if (!empty($params)) {
-                        $stmt->bind_param($types, ...$params);
-                    }
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $stmt->close();
-                    ?>
 
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
@@ -390,13 +399,9 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                         <table class="table table-striped table-borderless" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Feedback ID</th>
-                                                    <th>User ID</th>
-                                                    <th>Feedback</th>
-                                                    <th>Action Taken</th>
-                                                    <th>Date Created</th>
-                                                    <th>Last Edited</th>
-                                                    <th>Status</th>
+                                                    <th>Household ID</th>
+                                                    <th>Head Name</th>
+                                                    <th>Address</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -404,41 +409,43 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                 <?php if ($result->num_rows > 0): ?>
                                                     <?php while ($row = $result->fetch_assoc()): ?>
                                                         <tr>
-                                                            <td><?php echo htmlspecialchars($row['feedback_id']); ?></td>
-                                                            <td><?php echo htmlspecialchars($row['user_id']); ?></td>
-                                                            <td><?php echo htmlspecialchars(substr($row['feedback'], 0, 50)) . (strlen($row['feedback']) > 50 ? '...' : ''); ?></td>
-                                                            <td><?php echo !empty($row['action']) ? htmlspecialchars(substr($row['action'], 0, 50)) . (strlen($row['action']) > 50 ? '...' : '') : '<span class="text-muted">No action taken</span>'; ?></td>
-                                                            <td><?php echo date('F d, Y h:i A', strtotime($row['dateCreated'])); ?></td>
-                                                            <td><?php echo !empty($row['lastEdited']) ? date('F d, Y h:i A', strtotime($row['lastEdited'])) : 'N/A'; ?></td>
+                                                            <td><?php echo htmlspecialchars($row['household_head_id']); ?></td>
                                                             <td>
-                                                                <span class="badge <?php echo empty($row['action']) ? 'badge-warning' : 'badge-success'; ?> text-white font-weight-bold">
-                                                                    <?php echo empty($row['action']) ? 'Pending' : 'Addressed'; ?>
-                                                                </span>
+                                                                <?php 
+                                                                    echo htmlspecialchars(trim(
+                                                                        ucfirst($row['first_name']) . ' ' . 
+                                                                        ($row['middle_name'] ? $row['middle_name'] . ' ' : '') . 
+                                                                        $row['last_name']
+                                                                    )); 
+                                                                ?>
                                                             </td>
+
+                                                            <td><?php echo htmlspecialchars(substr($row['address'], 0, 50)) . (strlen($row['address']) > 50 ? '...' : ''); ?></td>
+                                                            
                                                             <td>
                                                                 <!-- View button -->
                                                                 <button class="btn btn-info btn-sm" data-toggle="modal" title="View Feedback"
-                                                                    data-target="#viewModal<?php echo $row['feedback_id']; ?>">
+                                                                    data-target="#viewModal<?php echo $row['household_head_id']; ?>">
                                                                     <i class="fa-solid fa-eye"></i>
                                                                 </button>
 
                                                                 <!-- Edit/Update button -->
                                                                 <button class="btn btn-warning btn-sm" data-toggle="modal" title="Respond"
-                                                                    data-target="#editModal<?php echo $row['feedback_id']; ?>">
+                                                                    data-target="#editModal<?php echo $row['household_head_id']; ?>">
                                                                     <i class="fa-solid fa-edit"></i>
                                                                 </button>
                                                             </td>
                                                         </tr>
 
                                                         <!-- View Modal -->
-                                                        <div class="modal fade" id="viewModal<?php echo $row['feedback_id']; ?>" tabindex="-1"
+                                                        <div class="modal fade" id="viewModal<?php echo $row['household_head_id']; ?>" tabindex="-1"
                                                             role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content shadow-lg border-0">
                                                                     <!-- Enhanced Header with gradient background -->
                                                                     <div class="modal-header bg-gradient-primary text-white py-3">
                                                                         <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-                                                                            <i class="fas fa-comment-alt mr-2"></i>Feedback Details
+                                                                            <i class="fas fa-house mr-2"></i>Household Details
                                                                         </h5>
                                                                         <button type="button" class="close text-white"
                                                                             data-dismiss="modal" aria-label="Close">
@@ -447,94 +454,6 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                                     </div>
 
                                                                     <div class="modal-body py-4">
-                                                                        <!-- Status badge at top -->
-                                                                        <div class="text-center mb-4">
-                                                                            <span class="badge badge-pill px-4 py-2 font-weight-bold text-white
-                                                                                <?php echo empty($row['action']) ? 'badge-warning' : 'badge-success'; ?>">
-                                                                                <i class="fas <?php echo empty($row['action']) ? 'fa-clock' : 'fa-check-circle'; ?> mr-1"></i>
-                                                                                <?php echo empty($row['action']) ? 'Pending' : 'Addressed'; ?>
-                                                                            </span>
-                                                                        </div>
-
-                                                                        <!-- Feedback Information Card -->
-                                                                        <div class="card border-0 shadow-sm mb-4">
-                                                                            <div class="card-header bg-light py-3">
-                                                                                <h6 class="font-weight-bold text-primary mb-0">
-                                                                                    <i class="fas fa-info-circle mr-2"></i>Feedback Information
-                                                                                </h6>
-                                                                            </div>
-                                                                            <div class="card-body">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="info-group mb-3">
-                                                                                            <label class="text-muted small text-uppercase">Feedback ID</label>
-                                                                                            <p class="font-weight-bold mb-2">
-                                                                                                <?php echo htmlspecialchars($row['feedback_id']); ?>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <div class="info-group mb-3">
-                                                                                            <label class="text-muted small text-uppercase">User ID</label>
-                                                                                            <p class="font-weight-bold mb-2">
-                                                                                                <?php echo htmlspecialchars($row['user_id']); ?>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="info-group mb-3">
-                                                                                            <label class="text-muted small text-uppercase">Date Created</label>
-                                                                                            <p class="font-weight-bold mb-2">
-                                                                                                <?php echo date('F d, Y h:i A', strtotime($row['dateCreated'])); ?>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                        <div class="info-group mb-3">
-                                                                                            <label class="text-muted small text-uppercase">Last Updated</label>
-                                                                                            <p class="font-weight-bold mb-2">
-                                                                                                <?php echo !empty($row['lastEdited']) ? date('F d, Y h:i A', strtotime($row['lastEdited'])) : 'Not updated yet'; ?>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Feedback Content Card -->
-                                                                        <div class="card border-0 shadow-sm mb-4">
-                                                                            <div class="card-header bg-light py-3">
-                                                                                <h6 class="font-weight-bold text-primary mb-0">
-                                                                                    <i class="fas fa-comment mr-2"></i>Feedback Content
-                                                                                </h6>
-                                                                            </div>
-                                                                            <div class="card-body">
-                                                                                <div class="p-3 bg-light rounded">
-                                                                                    <p class="mb-0"><?php echo nl2br(htmlspecialchars($row['feedback'])); ?></p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Action Taken Card (if available) -->
-                                                                        <?php if (!empty($row['action'])): ?>
-                                                                            <div class="card border-0 shadow-sm mb-4">
-                                                                                <div class="card-header bg-light py-3">
-                                                                                    <h6 class="font-weight-bold text-success mb-0">
-                                                                                        <i class="fas fa-clipboard-check mr-2"></i>Action Taken
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <div class="card-body">
-                                                                                    <div class="p-3 bg-light rounded">
-                                                                                        <p class="mb-2"><?php echo nl2br(htmlspecialchars($row['action'])); ?></p>
-                                                                                        <?php if (!empty($row['action_by'])): ?>
-                                                                                            <div class="text-muted small mt-3">
-                                                                                                <i class="fas fa-user mr-1"></i> Action by: <?php echo htmlspecialchars($row['action_by']); ?>
-                                                                                            </div>
-                                                                                        <?php endif; ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        <?php else: ?>
-                                                                            <div class="alert alert-warning">
-                                                                                <i class="fas fa-exclamation-triangle mr-2"></i> No action has been taken on this feedback yet.
-                                                                            </div>
-                                                                        <?php endif; ?>
                                                                     </div>
 
                                                                     <div class="modal-footer bg-light">
@@ -547,7 +466,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                         </div>
 
                                                         <!-- Edit Modal -->
-                                                        <div class="modal fade" id="editModal<?php echo $row['feedback_id']; ?>" tabindex="-1"
+                                                        <div class="modal fade" id="editModal<?php echo $row['household_head_id']; ?>" tabindex="-1"
                                                             role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content shadow-lg border-0">
@@ -563,11 +482,11 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                                     <!-- Make sure the form action points to the correct location -->
                                                                     <form action="edit_feedback.php" method="POST">
                                                                         <div class="modal-body py-4">
-                                                                            <input type="hidden" name="feedback_id" value="<?php echo $row['feedback_id']; ?>">
+                                                                            <input type="hidden" name="household_head_id" value="<?php echo $row['household_head_id']; ?>">
 
                                                                             <!-- Original Feedback (read-only) -->
                                                                             <div class="form-group">
-                                                                                <label for="original_feedback<?php echo $row['feedback_id']; ?>">
+                                                                                <label for="original_feedback<?php echo $row['household_head_id']; ?>">
                                                                                     <strong>Original Feedback</strong>
                                                                                 </label>
                                                                                 <div class="p-3 bg-light rounded">
@@ -577,11 +496,11 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
                                                                             <!-- Action Input Field -->
                                                                             <div class="form-group">
-                                                                                <label for="action<?php echo $row['feedback_id']; ?>">
+                                                                                <label for="action<?php echo $row['household_head_id']; ?>">
                                                                                     <strong>Action Taken</strong>
                                                                                 </label>
                                                                                 <textarea class="form-control" name="action" 
-                                                                                    id="action<?php echo $row['feedback_id']; ?>" 
+                                                                                    id="action<?php echo $row['household_head_id']; ?>" 
                                                                                     rows="5" required><?php echo isset($row['action']) ? htmlspecialchars($row['action']) : ''; ?></textarea>
                                                                                 <small class="form-text text-muted">
                                                                                     Describe the action taken to address this feedback.
@@ -590,11 +509,11 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
                                                                             <!-- Action By Input Field -->
                                                                             <div class="form-group">
-                                                                                <label for="action_by<?php echo $row['feedback_id']; ?>">
+                                                                                <label for="action_by<?php echo $row['household_head_id']; ?>">
                                                                                     <strong>Action By</strong>
                                                                                 </label>
                                                                                 <input type="text" class="form-control" name="action_by" 
-                                                                                    id="action_by<?php echo $row['feedback_id']; ?>" 
+                                                                                    id="action_by<?php echo $row['household_head_id']; ?>" 
                                                                                     value="<?php echo isset($row['action_by']) ? htmlspecialchars($row['action_by']) : (isset($_SESSION['full_name']) ? $_SESSION['full_name'] : ''); ?>" required>
                                                                                 <small class="form-text text-muted">
                                                                                     Name or position of the person taking action.
@@ -620,7 +539,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                     <?php endwhile; ?>
                                                 <?php else: ?>
                                                     <tr>
-                                                        <td colspan="8" class="text-center">No feedback found</td>
+                                                        <td colspan="8" class="text-center">No Data found</td>
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>
