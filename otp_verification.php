@@ -66,6 +66,21 @@ if (isset($_POST['verify'])) {
             $account_status
         );
         
+        if ($user_data['is_household_head'] === 'Yes') {
+            $stmt_head = $conn->prepare("INSERT INTO tbl_household_head (user_id) VALUES (?)");
+            $stmt_head->bind_param("s", $user_id);
+            $stmt_head->execute();
+
+        } else if ($user_data['is_household_head'] === 'No') {
+            $stmt_relation = $conn->prepare("
+                INSERT INTO tbl_household_relation (thr_head_id, thr_user_id,thr_relationship) 
+                VALUES (?, ?)
+            ");
+            $stmt_relation->bind_param("sss", $user_data['household_head_name'], $user_id,$user_data['relationship_to_head']);
+            $stmt_relation->execute();
+        }
+
+
         
         if ($stmt->execute()) {
             $id = $conn->insert_id;
