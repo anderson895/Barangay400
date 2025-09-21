@@ -424,118 +424,36 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                             
                                                             <td>
                                                                 <!-- View button -->
-                                                                <button class="btn btn-info btn-sm" data-toggle="modal" title="View Feedback"
-                                                                    data-target="#viewModal<?php echo $row['household_head_id']; ?>">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </button>
+                                                                <button 
+                                                                        class="btn btn-info btn-sm viewHHModal" 
+                                                                        data-toggle="modal" 
+                                                                        title="View Feedback"
+                                                                        data-target="#viewHHModal"
+                                                                        data-household_head_id="<?= $row['household_head_id'] ?>"
+                                                                        data-fullname="<?= ucfirst($row['first_name']) . ' ' . 
+                                                                            ($row['middle_name'] ? $row['middle_name'] . ' ' : '') . 
+                                                                            $row['last_name'] ?>"
+                                                                        data-address="<?= $row['address'] ?>"
+                                                                    >
+                                                                        <i class="fa-solid fa-eye"></i>
+                                                                    </button>
+
 
                                                                 <!-- Edit/Update button -->
-                                                                <button class="btn btn-warning btn-sm" data-toggle="modal" title="Respond"
+                                                                <!-- <button class="btn btn-warning btn-sm" data-toggle="modal" title="Respond"
                                                                     data-target="#editModal<?php echo $row['household_head_id']; ?>">
                                                                     <i class="fa-solid fa-edit"></i>
-                                                                </button>
+                                                                </button> -->
                                                             </td>
                                                         </tr>
 
                                                         <!-- View Modal -->
-                                                        <div class="modal fade" id="viewModal<?php echo $row['household_head_id']; ?>" tabindex="-1"
-                                                            role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content shadow-lg border-0">
-                                                                    <!-- Enhanced Header with gradient background -->
-                                                                    <div class="modal-header bg-gradient-primary text-white py-3">
-                                                                        <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-                                                                            <i class="fas fa-house mr-2"></i>Household Details
-                                                                        </h5>
-                                                                        <button type="button" class="close text-white"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
+                                                       <!-- View Modal -->
 
-                                                                    <div class="modal-body py-4">
-                                                                    </div>
 
-                                                                    <div class="modal-footer bg-light">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                                            <i class="fas fa-times mr-1"></i> Close
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <!-- Edit Modal -->
-                                                        <div class="modal fade" id="editModal<?php echo $row['household_head_id']; ?>" tabindex="-1"
-                                                            role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content shadow-lg border-0">
-                                                                    <div class="modal-header bg-gradient-warning text-white py-3">
-                                                                        <h5 class="modal-title font-weight-bold" id="editModalLabel">
-                                                                            <i class="fas fa-edit mr-2"></i>Update Feedback Response
-                                                                        </h5>
-                                                                        <button type="button" class="close text-white"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <!-- Make sure the form action points to the correct location -->
-                                                                    <form action="edit_feedback.php" method="POST">
-                                                                        <div class="modal-body py-4">
-                                                                            <input type="hidden" name="household_head_id" value="<?php echo $row['household_head_id']; ?>">
 
-                                                                            <!-- Original Feedback (read-only) -->
-                                                                            <div class="form-group">
-                                                                                <label for="original_feedback<?php echo $row['household_head_id']; ?>">
-                                                                                    <strong>Original Feedback</strong>
-                                                                                </label>
-                                                                                <div class="p-3 bg-light rounded">
-                                                                                    <p class="mb-0"><?php echo nl2br(htmlspecialchars($row['feedback'])); ?></p>
-                                                                                </div>
-                                                                            </div>
 
-                                                                            <!-- Action Input Field -->
-                                                                            <div class="form-group">
-                                                                                <label for="action<?php echo $row['household_head_id']; ?>">
-                                                                                    <strong>Action Taken</strong>
-                                                                                </label>
-                                                                                <textarea class="form-control" name="action" 
-                                                                                    id="action<?php echo $row['household_head_id']; ?>" 
-                                                                                    rows="5" required><?php echo isset($row['action']) ? htmlspecialchars($row['action']) : ''; ?></textarea>
-                                                                                <small class="form-text text-muted">
-                                                                                    Describe the action taken to address this feedback.
-                                                                                </small>
-                                                                            </div>
-
-                                                                            <!-- Action By Input Field -->
-                                                                            <div class="form-group">
-                                                                                <label for="action_by<?php echo $row['household_head_id']; ?>">
-                                                                                    <strong>Action By</strong>
-                                                                                </label>
-                                                                                <input type="text" class="form-control" name="action_by" 
-                                                                                    id="action_by<?php echo $row['household_head_id']; ?>" 
-                                                                                    value="<?php echo isset($row['action_by']) ? htmlspecialchars($row['action_by']) : (isset($_SESSION['full_name']) ? $_SESSION['full_name'] : ''); ?>" required>
-                                                                                <small class="form-text text-muted">
-                                                                                    Name or position of the person taking action.
-                                                                                </small>
-                                                                            </div>
-
-                                                                            <div class="alert alert-info">
-                                                                                <small><i class="fas fa-info-circle mr-1"></i> Your response will be recorded and may be visible to the user who submitted this feedback.</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer bg-light">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                                                <i class="fas fa-times mr-1"></i> Cancel
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-success">
-                                                                                <i class="fas fa-save mr-1"></i> Update Response
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     <?php endwhile; ?>
                                                 <?php else: ?>
                                                     <tr>
@@ -615,6 +533,19 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+
+
+
+       
+
+
+
+
+
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');
             var searchInput = document.getElementById('searchInput');
@@ -646,7 +577,192 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 });
             }
         });
+
+
+
+
+
+
+
+
+
+
+         $('.viewHHModal').click(function (e) { 
+            e.preventDefault();
+
+            let hhID     = $(this).data('household_head_id');
+            let fullname = $(this).data('fullname');
+            let address  = $(this).data('address');
+
+            // Fill basic info
+            $("#household_head_id").text(hhID);
+            $("#fullname").text(fullname);
+            $("#address").text(address);
+
+            console.log(hhID);
+
+
+            $.ajax({
+                url: 'get_household_data.php',
+                type: 'POST',
+                data: { household_head_id: hhID },
+                dataType: 'json',
+                success: function(response) {
+                    // ✅ Stats
+                     // ✅ update counters
+                    $('#total_members').text(response.total_members);
+                    $('#total_voters').text(response.total_voters);
+                    $('#total_adults').text(response.total_adults);
+                    $('#total_minors').text(response.total_minors);
+
+                    // ✅ Members
+                    let tbody = $("#household_members_table tbody");
+                    tbody.empty();
+
+                    if (response.no_members) {
+                        tbody.append(`
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No members found</td>
+                            </tr>
+                        `);
+                    } else {
+                        $.each(response.members, function(i, m) {
+                            tbody.append(`
+                                <tr>
+                                    <td>${i + 1}</td>
+                                    <td>${m.fullname}</td>
+                                    <td>${m.age}</td>
+                                    <td>${m.relationship}</td>
+                                </tr>
+                            `);
+                        });
+                    }
+
+                    $('#viewHHModal').modal('show');
+                }
+
+            });
+        });
+
+
+
+
+
     </script>
+
+
+
+
+
+
+<div class="modal fade" id="viewHHModal" tabindex="-1"
+    role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content shadow-lg border-0">
+            <!-- Header -->
+            <div class="modal-header bg-gradient-primary text-white py-3">
+                <h5 class="modal-title font-weight-bold" id="viewModalLabel">
+                    <i class="fas fa-house mr-2"></i> Household Details
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body py-4">
+                <div class="container">
+                    <!-- Household Info -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="card shadow-sm border-0 mb-3">
+                                <div class="card-body">
+                                    <h6 class="text-muted"><i class="fas fa-id-card mr-2"></i> Household ID</h6>
+                                    <h5 class="font-weight-bold text-dark">
+                                        <span id="household_head_id"></span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card shadow-sm border-0 mb-3">
+                                <div class="card-body">
+                                    <h6 class="text-muted"><i class="fas fa-user mr-2"></i> Name of Head</h6>
+                                    <h5 class="font-weight-bold text-dark">
+                                        <span id="fullname"></span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="card shadow-sm border-0 mb-3">
+                                <div class="card-body">
+                                    <h6 class="text-muted"><i class="fas fa-map-marker-alt mr-2"></i> Address</h6>
+                                    <h5 class="font-weight-bold text-dark">
+                                        <span id="address"></span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   <!-- Stats Section inside Modal -->
+                        <div class="row text-center mb-4">
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Total Members</h6>
+                                <h4 class="font-weight-bold text-primary" id="total_members"></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Total Voters</h6>
+                                <h4 class="font-weight-bold text-success" id="total_voters"></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Total Adults</h6>
+                                <h4 class="font-weight-bold text-info" id="total_adults"></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-muted">Total Minors</h6>
+                                <h4 class="font-weight-bold text-danger" id="total_minors"></h4>
+                            </div>
+                        </div>
+
+                        <!-- Household Members Table -->
+                        <table class="table table-striped table-hover mb-0" id="household_members_table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fullname</th>
+                                    <th>Age</th>
+                                    <th>Relationship</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Members Section -->
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times mr-1"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Add SweetAlert script -->
