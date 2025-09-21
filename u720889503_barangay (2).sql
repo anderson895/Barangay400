@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2025 at 10:04 AM
+-- Generation Time: Sep 21, 2025 at 02:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -374,7 +374,14 @@ INSERT INTO `tbl_audit` (`audit_id`, `res_id`, `brgyOfficer_id`, `requestType`, 
 (1144, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-09-19 15:13:19', '', '2025-09-19 15:13:19'),
 (1145, NULL, NULL, '', '8', 'Resident', 'Logged in', '', '2025-09-19 15:13:36', '', '2025-09-19 15:13:36'),
 (1146, NULL, NULL, '', '0', 'admin', 'Logged out', '', '2025-09-19 15:26:56', '', '2025-09-19 15:26:56'),
-(1147, NULL, NULL, '', '8', 'Resident', 'Logged in', '', '2025-09-19 15:27:00', '', '2025-09-19 15:27:00');
+(1147, NULL, NULL, '', '8', 'Resident', 'Logged in', '', '2025-09-19 15:27:00', '', '2025-09-19 15:27:00'),
+(1148, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-09-21 20:08:25', '', '2025-09-21 20:08:25'),
+(1149, NULL, NULL, '', '0', 'admin', 'Logged out', '', '2025-09-21 20:08:50', '', '2025-09-21 20:08:50'),
+(1150, NULL, NULL, '', '8', 'Resident', 'Logged in', '', '2025-09-21 20:08:54', '', '2025-09-21 20:08:54'),
+(1151, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-09-21 20:19:33', '', '2025-09-21 20:19:33'),
+(1152, 49, NULL, 'Calamity', '8', 'admin', 'Certificate Status Updated to: Approved', 'admin', '2025-09-21 20:19:48', 'Certificate Status U', '2025-09-21 20:19:48'),
+(1153, 49, NULL, 'Calamity', '8', 'admin', 'Certificate Status Updated to: Approved', 'admin', '2025-09-21 20:29:49', 'Certificate Status U', '2025-09-21 20:29:49'),
+(1154, 49, NULL, 'Calamity', '8', 'admin', 'Certificate Status Updated to: Approved', 'admin', '2025-09-21 20:38:49', 'Certificate Status U', '2025-09-21 20:38:49');
 
 -- --------------------------------------------------------
 
@@ -525,7 +532,7 @@ CREATE TABLE `tbl_certification` (
   `calamity_time` varchar(255) DEFAULT NULL,
   `what_is_caused` text DEFAULT NULL,
   `location` text DEFAULT NULL,
-  `calamity_purpose` text NOT NULL,
+  `calamity_purpose` text DEFAULT NULL,
   `requested_by` varchar(100) DEFAULT NULL,
   `calamity_notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -535,21 +542,9 @@ CREATE TABLE `tbl_certification` (
 --
 
 INSERT INTO `tbl_certification` (`certification_id`, `res_id`, `user_id`, `certificationType`, `name`, `suffix`, `address`, `purpose`, `remarks`, `registeredVoter`, `resident_status`, `dateToday`, `dateApplied`, `dateReceived`, `residentSignature`, `document_path`, `status`, `created_at`, `type_of_calamity`, `calamity_date`, `calamity_time`, `what_is_caused`, `location`, `calamity_purpose`, `requested_by`, `calamity_notes`) VALUES
-(42, 29, '2', 'Calamity', 'kath Pompom', NULL, 'Makati', 'Hospital Requirement', 'This is not right. ', 0, 0, '2025-08-09', '2025-08-09 12:20:44', NULL, NULL, '1754742044_68973d1c6b482_sfsdf.PNG', 'Approved', '2025-09-19 07:48:13', 'Typhoon', '2025-08-14', NULL, NULL, NULL, '', 'Kath POmPOm', 'adsadasdasdasd'),
-(65, 46, '5', 'Calamity', 'Felix Lee', NULL, '12 Yba', '', '', 0, 0, '2025-08-31', '2025-08-31 14:38:08', NULL, NULL, '', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(82, 46, '5', 'First Time Job Seeker', 'Felix Lee', NULL, '12 Yba', 'Hospital Requirement', '', 0, 0, '2025-08-31', '2025-08-31 16:19:56', NULL, NULL, '', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(89, 29, '2', 'Good Moral', 'kath Pompom', NULL, 'Makati', 'School Requirement', '', 0, 0, '2025-09-01', '2025-09-01 10:33:55', NULL, NULL, '1756722835_68b5769351844_Barangay ID.JPG', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(90, 29, '2', 'First Time Job Seeker', 'kath Pompom', NULL, 'Makati', 'Proof Of Indigency', '', 0, 0, '2025-09-01', '2025-09-01 10:35:17', NULL, NULL, '1756722917_68b576e54cd3c_Barangay ID.JPG', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(91, 29, '2', 'Calamity', 'kath Pompom', NULL, 'Makati', 'Calamity', '', 0, 0, '2025-09-01', '2025-09-01 10:37:34', NULL, NULL, '1756723054_68b5776e0c5cc_Barangay ID.JPG', 'Approved', '2025-09-19 07:48:22', 'Typhoon', '2025-08-07', NULL, NULL, NULL, '', 'Felix Lee', 'There\'s a flood near our house'),
-(94, 49, '8', 'Calamity', 'Joshua Anderson Padilla', NULL, 'mexico pampanga', 'Calamity', '', 0, 0, '2025-09-05', '2025-09-05 22:40:45', NULL, NULL, '1757083245_68baf66d0393a_OIP (1).jpg', 'Approved', '2025-09-19 07:48:22', 'Typhoon', '2025-09-06', NULL, NULL, NULL, '', 'andy anderson', 'dwawad'),
-(95, 49, '8', 'Good Moral', 'Joshua Anderson Padilla', NULL, 'mexico pampanga', 'Local Employment', '', 0, 0, '2025-09-05', '2025-09-05 22:46:12', NULL, NULL, '1757083572_68baf7b46df47_366696307_775085887951627_417146910775853273_n.jpg', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(96, 49, '8', 'Good Moral', 'Joshua Anderson Padilla', NULL, 'mexico pampanga', 'Medical Assistance', '', 0, 0, '2025-09-05', '2025-09-05 23:03:16', NULL, NULL, '1757084596_68bafbb4598eb_OIP (1).jpg', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(97, 49, '8', 'Good Moral', 'Joshua Anderson Padilla', NULL, 'mexico pampanga', 'Transfer Residency', '', 0, 0, '2025-09-05', '2025-09-05 23:15:46', NULL, NULL, '1757085346_68bafea23db87_OIP (1).jpg', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(98, 49, '8', 'First Time Job Seeker', 'Joshua Anderson Padilla', NULL, 'mexico pampanga', 'Financial Assistance', '', 0, 0, '2025-09-05', '2025-09-05 23:16:43', NULL, NULL, '1757085403_68bafedb26e55_Exercise-04.docs.pdf', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(99, 49, '8', 'Good Moral', 'Juan Dle cruz', NULL, 'mexico pampanga', 'Hospital Requirement', '', 0, 0, '2025-09-05', '2025-09-06 00:22:55', NULL, NULL, '1757089375_68bb0e5f4e241_OIP (1).jpg', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(100, 50, '9', 'Good Moral', 'ryan lopez', NULL, 'marilao bulacan', 'Bank Transaction', '', 0, 0, '2025-09-10', '2025-09-10 23:42:17', NULL, NULL, '1757518937_68c19c597f342_gcash.png', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(101, 49, '8', 'Good Moral', 'Jame Padilla', NULL, 'mexico pampanga', 'Transfer Residency', '', 0, 0, '2025-09-15', '2025-09-15 12:08:20', NULL, NULL, '1757909300_68c79134979d1__101539981_lebronjames.jpg.webp', 'Approved', '2025-09-19 07:48:22', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL),
-(102, 49, '8', 'Calamity', 'kathryn Padilla', NULL, 'mexico pampanga', 'Calamity', NULL, 0, 0, '2025-09-19', '2025-09-19 15:54:31', NULL, NULL, '1758268471_68cd0c373ce61_OIP (1).jpg', 'To Be Approved', '2025-09-19 07:54:31', 'Fire', '2025-09-20', NULL, 'broken wire', 'manila', 'Fire Victim Purposes', 'maria', '');
+(106, 49, '8', 'Calamity', 'kathryn Padilla', NULL, 'mexico pampanga', 'Calamity', '', 0, 0, '2025-09-21', '2025-09-21 20:10:01', NULL, NULL, '', 'Approved', '2025-09-21 12:19:48', 'Typhoon', '2025-09-21', '', NULL, NULL, 'Supporting Document For Submmission', 'maria', ''),
+(107, 49, '8', 'Good Moral', 'kathryn Padilla', NULL, 'mexico pampanga', 'Proof Of Indigency', NULL, 0, 0, '2025-09-21', '2025-09-21 20:18:25', NULL, NULL, '1758457105_68cfed1158089_494579798_693373853415594_8083316453582063649_n.jpg', 'To Be Approved', '2025-09-21 12:18:25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(109, 49, '8', 'Calamity', 'kathryn Padilla', NULL, 'mexico pampanga', 'Calamity', '', 0, 0, '2025-09-21', '2025-09-21 20:38:32', NULL, NULL, '1758458312_68cff1c8c3df1_bini-desktop-wallpapers-v0-v1z43kmivtbd1.webp', 'Approved', '2025-09-21 12:38:49', 'Fire', '2025-09-21', '20:38', NULL, NULL, 'Fire Victim Purposes', 'andy anderson', '');
 
 -- --------------------------------------------------------
 
@@ -1025,7 +1020,10 @@ INSERT INTO `tbl_notifications` (`notification_id`, `user_id`, `message`, `notif
 (314, '8', 'Your barangay ID request has been updated to: Approved', 'bid_update', '2025-09-06 11:38:39', 0),
 (315, '8', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-15 06:51:37', 0),
 (316, '8', 'Your clearance request has been updated to: Approved', 'clearance_update', '2025-09-15 08:43:19', 0),
-(317, '9', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-16 16:07:35', 0);
+(317, '9', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-16 16:07:35', 0),
+(318, '8', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-21 14:19:48', 0),
+(319, '8', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-21 14:29:49', 0),
+(320, '8', 'Your certificate request has been updated to: Approved', 'certification_update', '2025-09-21 14:38:49', 0);
 
 -- --------------------------------------------------------
 
@@ -1202,15 +1200,15 @@ CREATE TABLE `tbl_user` (
 INSERT INTO `tbl_user` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `password`, `image`, `email`, `mobile`, `address`, `account_status`, `role`, `is_logged_in`, `is_logged_in_time`, `remember_token`, `reset_token`, `reset_token_expiry`, `terms`, `suffix`, `gender`, `civilStatus`, `household_head_id`, `is_household_head`, `household_head_name`, `relationship_to_head`, `is_senior`, `senior_document`, `is_pwd`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency`, `occupation`, `birthday`) VALUES
 (110, '2', 'kath', '', 'Pompom', '$2y$10$09JbPtLtQYtV2vhS7TkWpO.TZBGu/jJy/x4eNI4OB4STd/Kz2GsFG', '68b320feefdf6_1b1467e4466f6eb324854229b7e4ffe7.jpg', 'panis.kathleennicole@ue.edu.ph', '09464838399', 'Makati', 'Active', 'Resident', 1, '2025-09-02 14:26:06', NULL, '4a47a93cb80f9e2ae775427ac78a426e5226477d6f6e6b9ad5d60cada3b21dce', '2025-08-09 13:41:06', 0, '', '', 'Single', 2, 'Yes', 'kath Pompom', '', 'No', '', 'No', '', 'Yes', 'uploads/6868e4e818eb2_wallhaven-wq5e3q.png', 'uploads/6868e4e8180e8_wallhaven-wq5e3q.png', 'N/A', '2004-02-04'),
 (122, '4', 'Mario', '', 'Luigi', '$2y$10$dlAklUIOlwMLwFr1CyWYUO3LC5ia7IMDCt1mDiIWbZC/u0tiFbzty', NULL, 'kale0042104@gmail.com', '09318689501', 'Makati', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Female', 'Single', 2, 'No', 'kath Pompom', 'Mother', 'Yes', 'uploads/6868edda2ded3_wallhaven-wq5e3q.png', 'No', '', 'No', '', 'uploads/6868edda2d4d3_wallhaven-wq5e3q.png', 'N/A', '1926-05-05'),
-(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 0, NULL, NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-09-21 20:19:33', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 1, '2025-09-21 20:19:33', NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-09-21 20:19:33', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-09-21 20:19:33', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (137, '5', 'Felix', '', 'Lee', '$2y$10$sAPydp0CfIJESB6dyyvLjeYJoM3Mfp6YjEjGPu3e6cP1ja0.Pk6IG', '68b30e7bbaf3e_Screenshot (137).png', 'lemonadejuicy100@gmail.com', '09999999999', '12 Yba', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 2, 'Yes', 'kath Pompom', '', 'No', '', 'No', '', 'No', '', 'uploads/68b2f905de3c2_117583771.jpg', 'Rapper', '2000-07-03'),
-(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 0, NULL, NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-09-21 20:19:33', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (139, '6', 'Thomas', '', 'Bull', '$2y$10$xZtkyDZ5VyArEjsFqIk/vuLxUZtBo.P0wIc9dWuU75gBCyw31sKlu', NULL, 'gugkui21@gmail.com', '09464838399', '15 Nasan Street', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'No', '', 'uploads/68b3265db9280_code.txt', 'N/A', '2025-08-05'),
 (140, '7', 'Sample', '', 'Sample', '$2y$10$5WMcnXJY6uL1KU.aOqGQFugriCgsvvO7ZSZ3PBPpK39ok7L1bYe3y', NULL, 'orgaforst@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'No', '', 'uploads/68b3c59b883c6_code.txt', 'N/A', '2025-08-01'),
-(141, '8', 'lebron', '', 'Padilla', '$2y$10$JO/TSpgYvzHaH6icP5uD0e4bYkYm7X26tc0elN9vkn1vzkndmXs3G', NULL, 'andersonandy046@gmail.com', '09454454741', 'mexico pampanga', 'Active', 'Resident', 1, '2025-09-19 15:27:00', NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'No', '', 'uploads/68baed6767a7f_PDF Inventory.pdf', 'N/A', '2000-02-19'),
+(141, '8', 'lebron', '', 'Padilla', '$2y$10$JO/TSpgYvzHaH6icP5uD0e4bYkYm7X26tc0elN9vkn1vzkndmXs3G', NULL, 'andersonandy046@gmail.com', '09454454741', 'mexico pampanga', 'Active', 'Resident', 1, '2025-09-21 20:08:54', NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'No', '', 'uploads/68baed6767a7f_PDF Inventory.pdf', 'N/A', '2000-02-19'),
 (142, '9', 'ryan', '', 'lopez', '$2y$10$iVhz1srqj2Or.VcAgFiZveR5gmeb/SZTcq5uEmmnSuBGQN.0zMdqO', NULL, 'rodriguezryan325@gmail.com', '09454454741', 'marilao bulacan', 'Active', 'Resident', 1, '2025-09-10 23:54:59', NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'Yes', 'uploads/68c19bbd63143_photo-1600891964599-f61ba0e24092.avif', 'uploads/68c19bbd62b01_how-to-make-brazo-de-mercedes.jpg', 'N/A', '2000-09-10');
 
 -- --------------------------------------------------------
@@ -1526,7 +1524,7 @@ ALTER TABLE `web_services`
 -- AUTO_INCREMENT for table `tbl_audit`
 --
 ALTER TABLE `tbl_audit`
-  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1148;
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1155;
 
 --
 -- AUTO_INCREMENT for table `tbl_banned_users`
@@ -1556,7 +1554,7 @@ ALTER TABLE `tbl_brgyofficer`
 -- AUTO_INCREMENT for table `tbl_certification`
 --
 ALTER TABLE `tbl_certification`
-  MODIFY `certification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `certification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `tbl_clearance`
@@ -1604,7 +1602,7 @@ ALTER TABLE `tbl_household_head`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
 
 --
 -- AUTO_INCREMENT for table `tbl_residentcop`
