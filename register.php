@@ -24,7 +24,7 @@ if (isset($_POST['register'])) {
     $civilStatus = mysqli_real_escape_string($conn, $_POST['civilStatus']);
     $is_household_head = mysqli_real_escape_string($conn, $_POST['is_household_head']);
     $household_head_name = isset($_POST['household_head_name']) ? mysqli_real_escape_string($conn, $_POST['household_head_name']) : '';
-    $relationship_to_head = isset($_POST['relationship_to_head']) ? mysqli_real_escape_string($conn, $_POST['relationship_to_head']) : '';
+    $relationship_to_head = isset($_POST['household_head_relationship']) ? mysqli_real_escape_string($conn, $_POST['household_head_relationship']) : '';
     $is_senior = mysqli_real_escape_string($conn, $_POST['is_senior']);
     $is_pwd = mysqli_real_escape_string($conn, $_POST['is_pwd']);
     $is_registered_voter = mysqli_real_escape_string($conn, $_POST['is_registered_voter']);

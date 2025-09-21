@@ -20,7 +20,14 @@ if (isset($_POST['verify'])) {
 
     if ($otp == $_SESSION['otp']) {
         $user_data = $_SESSION['user_data'];
+
+
+        echo "<pre>";
+        print_r($user_data);
+        echo "</pre>";
+
         $user_id = $user_data['user_id'];
+        
 
         $account_status = 'Pending';
         $role = 'Resident';
@@ -74,7 +81,7 @@ if (isset($_POST['verify'])) {
         } else if ($user_data['is_household_head'] === 'No') {
             $stmt_relation = $conn->prepare("
                 INSERT INTO tbl_household_relation (thr_head_id, thr_user_id,thr_relationship) 
-                VALUES (?, ?)
+                VALUES (?, ?,?)
             ");
             $stmt_relation->bind_param("sss", $user_data['household_head_name'], $user_id,$user_data['relationship_to_head']);
             $stmt_relation->execute();
@@ -133,8 +140,8 @@ if (isset($_POST['verify'])) {
                 }
     
                 logActivity($user_id, 'Resident', 'Registered in tbl_user and tbl_resident');
-                unset($_SESSION['otp'], $_SESSION['user_data']);
-                header('Location: login.php');
+                // unset($_SESSION['otp'], $_SESSION['user_data']);
+                // header('Location: login.php');
                 exit();
             } else {
                 $error[] = 'Registration to tbl_resident failed. Try again.';
