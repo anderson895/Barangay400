@@ -309,7 +309,7 @@ function getNotificationStyle($type) {
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="../dist/assets/images/default_image.png" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
