@@ -209,6 +209,13 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                         <span class="menu-title">Feedback Reports</span>
                     </a>
                 </li>
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="feedback.php">
+                        <i class="fa-solid fa-comments"></i>
+                        <span class="menu-title">House Hold</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#settingsManagement" aria-expanded="false"

@@ -614,9 +614,35 @@ if (isset($_POST['register'])) {
                     <!-- If No, show these -->
                     <div id="householdHeadDetails" style="display: none;">
                         <div class="form-group mb-3">
-                            <label>Name of Household Head <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="household_head_name">
+                            <label for="household_head_name">Name of Household Head <span class="text-danger">*</span></label>
+                            <select class="form-control" name="household_head_name" id="household_head_name" >
+                                <option value="" disabled selected>Select household head</option>
+                             <?php 
+                                    $query = $conn->prepare("
+                                        SELECT 
+                                            tbl_household_head.household_head_id ,
+                                            tbl_household_head.user_id AS hh_user_id,
+                                            tbl_residents.*
+                                        FROM tbl_household_head
+                                        LEFT JOIN tbl_residents 
+                                            ON tbl_residents.user_id = tbl_household_head.user_id
+                                    ");
+                                    $query->execute();
+                                    $result = $query->get_result();
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        // Handle middle name (optional)
+                                        $middle = !empty($row['middle_name']) ? ' ' . $row['middle_name'] : '';
+                                        $fullName = $row['first_name'] . $middle . ' ' . $row['last_name'];
+
+                                        echo '<option value="' . $row['household_head_id'] . '">' . htmlspecialchars($fullName) . '</option>';
+                                    }
+                                    ?>
+
+
+                            </select>
                         </div>
+
 
                         <div class="form-group mb-3">
                             <label>Relationship to Household Head <span class="text-danger">*</span></label>

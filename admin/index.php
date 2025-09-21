@@ -223,6 +223,14 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="household.php">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="menu-title">House Hold</span>
+                    </a>
+                </li>
+
+                
+                <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#settingsManagement" aria-expanded="false"
                         aria-controls="settingsManagement">
                         <i class="fa-solid fa-gear"></i>
