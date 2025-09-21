@@ -656,7 +656,9 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 <div class="modal fade" id="viewHHModal" tabindex="-1"
-    role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true"
+    data-bs-backdrop="false" data-bs-keyboard="false">
+
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content shadow-lg border-0">
             <!-- Header -->
