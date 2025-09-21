@@ -55,7 +55,7 @@
 
   <!-- SIGNATURE -->
   <div class="signature">
-    <img src="captain-signature.png" alt="Signature / Photo">
+    <!-- <img src="captain-signature.png" alt="Signature / Photo"> -->
     <p><strong>Hon. FELIX "ELIE" TAGUBA</strong></p>
     <p class="designation">PUNONG BARANGAY</p>
   </div>

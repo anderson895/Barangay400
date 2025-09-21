@@ -76,9 +76,9 @@
 
 <!-- SIGNATURE -->
   <div class="signature">
-    <img src="../templates/captain.png" alt="Signature / Photo"> <!-- Palitan ng actual signature or photo -->
-    <!-- <p>Hon. FELIX "ELIE" TAGUBA</p>
-    <p class="designation">PUNONG BARANGAY</p> -->
+    <!-- <img src="../templates/captain.png" alt="Signature / Photo">  -->
+    <p>Hon. FELIX "ELIE" TAGUBA</p>
+    <p class="designation">PUNONG BARANGAY</p>
   </div>
 
 </body>

@@ -4,23 +4,7 @@ $certification_id = $_GET['certification_id'];
 include '../connection/config.php';
 $view_certificate = $conn->query("
     SELECT 
-        c.certification_id, 
-        c.res_id, 
-        c.user_id, 
-        c.name, 
-        c.address, 
-        c.purpose, 
-        c.registeredVoter, 
-        c.resident_status, 
-        c.dateApplied, 
-        c.document_path, 
-        c.certificationType,
-        c.status, 
-        c.type_of_calamity, 
-        c.requested_by, 
-        c.calamity_date, 
-        c.created_at, 
-        c.remarks,
+        c.*,
         u.address AS user_address,
         u.first_name, 
         u.middle_name, 
@@ -67,14 +51,20 @@ $fullname = $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_na
   if($row['certificationType']==='Good Moral'){
       include '../templates/goodmoral.php';
   }else if($row['certificationType']==='Calamity'){
+    if($row['calamity_purpose']==='Fire Victim Purposes'){
+      include '../templates/certificate_for_calamity_fire.php';
+    }else if($row['calamity_purpose']==='Supporting Document For Submmission'){
+      include '../templates/certificate_for_calamity_sds.php';
+    }else{
       include '../templates/certificate_for_calamity_ccls.php';
+    }
+
   }else if($row['certificationType']==='First Time Job Seeker'){
       include '../templates/firstime_job_seeker.php';
   }
   
 //  include '../templates/outh_of_undertaking.php';
 //   include '../templates/firstime_job_seeker.php';
-//   include '../templates/certificate_for_calamity_sds.php';
 //   include '../templates/certificate_for_calamity_fire.php';
 //    include '../templates/certificate_for_calamity_ccls.php';
 //    include '../templates/blotter.php';

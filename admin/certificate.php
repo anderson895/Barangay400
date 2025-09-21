@@ -559,10 +559,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 $total_pages = ceil($total_rows / $limit);
 
                 // Fetch certification requests query
-                $sql = "SELECT c.certification_id, c.res_id, c.user_id, c.name, 
-        c.address, c.purpose, c.registeredVoter, c.resident_status, 
-        c.dateApplied, c.document_path, c.certificationType,
-        c.status, c.created_at, c.remarks,u.*
+                $sql = "SELECT c.*,u.*
         FROM tbl_certification c
         left join tbl_residents u on c.user_id = u.user_id
         WHERE $where_clause
@@ -639,7 +636,15 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                         <td><?= htmlspecialchars(implode(' ', [$row['first_name'], $row['middle_name'], $row['last_name']])) ?></td>
 
                                                         <td><?php echo htmlspecialchars($row['certificationType']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['purpose']); ?></td>
+                                                        <td>
+                                                            <?php 
+                                                                if ($row['certificationType'] === "Calamity") {
+                                                                    echo htmlspecialchars($row['calamity_purpose']);
+                                                                } else {
+                                                                    echo htmlspecialchars($row['purpose']);
+                                                                }
+                                                            ?>
+                                                        </td>
                                                         <td><?php echo date('F d, Y h:i A', strtotime($row['dateApplied'])); ?>
                                                         </td>
                                                         <td>
