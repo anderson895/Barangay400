@@ -110,7 +110,7 @@
           <?= checkItem($row['purpose'], "Proof Of Indigency"); ?>
       </div>
       <div><?= checkItem($row['purpose'], "School Requirement"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          <?= checkItem($row['purpose'], "Proof of Residency"); ?> <i>(Not valid for Loan Purposes)</i>
+          <?= checkItem($row['purpose'], "Proof Of Residency"); ?> <i>(Not valid for Loan Purposes)</i>
       </div>
       <div><?= checkItem($row['purpose'], "Financial Assistance"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
           <?= checkItem($row['purpose'], "Maynilad Requirement"); ?>
