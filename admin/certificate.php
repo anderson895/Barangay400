@@ -676,7 +676,10 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                         <td>
                                                             <!-- View button for all positions -->
                                                             <?php if ($row['status'] === 'Approved'): ?>
-                                                                <button class="btn btn-info btn-sm viewCert" data-certification_id=<?= $row['certification_id']; ?> data-toggle="modal" title="View"
+                                                                <button class="btn btn-info btn-sm viewCert" 
+                                                                data-certification_id=<?= $row['certification_id']; ?> 
+                                                                data-certificationType="<?=$row['certificationType']?>"
+                                                                data-toggle="modal" title="View"
                                                                     data-target="#viewCertificateModal">
                                                                     <i class="fa-solid fa-eye"></i>
                                                                 </button>
@@ -1065,46 +1068,87 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
     <!-- container-scroller -->
     <!-- plugins:js -->
 
-    <div class="modal fade" id="viewCertificateModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content shadow-lg border-0">
-            <div class="modal-header bg-gradient-warning text-white py-3">
-                <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-                <i class="fas fa-edit mr-2"></i> View Certificate
-                </h5>
-                <button type="button" class="close text-white btn-close-modal" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+ <!-- Default Certificate Modal -->
+<div class="modal fade" id="viewCertificateModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header bg-gradient-warning text-white py-3">
+        <h5 class="modal-title font-weight-bold" id="viewModalLabel">
+          <i class="fas fa-edit mr-2"></i> View Certificate
+        </h5>
+        <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
+      </div>
 
-            <div class="modal-body text-center"> 
-                <div id="certificateContent">
-                <!-- Certificate content will be loaded here via AJAX -->
-                </div>
-            </div>
-
-            <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-primary btn-print">
-                <i class="fas fa-print mr-1"></i> Print
-                </button>
-                <button type="button" class="btn btn-secondary btn-close-modal" data-dismiss="modal">
-                <i class="fas fa-times mr-1"></i> Close
-                </button>
-            </div>
-            </div>
+      <div class="modal-body text-center"> 
+        <div id="certificateContent">
+          <!-- Certificate content will be loaded here via AJAX -->
         </div>
+      </div>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-primary btn-print" data-target="#certificateContent">
+          <i class="fas fa-print mr-1"></i> Print
+        </button>
+        <button type="button" class="btn btn-secondary btn-close-modal">
+          <i class="fas fa-times mr-1"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- First Time Job Seeker Modal -->
+<div class="modal fade" id="firstTimeJobModal" tabindex="-1" role="dialog" aria-labelledby="firstTimeJobModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content shadow-lg border-0">
+      
+      <!-- Header -->
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="firstTimeJobModalLabel">First Time Job Seeker Certificate</h5>
+        <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <!-- Oath of Undertaking -->
+        <div id="firstTimeJobContent1" class="mb-4 border p-3 rounded bg-light"></div>
+        
+        <!-- Print button for Content 1 -->
+        <div class="text-end mb-3">
+          <button type="button" class="btn btn-success btn-print" data-target="#firstTimeJobContent1">
+            <i class="fas fa-print"></i> Print Oath of Undertaking
+          </button>
         </div>
 
+        <hr>
+
+        <!-- Barangay Clearance -->
+        <div id="firstTimeJobContent2" class="mb-4 border p-3 rounded bg-light"></div>
+        
+        <!-- Print button for Content 2 -->
+        <div class="text-end">
+          <button type="button" class="btn btn-success btn-print" data-target="#firstTimeJobContent2">
+            <i class="fas fa-print"></i> Print First Time Job Seeker Clearance
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
-    <script>
-// Close modal
-$(".btn-close-modal").on("click", function () {
-  $("#viewCertificateModal").modal("hide");
+<script>
+// ✅ Close any modal
+$(document).on("click", ".btn-close-modal", function () {
+  $(this).closest(".modal").modal("hide");
 });
 
-$(".btn-print").on("click", function () {
-  var printContents = document.getElementById("certificateContent").innerHTML;
+// ✅ Print specific content with proper header layout
+$(document).on("click", ".btn-print", function () {
+  var target = $(this).data("target");
+  var printContents = document.querySelector(target).innerHTML;
   var printWindow = window.open("", "", "width=900,height=650");
 
   printWindow.document.write(`
@@ -1114,7 +1158,19 @@ $(".btn-print").on("click", function () {
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <style>
-          body { padding: 20px; text-align: center; }
+          body { padding: 20px; font-family: Arial, sans-serif; }
+          .d-flex { display: flex !important; }
+          .flex-column { flex-direction: column !important; }
+          .flex-md-row { flex-direction: row !important; }
+          .justify-content-between { justify-content: space-between !important; }
+          .align-items-center { align-items: center !important; }
+          .text-center { text-align: center !important; }
+          .certificate { page-break-after: always; }
+          .certificate:last-child { page-break-after: auto; }
+          .line-separator { border-top: 1px solid #000; margin: 10px 0; }
+          img.img-fluid { max-height: 70px; }
+          .header-center { flex: 1; padding: 0 10px; }
+          .office { font-size: 0.85rem; }
         </style>
       </head>
       <body>
@@ -1125,27 +1181,35 @@ $(".btn-print").on("click", function () {
 
   printWindow.document.close();
 
-  // Hintayin mag-load bago mag print
   printWindow.onload = function () {
     printWindow.focus();
     printWindow.print();
-    // Huwag agad i-close para makita ang print dialog
-    // Kung gusto mo auto-close pagkatapos mag print:
-    // printWindow.onafterprint = function() { printWindow.close(); };
   };
 });
 
 
-// Load certificate via AJAX
+// ✅ Load certificate via AJAX
 $('.viewCert').on("click", function (e) {
   e.preventDefault();
 
+  var certificationType = $(this).data("certificationtype");
   var $btn = $(this);
   var certification_id = $btn.data("certification_id");
 
+  console.log("Certification Type:", certificationType);
+
   if (!certification_id) {
-    console.error("Missing certification_id");
+    console.error("❌ Missing certification_id");
     return;
+  }
+
+  var ajaxUrl, modalTarget;
+  if (certificationType === "First Time Job Seeker") {
+    ajaxUrl = "generate_certificate_for_firstTime.php";
+    modalTarget = "#firstTimeJobModal";    
+  } else {
+    ajaxUrl = "generate_certificate.php";
+    modalTarget = "#viewCertificateModal";
   }
 
   var originalText = $btn.html();
@@ -1153,12 +1217,24 @@ $('.viewCert').on("click", function (e) {
   $btn.prop("disabled", true);
 
   $.ajax({
-    url: "generate_certificate.php",
+    url: ajaxUrl,
     type: "GET",
     data: { certification_id: certification_id },
     success: function (response) {
-      $("#certificateContent").html(response);
-      $("#viewCertificateModal").modal("show");
+      if (certificationType === "First Time Job Seeker") {
+        try {
+          var data = JSON.parse(response);
+          $("#firstTimeJobContent1").html(data.content1);
+          $("#firstTimeJobContent2").html(data.content2);
+        } catch (e) {
+          console.error("❌ JSON Parse Error", e, response);
+          alert("Invalid response format for First Time Job Seeker");
+          return;
+        }
+      } else {
+        $("#certificateContent").html(response);
+      }
+      $(modalTarget).modal("show");
     },
     error: function (xhr, status, error) {
       console.error("❌ AJAX Error:", status, error);
@@ -1171,12 +1247,10 @@ $('.viewCert').on("click", function (e) {
     }
   });
 });
+</script>
 
 
-
-
-
-
+<script>
 
 
 

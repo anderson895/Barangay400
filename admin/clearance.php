@@ -1157,7 +1157,7 @@ $('.viewCert').on("click", function (e) {
   $btn.prop("disabled", true);
 
   $.ajax({
-    url: "generate_certificate.php",
+    url: "generate_clearance.php",
     type: "GET",
     data: { clearance_id: clearance_id },
     success: function (response) {
