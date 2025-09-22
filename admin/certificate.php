@@ -1070,17 +1070,17 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
  <!-- Default Certificate Modal -->
 <div class="modal fade" id="viewCertificateModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content shadow-lg border-0">
-      <div class="modal-header bg-gradient-warning text-white py-3">
-        <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-          <i class="fas fa-edit mr-2"></i> View Certificate
-        </h5>
+      
+      <!-- Header -->
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="firstTimeJobModalLabel">First Time Job Seeker Certificate</h5>
         <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
       </div>
 
       <div class="modal-body text-center"> 
-        <div id="certificateContent">
+        <div id="certificateContent" class="border p-3 rounded bg-light">
           <!-- Certificate content will be loaded here via AJAX -->
         </div>
       </div>
