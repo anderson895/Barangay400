@@ -64,7 +64,7 @@
 
   <!-- Title -->
   <h2>BARANGAY CERTIFICATION</h2>
-  <h3>( First Time Jobseekers Assistance Act – RA 11261 )</h3>
+  <h3 class="mb-3">( First Time Jobseekers Assistance Act – RA 11261 )</h3>
 
   <!-- Body -->
   <p class="indent">

@@ -56,7 +56,7 @@
     }
 </style>
 
-<h2>OATH OF UNDERTAKING</h2>
+<h2 class="mb-3">OATH OF UNDERTAKING</h2>
 
   <p class="indent">
     I, <span class="underline">JONATHAN D. MALLEN</span>, 23 years of age, resident of Barangay 400, Zone 41 for 23 yrs. availing the benefits of Republic Act of 11261, otherwise known as the <b>First Time Jobseekers Act of 2019</b>, do hereby declare, agree and undertake to abide and be bound by the following;

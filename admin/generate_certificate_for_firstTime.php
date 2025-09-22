@@ -1,6 +1,5 @@
-<?php 
+<?php
 $certification_id = $_GET['certification_id'] ?? null;
-
 include '../connection/config.php';
 
 if (!$certification_id) {
@@ -12,14 +11,9 @@ if (!$certification_id) {
 }
 
 $view_certificate = $conn->query("
-    SELECT 
-        c.*,
-        u.address AS user_address,
-        u.first_name, 
-        u.middle_name, 
-        u.last_name
+    SELECT c.*, u.address AS user_address, u.first_name, u.middle_name, u.last_name
     FROM tbl_certification c
-    LEFT JOIN tbl_residents u ON u.user_id = c.user_id 
+    LEFT JOIN tbl_residents u ON u.user_id = c.user_id
     WHERE c.certification_id = '$certification_id'
 ");
 
@@ -48,28 +42,37 @@ $header = '
     </div>
     <img src="../assets/right-logo.png" alt="Bagong Pilipinas Logo" class="img-fluid" style="max-height:70px;">
 </div>
-<hr class="my-2">';
-  
+<hr class="my-2">
+';
+
 // ================== CONTENT 1 ==================
+ob_start();
+include '../templates/outh_of_undertaking.php';
+$content1_body = ob_get_clean();
+
 $content1 = '
 <div class="certificate p-3">
     ' . $header . '
-    <h3 class="text-center mt-3">OATH OF UNDERTAKING</h3>
-    <div class="certificate-body text-justify">
-        <p>I, <strong>'.htmlspecialchars($fullname).'</strong>, resident of <strong>'.htmlspecialchars($row['user_address']).'</strong>, do hereby swear to comply with the requirements set forth for first-time job seekers. I pledge to act responsibly and follow the rules and regulations of the Barangay.</p>
+   <div class="certificate-body text-justify">
+    ' . $content1_body . '
     </div>
-</div>';
+</div>
+';
 
 // ================== CONTENT 2 ==================
+ob_start();
+include '../templates/firstime_job_seeker.php';
+$content2_body = ob_get_clean();
+
 $content2 = '
 <div class="certificate p-3">
     ' . $header . '
-    <h3 class="text-center">Barangay Clearance for First Time Job Seeker</h3>
+   
     <div class="certificate-body text-justify">
-        <p>This certifies that <strong>'.htmlspecialchars($fullname).'</strong> is a bona fide resident of Barangay 400, Zone 41, District IV, Sampaloc, Manila.</p>
-        <p>Issued on <strong>'.date("F d, Y").'</strong> for employment purposes only.</p>
+        ' . $content2_body . '
     </div>
-</div>';
+</div>
+';
 
 // Return JSON
 echo json_encode([
