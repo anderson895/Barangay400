@@ -17,6 +17,26 @@ $view_certificate = $conn->query("
 $row = $view_certificate->fetch_assoc();
 
 $fullname = $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
+$user_address = $row['user_address'];
+$what_is_caused = $row['what_is_caused'];
+
+$calamityDate = new DateTime($row['calamity_date']);
+$calamity_dateWord = $calamityDate->format('F j, Y');
+
+$calamityTimeObj = new DateTime($row['calamity_time']);
+$calamity_timeFormatted = $calamityTimeObj->format('g:i A'); // e.g., 2:30 PM
+
+$location = $row['location'];
+$requested_by = $row['requested_by'];
+$calamity_purpose = $row['calamity_purpose'];
+
+
+$today = new DateTime(); 
+$day = $today->format('j');       // 1-31
+$daySuffix = $today->format('S'); // st, nd, rd, th
+$month = $today->format('F');     // January, February, ...
+$year = $today->format('Y');      // 2025
+
 
 ?>
 

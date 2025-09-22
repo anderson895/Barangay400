@@ -59,7 +59,7 @@
 <h2 class="mb-3">OATH OF UNDERTAKING</h2>
 
   <p class="indent">
-    I, <span class="underline">JONATHAN D. MALLEN</span>, 23 years of age, resident of Barangay 400, Zone 41 for 23 yrs. availing the benefits of Republic Act of 11261, otherwise known as the <b>First Time Jobseekers Act of 2019</b>, do hereby declare, agree and undertake to abide and be bound by the following;
+    I, <b><span class="underline"><?=ucfirst($fullname)?></span></b>, <?=$age?> years of age, resident of Barangay 400, Zone 41 for 23 yrs. availing the benefits of Republic Act of 11261, otherwise known as the <b>First Time Jobseekers Act of 2019</b>, do hereby declare, agree and undertake to abide and be bound by the following;
   </p>
 
   <ol>
@@ -74,12 +74,21 @@
     <li>That I consent to the use of my personal information pursuant to the Data Private Act and other applicable laws, rules and regulations.</li>
   </ol>
 
-  <p class="indent">
-    Signed this <span class="underline">8<sup>th</sup></span> day of <span class="underline">August 2025</span> in the City Municipality of Manila.
-  </p>
+  <?php
+    echo '<p class="indent">
+        Signed this <span class="underline">' . $day . '<sup>' . $daySuffix . '</sup></span> day of <span class="underline">' . $month . ' ' . $year . '</span> in the City Municipality of Manila.
+    </p>';
+  ?>
+
 
   <div class="signature">
-    <p><b>JONATHAN D. MALLEN</b><br>
+   <?php
+    $first = strtoupper($row['first_name']);
+    $middleInitial = strtoupper(substr($row['middle_name'], 0, 1)) . '.';
+    $last = strtoupper($row['last_name']);
+    ?>
+    <p><b><?= $first . ' ' . $middleInitial . ' ' . $last ?></b><br>
+
     First Time Jobseeker</p>
   </div>
 
@@ -89,5 +98,5 @@
     <p><b>MA. ELIEZEL D. CRUZ / KAGAWAD</b></p>
     <p>Barangay Official / Designation / Position</p>
     <br>
-    <p>Date: <span class="underline">August 8, 2025</span></p>
+    <p>Date: <span class="underline"><?=$todayWord?></span></p>
   </div>

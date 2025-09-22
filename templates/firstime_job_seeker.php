@@ -68,28 +68,32 @@
 
   <!-- Body -->
   <p class="indent">
-    This is to certify that Mr./Ms. <b><span class="underline">JONATHAN D. MALLEN</span></b>, 
-    a resident of <span class="underline">631-D Reten St, Barangay 400, Zone 41, District IV Sampaloc, Manila</span>, 
-    for <span class="underline">23 years</span>, is qualified availer of RA 11261 or the First Time Jobseekers Assistance Act of 2019.
+    This is to certify that Mr./Ms. <b><span class="underline"><?=ucfirst($fullname)?></span></b>, 
+    a resident of <span class="underline"><?=ucfirst($user_address)?></span>, 
+    for <span class="underline"><?=$age;?> years</span>, is qualified availer of RA 11261 or the First Time Jobseekers Assistance Act of 2019.
   </p>
 
   <p class="indent">
     I hereby certify that the holder / bearer were informed of his/her rights, including the duties and responsibilities accorded by RA 11261 through the Oath of undertaking he/she signed and executed in the presence of Barangay Officials.
   </p>
 
-  <p class="indent">
-    Signed this <span class="underline">8<sup>th</sup></span> day of <span class="underline">August 2025</span> in the City Municipality of Manila.
-  </p>
+  <?php
+    echo '<p class="indent">
+    Signed this <span class="underline">' . $day . '<sup>' . $daySuffix . '</sup></span> day of <span class="underline">' . $month . ' ' . $year . '</span> in the City Municipality of Manila.
+    </p>';
 
-  <p class="indent">
-    Certification is valid only until August 8, 2026, one (1) year from the issuance.
-  </p>
+    echo '<p class="indent">
+        Certification is valid only until <span class="underline">' . $validMonth . ' ' . $validDay . ', ' . $validYear . '</span>, one (1) year from the issuance.
+    </p>';
+  ?>
+
+  
 
   <!-- Signature -->
   <div class="signature">
     <p><b>FELIX C. TAGUBA</b></p>
     <p>Punong Barangay /<br>Authorized Barangay Official and Position</p>
-    <p><span class="underline">August 8, 2025</span><br>Date</p>
+    <p><span class="underline"><?=$todayWord?></span><br>Date</p>
   </div>
 
   <!-- Witness -->
@@ -97,7 +101,7 @@
     <p>Witnessed by:</p>
     <p><b>MA. ELIEZEL D. CRUZ / Kagawad</b></p>
     <p>Barangay Official / Designation / Position</p>
-    <p><span class="underline">August 8, 2025</span><br>Date</p>
+    <p><span class="underline"><?=$todayWord?></span><br>Date</p>
   </div>
 
   <!-- Footer Note -->

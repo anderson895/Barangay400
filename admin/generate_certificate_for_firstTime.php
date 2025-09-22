@@ -11,7 +11,7 @@ if (!$certification_id) {
 }
 
 $view_certificate = $conn->query("
-    SELECT c.*, u.address AS user_address, u.first_name, u.middle_name, u.last_name
+    SELECT c.*, u.address AS user_address, u.first_name, u.middle_name, u.last_name, u.birthday
     FROM tbl_certification c
     LEFT JOIN tbl_residents u ON u.user_id = c.user_id
     WHERE c.certification_id = '$certification_id'
@@ -26,6 +26,38 @@ if (!$row) {
     ]);
     exit;
 }
+
+
+
+// 1. Today's date
+$today = new DateTime(); 
+
+$todayWord = $today->format('F j, Y'); // convert to word format
+
+$day = $today->format('j');       // 1-31
+$daySuffix = $today->format('S'); // st, nd, rd, th
+$month = $today->format('F');     // January, February, ...
+$year = $today->format('Y');      // 2025
+
+// ----------------------------
+// 2. Validity date = +1 year
+$validity = clone $today;
+$validity->modify('+1 year');
+$validDay = $validity->format('j');
+$validDaySuffix = $validity->format('S');
+$validMonth = $validity->format('F');
+$validYear = $validity->format('Y');
+
+// ----------------------------
+// 3. Age calculation
+$birthday = $row['birthday']; // e.g., "1990-09-22"
+$birthDate = new DateTime($birthday);
+$age = $today->diff($birthDate)->y; // difference in years
+
+
+
+
+$user_address = $row['user_address'];
 
 $fullname = trim($row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']);
 
