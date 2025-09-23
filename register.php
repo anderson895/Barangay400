@@ -650,6 +650,8 @@ if (isset($_POST['register'])) {
                                 <option value="" selected disabled>Select Relationship</option>
                                 <option value="Spouse">Spouse</option>
                                 <option value="Child">Child</option>
+                                <option value="Daughter">Daughter</option>
+                                <option value="Son">Son</option>
                                 <option value="Parent">Parent</option>
                                 <option value="Sibling">Sibling</option>
                                 <option value="Relative">Relative</option>

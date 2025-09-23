@@ -2,21 +2,42 @@
 $certification_id = $_GET['certification_id'];
 
 include '../connection/config.php';
+// $view_certificate = $conn->query("
+//     SELECT 
+//         c.*,
+//         u.address AS user_address,
+//         u.first_name, 
+//         u.middle_name, 
+//         u.last_name,
+//         u.birthday
+//     FROM tbl_certification c
+//     LEFT JOIN tbl_residents u ON u.user_id = c.user_id 
+//     WHERE c.certification_id = '$certification_id'
+// ");
+
 $view_certificate = $conn->query("
     SELECT 
         c.*,
-        u.address AS user_address,
-        u.first_name, 
-        u.middle_name, 
-        u.last_name
+        r.address AS user_address,
+        r.first_name, 
+        r.middle_name, 
+        r.last_name,
+        r.birthday,
+        thh.household_head_id,
+        thr.thr_relationship,
+        CONCAT(hr.first_name, ' ', COALESCE(CONCAT(LEFT(hr.middle_name, 1), '. '), ''), hr.last_name) AS fullname_of_head
     FROM tbl_certification c
-    LEFT JOIN tbl_residents u ON u.user_id = c.user_id 
+    LEFT JOIN tbl_residents r ON r.user_id = c.user_id 
+    LEFT JOIN tbl_household_relation thr ON thr.thr_user_id = c.user_id 
+    LEFT JOIN tbl_household_head thh ON thh.household_head_id = thr.thr_head_id  
+    LEFT JOIN tbl_residents hr ON hr.user_id = thh.household_head_id
     WHERE c.certification_id = '$certification_id'
 ");
 
+
 $row = $view_certificate->fetch_assoc();
 
-$fullname = $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
+$fullname = ucfirst($row['first_name']) . ' ' . ucfirst($row['middle_name']) . ' ' . ucfirst($row['last_name']);
 $user_address = $row['user_address'];
 $what_is_caused = $row['what_is_caused'];
 
@@ -38,6 +59,11 @@ $month = $today->format('F');     // January, February, ...
 $year = $today->format('Y');      // 2025
 
 
+
+$birthday = $row['birthday']; // e.g., "1990-09-22"
+$birthDate = new DateTime($birthday);
+$birthdayWord = $birthDate->format('F j, Y');
+$age = $today->diff($birthDate)->y; // Calculate age in years
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +95,14 @@ $year = $today->format('Y');      // 2025
   <?php 
 
   if($row['certificationType']==='Good Moral'){
-      include '../templates/goodmoral.php';
+    
+    if($age < 18){
+      include '../templates/goodmoral_minor.php';
+
+    }else{
+      include '../templates/goodmoral_adult.php';
+    }
+      
   }else if($row['certificationType']==='Calamity'){
     if($row['calamity_purpose']==='Fire Victim Purposes'){
       include '../templates/certificate_for_calamity_fire.php';
