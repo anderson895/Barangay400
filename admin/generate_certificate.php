@@ -64,6 +64,9 @@ $birthday = $row['birthday']; // e.g., "1990-09-22"
 $birthDate = new DateTime($birthday);
 $birthdayWord = $birthDate->format('F j, Y');
 $age = $today->diff($birthDate)->y; // Calculate age in years
+
+
+
 ?>
 
 <!DOCTYPE html>

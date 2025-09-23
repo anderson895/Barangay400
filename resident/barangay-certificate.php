@@ -506,9 +506,9 @@ function getNotificationStyle($type) {
                                             <textarea class="form-control" id="calamityNotes" name="calamityNotes" rows="3" placeholder="Any other relevant information"></textarea>
                                         </div>
 
-                                        <div class="form-group" id="causeWrapper" style="display:none;">
-                                            <label for="calamityCause">What is caused?</label>
-                                            <input type="text" class="form-control" id="calamityCause" name="calamityCause">
+                                        <div class="form-group" id="causeWrapper" style="display:block;">
+                                            <label for="calamityCaused">What is caused?</label>
+                                            <input type="text" class="form-control" id="calamityCaused" name="calamityCaused">
                                         </div>
 
 
@@ -1171,8 +1171,8 @@ $stmt->close();
                     $("#fireTimeWrapper").show();
 
                     // Show Location & Cause fields
-                    $("#locationWrapper").show();
-                    $("#causeWrapper").show();
+                    // $("#locationWrapper").show();
+                    // $("#causeWrapper").show();
 
                     // Auto-select "Fire Victim Purposes"
                     $("#calamityPurpose").val("Fire Victim Purposes");
@@ -1184,8 +1184,8 @@ $stmt->close();
                     $("#fireTimeWrapper").hide();
 
                     // Hide Location & Cause fields
-                    $("#locationWrapper").hide();
-                    $("#causeWrapper").hide();
+                    // $("#locationWrapper").hide();
+                    // $("#causeWrapper").hide();
 
                     // Reset Purpose dropdown
                     $("#calamityPurpose").val("");
