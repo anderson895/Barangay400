@@ -1075,7 +1075,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
       
       <!-- Header -->
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="firstTimeJobModalLabel">First Time Job Seeker Certificate</h5>
+        <h5 class="modal-title" id="certificateTypeModalLabel">Title</h5>
         <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
       </div>
 
@@ -1099,13 +1099,13 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 <!-- First Time Job Seeker Modal -->
-<div class="modal fade" id="firstTimeJobModal" tabindex="-1" role="dialog" aria-labelledby="firstTimeJobModalLabel" aria-hidden="true">
+<div class="modal fade" id="firstTimeJobModal" tabindex="-1" role="dialog" aria-labelledby="certificateTypeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content shadow-lg border-0">
       
       <!-- Header -->
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="firstTimeJobModalLabel">First Time Job Seeker Certificate</h5>
+        <h5 class="modal-title" id="certificateTypeModalLabel">Title</h5>
         <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
       </div>
 
@@ -1197,6 +1197,8 @@ $('.viewCert').on("click", function (e) {
   var certification_id = $btn.data("certification_id");
 
   console.log("Certification Type:", certificationType);
+
+  $("#certificateTypeModalLabel").text(certificationType);
 
   if (!certification_id) {
     console.error("❌ Missing certification_id");
