@@ -30,7 +30,7 @@ $view_certificate = $conn->query("
     LEFT JOIN tbl_residents r ON r.user_id = c.user_id 
     LEFT JOIN tbl_household_relation thr ON thr.thr_user_id = c.user_id 
     LEFT JOIN tbl_household_head thh ON thh.household_head_id = thr.thr_head_id  
-    LEFT JOIN tbl_residents hr ON hr.user_id = thh.household_head_id
+    LEFT JOIN tbl_residents hr ON hr.user_id = thh.user_id 
     WHERE c.certification_id = '$certification_id'
 ");
 

@@ -95,7 +95,12 @@
   <div class="witness">
     <p>Witnessed by:</p>
     <br><br>
-    <p><b>MA. ELIEZEL D. CRUZ / KAGAWAD</b></p>
+    <!-- <p><b>MA. ELIEZEL D. CRUZ / KAGAWAD</b></p> -->
+     <select class="" name="" id="">
+        <option value="">Select Witness</option>
+        <option value="">Kagawad 2</option>
+        <option value="">Kagawad 3</option>
+    </select>
     <p>Barangay Official / Designation / Position</p>
     <br>
     <p>Date: <span class="underline"><?=$todayWord?></span></p>

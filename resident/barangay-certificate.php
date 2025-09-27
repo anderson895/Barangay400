@@ -514,7 +514,7 @@ function getNotificationStyle($type) {
 
                                         <div class="form-group" id="locationWrapper" style="display:none;">
                                             <label for="calamityLocation">Location</label>
-                                            <input type="text" class="form-control" id="calamityLocation" name="calamityLocation">
+                                            <input type="text" class="form-control" id="calamityLocation" name="calamityLocationFire">
                                         </div>
 
 
@@ -1171,7 +1171,7 @@ $stmt->close();
                     $("#fireTimeWrapper").show();
 
                     // Show Location & Cause fields
-                    // $("#locationWrapper").show();
+                    $("#locationWrapper").show();
                     // $("#causeWrapper").show();
 
                     // Auto-select "Fire Victim Purposes"
@@ -1184,7 +1184,7 @@ $stmt->close();
                     $("#fireTimeWrapper").hide();
 
                     // Hide Location & Cause fields
-                    // $("#locationWrapper").hide();
+                    $("#locationWrapper").hide();
                     // $("#causeWrapper").hide();
 
                     // Reset Purpose dropdown

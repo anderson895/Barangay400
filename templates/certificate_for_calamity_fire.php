@@ -33,6 +33,11 @@
       display: inline-block;
       margin-right: 0;
     }
+
+    .indent {
+      text-indent: 40px;
+    }
+
   </style>
 </head>
 <body>
@@ -42,15 +47,15 @@
   </div>
 
   <div class="content">
-    <p><strong>TO WHOM IT MAY CONCERN</strong></p>
+    <p ><strong>TO WHOM IT MAY CONCERN</strong></p>
 
-    <p>This is to certify that <strong><?=strtoupper($fullname) ?></strong>, of legal age, is a bonafide resident of Barangay 400, Zone 41, District IV, with postal address at <strong><?=ucfirst($user_address)?></strong>.</p>
+    <p class="indent">This is to certify that <strong><?=strtoupper($fullname) ?></strong>, of legal age, is a bonafide resident of Barangay 400, Zone 41, District IV, with postal address at <strong><?=ucfirst($user_address)?></strong>.</p>
 
-    <p>This further certifies that due to Fire Incident caused by <em>"<?=$what_is_caused?>"</em> last <?=$calamity_dateWord?>, at <?=$calamity_timeFormatted?> at <?=$location?> the aforementioned suffered from Fire and affected by the incident.</p>
+    <p class="indent">This further certifies that due to Fire Incident caused by <em>"<?=$what_is_caused?>"</em> last <?=$calamity_dateWord?>, at <?=$calamity_timeFormatted?> at <?=$location?> the aforementioned suffered from Fire and affected by the incident.</p>
 
-    <p>This certification is issued upon the request of <strong><?=$requested_by?></strong> for <?=$calamity_purpose?>.</p>
+    <p class="indent">This certification is issued upon the request of <strong><?=$requested_by?></strong> for <?=$calamity_purpose?>.</p>
 
-    <p>WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this <strong><?=$day?><sup><?=$daySuffix?></sup> day of <?=$month . ' ' . $year?></strong>.</p>
+    <p class="indent">WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this <strong><?=$day?><sup><?=$daySuffix?></sup> day of <?=$month . ' ' . $year?></strong>.</p>
   </div>
 
   <!-- SIGNATURE -->

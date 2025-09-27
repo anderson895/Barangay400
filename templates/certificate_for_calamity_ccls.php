@@ -33,6 +33,10 @@
       display: inline-block;
       margin-right: 0;
     }
+
+    .indent {
+      text-indent: 40px;
+    }
   </style>
 </head>
 <body>
@@ -44,16 +48,16 @@
   <div class="content">
     <p><strong>TO WHOM IT MAY CONCERN</strong></p>
 
-    <p>This is to certify that <strong><?=ucfirst($fullname)?></strong> of legal age, is a bonafide resident of Barangay 400, Zone 41, District IV, with postal address at 
+    <p class="indent">This is to certify that <strong><?=ucfirst($fullname)?></strong> of legal age, is a bonafide resident of Barangay 400, Zone 41, District IV, with postal address at 
     <strong><?=ucfirst($row['user_address'])?></strong>.</p>
 
-    <p>She has known me of good moral character and can be trusted. She has never been involved in any unlawful activities and has been a law-abiding citizen of this Barangay up to the present.</p>
+    <p class="indent">She has known me of good moral character and can be trusted. She has never been involved in any unlawful activities and has been a law-abiding citizen of this Barangay up to the present.</p>
 
-    <p>This further certifies that due to the continued rainfall caused by <em>"<?=ucfirst($row['type_of_calamity'])?>"</em> last <?= date("F j, Y", strtotime($row['calamity_date'])); ?>, the aforementioned suffered from flood and were affected by the calamity.</p>
+    <p class="indent">This further certifies that due to the continued rainfall caused by <em>"<?=ucfirst($row['type_of_calamity'])?>"</em> last <?= date("F j, Y", strtotime($row['calamity_date'])); ?>, the aforementioned suffered from flood and were affected by the calamity.</p>
 
-    <p>This certification is issued upon the request of <strong><?=ucfirst($row['requested_by'])?></strong> for Calamity Claim Purposes.</p>
+    <p class="indent">This certification is issued upon the request of <strong><?=ucfirst($row['requested_by'])?></strong> for Calamity Claim Purposes.</p>
 
-    <p>WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this 
+    <p class="indent">WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this 
     <strong><?php echo date('jS'); ?><sup></sup> day of  <?php echo date('F Y'); ?></strong>.</p>
   </div>
 

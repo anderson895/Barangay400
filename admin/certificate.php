@@ -1313,7 +1313,6 @@ $('.viewCert').on("click", function (e) {
     <!-- Custom js for this page-->
     <script src="../dist/assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="../dist/assets/js/dashboard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 

@@ -133,11 +133,11 @@ if (isset($_POST['verify'])) {
 
             if ($stmt_resident->execute()) {
                 // insert into tbl_household_head if needed
-                if (strtolower($user_data['is_household_head']) === 'yes' || $user_data['is_household_head'] == '1') {
-                    $stmt_head = $conn->prepare("INSERT INTO tbl_household_head (user_id) VALUES (?)");
-                    $stmt_head->bind_param("s", $user_id);
-                    $stmt_head->execute();
-                }
+                // if (strtolower($user_data['is_household_head']) === 'yes' || $user_data['is_household_head'] == '1') {
+                //     $stmt_head = $conn->prepare("INSERT INTO tbl_household_head (user_id) VALUES (?)");
+                //     $stmt_head->bind_param("s", $user_id);
+                //     $stmt_head->execute();
+                // }
     
                 logActivity($user_id, 'Resident', 'Registered in tbl_user and tbl_resident');
                 unset($_SESSION['otp'], $_SESSION['user_data']);
