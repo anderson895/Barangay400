@@ -39,6 +39,11 @@
     .signature p {
       margin: 2px 0;
     }
+
+    .indent {
+      text-indent: 40px;
+    }
+
     .signature img {
         width: 250px;
         display: inline-block;
@@ -63,15 +68,15 @@
   <div class="content">
     <p><strong>TO WHOM IT MAY CONCERN</strong></p>
 
-    <p>This is to certify that <strong><?=strtoupper($fullname) ?></strong> of legal age, is a resident of Barangay 400, Zone 41, District IV, with postal address at <strong><?=ucfirst($user_address)?></strong>.</p>
+    <p class="indent">This is to certify that <strong><?=strtoupper($fullname) ?></strong> of legal age, is a resident of Barangay 400, Zone 41, District IV, with postal address at <strong><?=ucfirst($user_address)?></strong>.</p>
 
-    <p>He/she has known me of good moral character and can be trusted. He/she has never been involved in any unlawful activities and has been a law-abiding citizen of this Barangay up to the present.</p>
+    <p class="indent">He/she has known me of good moral character and can be trusted. He/she has never been involved in any unlawful activities and has been a law-abiding citizen of this Barangay up to the present.</p>
 
-    <p>This further certifies that due to the continued rainfall caused by <em>"<?=$what_is_caused?>"</em> last <?=$calamity_dateWord?>, the aforementioned suffered from flood and were affected by the calamity.</p>
+    <p class="indent">This further certifies that due to the continued rainfall caused by <em>"<?=$what_is_caused?>"</em> last <?=$calamity_dateWord?>, the aforementioned suffered from flood and were affected by the calamity.</p>
 
-    <p>This certification is issued upon the request of <strong><?=$requested_by?></strong> as supporting document for submission to her work office on Employees Provident Moratorium Program.</p>
+    <p class="indent">This certification is issued upon the request of <strong><?=$requested_by?></strong> as supporting document for submission to her work office on Employees Provident Moratorium Program.</p>
 
-    <p>WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this <strong><?=$day?><sup><?=$daySuffix?></sup> day of <?=$month . ' ' . $year?></strong>.</p>
+    <p class="indent">WITNESS WHEREOF I have hereunto set my hand and affixed the official seal of this office. Done in the City of Manila, this <strong><?=$day?><sup><?=$daySuffix?></sup> day of <?=$month . ' ' . $year?></strong>.</p>
   </div>
 
 <!-- SIGNATURE -->
