@@ -554,7 +554,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
           <h6 class="text-primary mt-3">Blotter Details</h6>
           <div class="form-group">
             <label>Type</label>
-            <select class="form-control" name="blotter_type">
+            <select class="form-control" name="blotter_type" id="edit_type">
                                 <option value="">Select</option>
                                 <option value="theft">Theft</option>
                                 <option value="assault">Assault</option>
@@ -736,60 +736,56 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-success text-white">
+      <div class="modal-header bg-success text-white py-2">
         <h5 class="modal-title" id="scheduleModalLabel">Set Hearing Schedule</h5>
-        <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="scheduleForm">
+        <input type="hidden" id="schedule_complainant_email" name="complainant_email">
+        <input type="hidden" id="schedule_id" name="blotter_id">
 
-      <input type="hidden" id="schedule_complainant_email" name="complainant_email">
+        <div class="modal-body p-2">
+          <div class="mb-2">
+            <label class="form-label">Complainant</label>
+            <input type="text" id="schedule_complainant" class="form-control form-control-sm" readonly>
+          </div>
 
+          <div class="mb-2">
+            <label class="form-label">Hearing Date</label>
+            <input type="date" id="schedule_hearingdate" name="hearing_date" class="form-control form-control-sm" required>
+          </div>
 
-        <div class="modal-body">
-            <input type="hidden" id="schedule_id" name="blotter_id">
+          <div class="mb-2">
+            <label class="form-label">Hearing Time</label>
+            <input type="time" id="schedule_hearingtime" name="hearing_time" class="form-control form-control-sm" required>
+          </div>
 
-            <div class="mb-3">
-                <label>Complainant</label>
-                <input type="text" id="schedule_complainant" class="form-control" readonly>
-            </div>
+          <div class="mb-2">
+            <label class="form-label">Scheduled By</label>
+            <input type="text" id="schedule_scheduledby" name="scheduled_by" class="form-control form-control-sm" required>
+          </div>
 
-            <div class="mb-3">
-                <label>Hearing Date</label>
-                <input type="date" id="schedule_hearingdate" name="hearing_date" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Hearing Time</label>
-                <input type="time" id="schedule_hearingtime" name="hearing_time" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Scheduled By</label>
-                <input type="text" id="schedule_scheduledby" name="scheduled_by" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Status</label>
-                <select id="schedule_status" name="blotter_status" class="form-control text-black" required>
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Scheduled Hearing">Scheduled Hearing</option>
-                    <option value="Resolved">Resolved</option>
-                    <option value="Dismissed">Dismissed</option>
-                </select>
-            </div>
-
+          <div class="mb-2">
+            <label class="form-label">Status</label>
+            <select id="schedule_status" name="blotter_status" class="form-select form-select-sm text-black" required>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Scheduled Hearing">Scheduled Hearing</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Dismissed">Dismissed</option>
+            </select>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Save Schedule</button>
+
+        <div class="modal-footer py-2">
+          <button type="submit" class="btn btn-success btn-sm w-100">Save Schedule</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
 
 
 
