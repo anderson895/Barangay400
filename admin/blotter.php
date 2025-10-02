@@ -794,59 +794,33 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 
-                
-                
-               <?php
+  <?php
 include '../connection/config.php';
 
-// ✅ SweetAlert messages
-if (isset($_GET['success'])) {
-    $successMessages = [
-        1 => "Blotter Report Submitted Successfully",
-        2 => "Blotter Report Updated Successfully"
-    ];
-    if (isset($successMessages[$_GET['success']])) {
-        echo '<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Swal.fire({
-                icon: "success",
-                title: "' . $successMessages[$_GET['success']] . '",
-                showConfirmButton: false,
-                timer: 1500
-            });
-        });
-        </script>';
-    }
-}
-
-if (isset($_GET['error'])) {
-    echo '<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Something went wrong. Please try again.",
-            showConfirmButton: true
-        });
-    });
-    </script>';
-}
-
-// ✅ Pagination & Search
+// ✅ GET parameters
 $search = $_GET['search'] ?? '';
-$page   = $_GET['page'] ?? 1;
-$limit  = 10;
+$page = $_GET['page'] ?? 1;
+$status_filter = $_GET['status'] ?? 'Ongoing'; // default tab = Ongoing
+$limit = 10;
 $offset = ($page - 1) * $limit;
 
+// ✅ Build WHERE clause
 $where_clause = "1=1";
 $params = [];
-$types  = "";
+$types = "";
 
-// ✅ Search across complainant/respondent/type
+// Search filter
 if (!empty($search)) {
-    $where_clause = "(b.complainant_name LIKE ? OR b.respondent_name LIKE ? OR b.blotter_type LIKE ?)";
-    $params = ["%$search%", "%$search%", "%$search%"];
-    $types  = "sss";
+    $where_clause .= " AND (b.complainant_name LIKE ? OR b.respondent_name LIKE ? OR b.blotter_type LIKE ?)";
+    $params = array_merge($params, ["%$search%", "%$search%", "%$search%"]);
+    $types .= "sss";
+}
+
+// Status filter
+if (!empty($status_filter)) {
+    $where_clause .= " AND b.blotter_status = ?";
+    $params[] = $status_filter;
+    $types .= "s";
 }
 
 // ✅ Count total rows
@@ -868,7 +842,7 @@ $sql = "SELECT b.*
         LIMIT ? OFFSET ?";
 $params[] = $limit;
 $params[] = $offset;
-$types   .= "ii";
+$types .= "ii";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param($types, ...$params);
@@ -881,35 +855,43 @@ $stmt->close();
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+
                 <!-- Header -->
-                <div class="container-fluid mt-3">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                        <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
-                        <button class="btn btn-warning text-black font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
-                            Add Blotter
-                        </button>
-                    </div>
-
-                    <!-- Tabs -->
-                    <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item"><a class="nav-link active font-weight-bold" href="#">Ongoing</a></li>
-                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Scheduled Hearings</a></li>
-                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Resolved</a></li>
-                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Dismissed</a></li>
-                    </ul>
-
-                    <!-- Search -->
-                    <form method="GET" action="" class="form-inline mb-3">
-                        <div class="input-group w-50">
-                            <input type="text" name="search" class="form-control form-control-sm" placeholder="Search for Blotter Cases" value="<?= htmlspecialchars($search) ?>">
-                            <div class="input-group-append">
-                                <button class="btn btn-success btn-sm" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                    <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
+                    <button class="btn btn-warning text-black font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
+                        Add Blotter
+                    </button>
                 </div>
+
+                <!-- Tabs -->
+                <ul class="nav nav-tabs mb-3">
+                    <?php 
+                    $statuses = ['Ongoing', 'Scheduled Hearing', 'Resolved', 'Dismissed'];
+                    foreach ($statuses as $status):
+                        $active = ($status === $status_filter) ? 'active' : '';
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold <?= $active ?>" 
+                           href="?status=<?= urlencode($status) ?>&search=<?= urlencode($search) ?>">
+                           <?= $status ?>
+                        </a>
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+
+                <!-- Search -->
+                <form method="GET" action="" class="form-inline mb-3">
+                    <input type="hidden" name="status" value="<?= htmlspecialchars($status_filter) ?>">
+                    <div class="input-group w-50">
+                        <input type="text" name="search" class="form-control form-control-sm" placeholder="Search for Blotter Cases" value="<?= htmlspecialchars($search) ?>">
+                        <div class="input-group-append">
+                            <button class="btn btn-success btn-sm" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
                 <!-- Table -->
                 <div class="table-responsive">
@@ -1017,8 +999,7 @@ $stmt->close();
                                         </button>
 
 
-
-                                    </td>
+</td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
@@ -1032,24 +1013,23 @@ $stmt->close();
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $page - 1 ?>">&laquo;</a>
+                            <a class="page-link" href="?status=<?= urlencode($status_filter) ?>&search=<?= urlencode($search) ?>&page=<?= $page - 1 ?>">&laquo;</a>
                         </li>
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                             <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                                <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $i ?>"><?= $i ?></a>
+                                <a class="page-link" href="?status=<?= urlencode($status_filter) ?>&search=<?= urlencode($search) ?>&page=<?= $i ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
                         <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $page + 1 ?>">&raquo;</a>
+                            <a class="page-link" href="?status=<?= urlencode($status_filter) ?>&search=<?= urlencode($search) ?>&page=<?= $page + 1 ?>">&raquo;</a>
                         </li>
                     </ul>
                 </nav>
+
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 

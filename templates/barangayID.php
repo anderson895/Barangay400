@@ -26,7 +26,7 @@
     </div>
 
     <!-- Title -->
-    <h2 class="text-center font-bold mt-3 underline uppercase text-sm">
+    <h2 class="text-center font-bold  underline uppercase text-sm">
       Barangay Identification Card
     </h2>
 
@@ -47,9 +47,9 @@
     <!-- ID + Signature -->
     <div class="flex justify-between mt-6">
       <!-- Photo Box -->
-      <div class="w-28 h-32 border-2 border-black flex items-center justify-center text-[10px]">
-        PHOTO
-      </div>
+     <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
+          PHOTO
+        </div>
       
    
     </div>
@@ -74,54 +74,48 @@
   </div>
 
   <!-- BACK SIDE -->
-  <div class="w-[700px] border-2 border-black bg-white p-6 flex flex-col justify-between">
-
-    <!-- Top content -->
-    <div>
-      <!-- Info Section -->
-      <div class="grid grid-cols-2 gap-4 text-xs">
-        <div>
-          <p>Precinct No.: <span class="border-b border-black inline-block w-32"></span></p>
-          <p class="mt-2">Date of Birth: <span class="border-b border-black inline-block w-32"></span></p>
-          <p class="mt-2">Height: <span class="border-b border-black inline-block w-16"></span>
-             Weight: <span class="border-b border-black inline-block w-16"></span></p>
-          <p class="mt-2">SSS / GSIS No.: <span class="border-b border-black inline-block w-32"></span></p>
-        </div>
-
-        <div>
-          <p>Blood Type: <span class="border-b border-black inline-block w-32"></span></p>
-          <p class="mt-2">Place of Birth: <span class="border-b border-black inline-block w-32"></span></p>
-          <p class="mt-2">Status: <span class="border-b border-black inline-block w-32"></span></p>
-          <p class="mt-2">TIN No.: <span class="border-b border-black inline-block w-32"></span></p>
-        </div>
+<div class="w-[700px] h-[500px] border-2 border-black bg-white p-6 flex flex-col justify-between">
+  <!-- Top content -->
+  <div>
+    <div class="grid grid-cols-2 gap-4 text-xs">
+      <div>
+        <p>Precinct No.: <span class="border-b border-black inline-block w-32"></span></p>
+        <p class="mt-2">Date of Birth: <span class="border-b border-black inline-block w-32"></span></p>
+        <p class="mt-2">Height: <span class="border-b border-black inline-block w-16"></span>
+           Weight: <span class="border-b border-black inline-block w-16"></span></p>
+        <p class="mt-2">SSS / GSIS No.: <span class="border-b border-black inline-block w-32"></span></p>
       </div>
-
-      <!-- Emergency Contact -->
-      <div class="mt-6 text-xs">
-        <p class="text-red-600 font-bold">IN CASE OF EMERGENCY, PLEASE NOTIFY:</p>
-        <p class="mt-2">Name: <span class="border-b border-black inline-block w-64"></span></p>
-        <p class="mt-2">Address: <span class="border-b border-black inline-block w-72"></span></p>
-        <p class="mt-2">Contact No.: <span class="border-b border-black inline-block w-64"></span></p>
+      <div>
+        <p>Blood Type: <span class="border-b border-black inline-block w-32"></span></p>
+        <p class="mt-2">Place of Birth: <span class="border-b border-black inline-block w-32"></span></p>
+        <p class="mt-2">Status: <span class="border-b border-black inline-block w-32"></span></p>
+        <p class="mt-2">TIN No.: <span class="border-b border-black inline-block w-32"></span></p>
       </div>
     </div>
 
-    <!-- Officials (Always at bottom) -->
-    <div class="mt-10 flex justify-between items-center">
-      <div class="text-center">
-        <p class="font-bold underline">IMELDA M. SAQUNG</p>
-        <p class="text-red-600 text-xs">Barangay Secretary</p>
-      </div>
-
-      <div class="flex flex-col items-center">
-        <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
-          PHOTO
-        </div>
-        <p class="font-bold underline">Hon. FELIX C. TAGUBA</p>
-        <p class="text-red-600 text-xs">Punong Barangay</p>
-      </div>
+    <div class="mt-6 text-xs">
+      <p class="text-red-600 font-bold">IN CASE OF EMERGENCY, PLEASE NOTIFY:</p>
+      <p class="mt-2">Name: <span class="border-b border-black inline-block w-64"></span></p>
+      <p class="mt-2">Address: <span class="border-b border-black inline-block w-72"></span></p>
+      <p class="mt-2">Contact No.: <span class="border-b border-black inline-block w-64"></span></p>
     </div>
-
   </div>
 
+  <!-- Officials at bottom -->
+  <div class="flex justify-between items-center">
+    <div class="text-center">
+      <p class="font-bold underline">IMELDA M. SAQUNG</p>
+      <p class="text-red-600 text-xs">Barangay Secretary</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
+        PHOTO
+      </div>
+      <p class="font-bold underline">Hon. FELIX C. TAGUBA</p>
+      <p class="text-red-600 text-xs">Punong Barangay</p>
+    </div>
+  </div>
+</div>
 </body>
 </html>
