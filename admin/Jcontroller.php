@@ -111,10 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->close();
         } else if ($_POST['requestType'] == "UpdateBlotter") {
 
-            // echo "<pre>";
-            // print_r($_POST);
-            // echo "</pre>";
-                
+         
                 $id                   = $_POST['blotter_id'];
 
                 $complainant_name     = $_POST['complainant_name'];
@@ -142,12 +139,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $hearing_time  = trim($_POST['hearing_time']) !== '' ? $_POST['hearing_time'] : null;
                 $scheduled_by  = trim($_POST['scheduled_by']) !== '' ? $_POST['scheduled_by'] : null;
 
-
-
                 $blotter_status       = $_POST['blotter_status'];
 
                 // 🔹 File handling
-                $documentFileName = $_POST['existing_document'] ?? ''; // from hidden field if no new file
+                $documentFileName = $_POST['existing_document'] ?? ''; // kung merong nakalagay from hidden field
                 if (!empty($_FILES['supporting_documents']) && $_FILES['supporting_documents']['error'] === UPLOAD_ERR_OK) {
                     $maxFileSize = 10 * 1024 * 1024; 
                     if ($_FILES['supporting_documents']['size'] > $maxFileSize) {
@@ -176,16 +171,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                // 🔹 Update Query (all fields)
-                $stmt = $conn->prepare("UPDATE j_blotter SET 
+                // 🔹 Base Update Query
+                $sql = "UPDATE j_blotter SET 
                     complainant_name=?, complainant_age=?, complainant_address=?, complainant_email=?, complainant_phone=?,
                     respondent_name=?, respondent_age=?, respondent_address=?,
-                    blotter_type=?, incident_location=?, date_reported=?, time_reported=?, incident_narrative=?, supporting_documents=?,
-                    hearing_date=?, hearing_time=?, scheduled_by=?, blotter_status=?
-                    WHERE blotter_id=?");
+                    blotter_type=?, incident_location=?, date_reported=?, time_reported=?, incident_narrative=?,";
 
-                $stmt->bind_param(
-                    "sissssisssssssisssi",
+                // 🔹 Conditional: kung may documentFileName, isama sa update
+                $params = [
                     $complainant_name,
                     $complainant_age,
                     $complainant_address,
@@ -198,14 +191,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $incident_location,
                     $date_reported,
                     $time_reported,
-                    $incident_narrative,
-                    $documentFileName,
-                    $hearing_date,
-                    $hearing_time,
-                    $scheduled_by,
-                    $blotter_status,
-                    $id
-                );
+                    $incident_narrative
+                ];
+
+                $types = "sissssissssss"; // hanggang incident_narrative
+
+                if (!empty($documentFileName)) {
+                    $sql .= " supporting_documents=?,";
+                    $params[] = $documentFileName;
+                    $types   .= "s";
+                }
+
+                $sql .= " hearing_date=?, hearing_time=?, scheduled_by=?, blotter_status=? WHERE blotter_id=?";
+
+                $params[] = $hearing_date;
+                $params[] = $hearing_time;
+                $params[] = $scheduled_by;
+                $params[] = $blotter_status;
+                $params[] = $id;
+
+                $types .= "ssssi";
+
+                // 🔹 Prepare and execute
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param($types, ...$params);
 
                 if ($stmt->execute()) {
                     echo json_encode([
@@ -221,6 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt->close();
                 exit;
+
         }else {
             echo '404';
         }

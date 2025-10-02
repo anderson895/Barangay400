@@ -547,7 +547,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
             </div>
             <div class="form-group col-md-3">
               <label>Address</label>
-              <textarea class="form-control" name="respondent_address" id="edit_respondentaddress"></textarea>
+              <input type="text" class="form-control" name="respondent_address" id="edit_respondentaddress">
             </div>
           </div>
 
