@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2025 at 05:10 PM
+-- Generation Time: Oct 02, 2025 at 05:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,8 +54,8 @@ CREATE TABLE `j_blotter` (
 --
 
 INSERT INTO `j_blotter` (`blotter_id`, `complainant_name`, `complainant_age`, `complainant_address`, `complainant_email`, `complainant_phone`, `respondent_name`, `respondent_age`, `respondent_address`, `blotter_type`, `incident_location`, `date_reported`, `time_reported`, `incident_narrative`, `supporting_documents`, `hearing_date`, `hearing_time`, `scheduled_by`, `blotter_status`) VALUES
-(13, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'sta.rosa 2 marilao', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2ef789f602.14746924.png', NULL, NULL, NULL, 'Ongoing'),
-(14, 'joshua', 12, 'None\r\nNone', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'None', '', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', '2025-10-02', '03:51:00', 'JOSHUA', 'Ongoing');
+(13, 'joshua', 12, 'sta.rosa 2 marilao', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'sta.rosa 2 marilao', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2ef789f602.14746924.png', NULL, NULL, NULL, 'Ongoing'),
+(14, 'joshua', 12, 'marilao bulacan', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'None', 'theft', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', '2025-10-02', '03:51:00', 'JOSHUA', 'Scheduled Hearing');
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1237,8 @@ CREATE TABLE `tbl_residents` (
 INSERT INTO `tbl_residents` (`res_id`, `user_id`, `household_id`, `first_name`, `middle_name`, `last_name`, `birthday`, `birthplace`, `civilStatus`, `mobile`, `gender`, `address`, `precinctNumber`, `residentStatus`, `voterStatus`, `bloodType`, `height`, `weight`, `typeOfID`, `IDNumber`, `SSSGSIS_Number`, `TIN_number`, `barangay_number`, `is_senior`, `is_pwd`, `is_4ps_member`, `suffix`, `is_household_head`, `household_head_name`, `relationship_to_head`, `senior_document`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency_document`, `residency_tenure`, `occupation`, `email`, `image`, `created_at`, `updated_at`) VALUES
 (51, '1', 0, 'john', '', 'doe', '2020-09-21', '', 'Single', '09454454744', 'Female', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'Yes', '', '', '', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', NULL, 'N/A', 'rodriguezryan325@gmail.com', NULL, '2025-09-21 14:34:32', '2025-09-21 16:27:24'),
 (60, '2', 0, 'Joshua', 'Anderson', 'doe', '2000-09-21', '', 'Single', '09454454744', 'Male', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'No', '9', 'Relative', '', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', NULL, 'N/A', 'padillajoshuaanderson.pdm@gmail.com', NULL, '2025-09-21 15:19:44', '2025-09-21 16:27:55'),
-(61, '3', 0, 'cevin', '', 'garnet', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-09-21 16:27:26');
+(61, '3', 0, 'cevin', '', 'garnet', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-09-21 16:27:26'),
+(62, '8', 0, 'kevin', '', 'quiambao', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-10-02 15:22:20');
 
 -- --------------------------------------------------------
 
@@ -1724,7 +1725,7 @@ ALTER TABLE `tbl_residentcop`
 -- AUTO_INCREMENT for table `tbl_residents`
 --
 ALTER TABLE `tbl_residents`
-  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
