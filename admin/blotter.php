@@ -33,8 +33,7 @@ if ($result && $result->num_rows > 0) {
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
-    $address = $row["address"];
-    $phone_number = $row["phone_number"];
+    $address = $row["address"]; 
     $email = $row["email"];
     $is_logged_in = $row['is_logged_in'];
     $account_status = $row["account_status"];
@@ -77,6 +76,16 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
     <link rel="shortcut icon" href="../dist/assets/images/logos.png" />
 </head>
 
+
+<style>
+    
+  .nav-link i {
+    margin-right: 10px;
+  }
+
+</style>
+
+
 <body>
     <div class="container-scroller">
 
@@ -99,7 +108,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="../dist/assets/images/default_image.png" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
@@ -120,11 +129,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <style>
-            .nav-link i {
-                margin-right: 10px;
-            }
-        </style>
+        
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
@@ -230,8 +235,11 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                         </div>
                     </div>
                 </div>
+
+
+
                 <!-- Blotter Request Modal -->
-                <div class="modal fade" id="BlotterModal" tabindex="-1" role="dialog" aria-labelledby="BlotterModalLabel" aria-hidden="true">
+                <!-- <div class="modal fade" id="BlotterModal" tabindex="-1" role="dialog" aria-labelledby="BlotterModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -266,7 +274,6 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                     <div class="row">
                                         
 
-                                        <!-- Hidden fields to store resident information -->
                                         <input type="hidden" id="user_id" name="user_id">
                                         <input type="hidden" id="first_name" name="first_name">
                                         <input type="hidden" id="last_name" name="last_name">
@@ -325,7 +332,6 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Document Upload Section -->
                                         <div class="mb-4">
                                             <h5 class="border-bottom pb-2"><i class="fas fa-file-upload me-2"></i>Supporting Documents</h5>
                                             <div class="file-upload">
@@ -340,7 +346,6 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                                         </div>
                                     </div>
 
-                                    <!-- Terms and Submit -->
                                     <div class="mb-3 d-flex justify-content-center">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="terms" required>
@@ -358,60 +363,127 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                             </form>
                         </div>
                     </div>
+                </div> -->
+
+                <!-- Add Blotter Report Modal -->
+                <div class="modal fade" id="BlotterModal" tabindex="-1" role="dialog" aria-labelledby="blotterModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    
+                    <!-- Modal Header -->
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="blotterModalLabel">Add Blotter Report</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form id="blotterForm" enctype="multipart/form-data">
+
+                        <!-- Complainant Information -->
+                        <h6 class="mb-3 font-weight-bold">Complainant Information</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                            <label>Complainant Name</label>
+                            <input type="text" class="form-control" name="complainant_name">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Age</label>
+                            <input type="number" class="form-control" name="complainant_age">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Residential Address</label>
+                            <input type="text" class="form-control" name="complainant_address">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Email Address (If any)</label>
+                            <input type="email" class="form-control" name="complainant_email">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" name="complainant_phone">
+                            </div>
+                        </div>
+
+                        <!-- Respondent Information -->
+                        <h6 class="mt-4 mb-3 font-weight-bold">Respondent Information</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                            <label>Respondent Name</label>
+                            <input type="text" class="form-control" name="respondent_name">
+                            <div class="d-flex align-items-center mt-1 ml-4">
+                                <input type="checkbox" class="form-check-input mr-2" id="unknownRespondent" name="unknown_respondent">
+                                <label class="form-check-label mb-0" for="unknownRespondent">I'm not sure what the name is</label>
+                            </div>
+
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Age</label>
+                            <input type="number" class="form-control" name="respondent_age">
+                            </div>
+                            <div class="form-group col-md-12">
+                            <label>Residential Address</label>
+                            <input type="text" class="form-control" name="respondent_address">
+                            </div>
+                        </div>
+
+                        <!-- Incident Details -->
+                        <h6 class="mt-4 mb-3 font-weight-bold">Incident Details</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                            <label>Blotter Type</label>
+                            <select class="form-control" name="blotter_type">
+                                <option value="">Select</option>
+                                <option value="theft">Theft</option>
+                                <option value="assault">Assault</option>
+                                <option value="harassment">Harassment</option>
+                            </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Location of Incident</label>
+                            <input type="text" class="form-control" name="incident_location">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Date Reported</label>
+                            <input type="date" class="form-control" name="date_reported">
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label>Time Reported</label>
+                            <input type="time" class="form-control" name="time_reported">
+                            </div>
+                        </div>
+
+                        <!-- Narrative of Incident -->
+                        <h6 class="mt-4 mb-3 font-weight-bold">Narrative of Incident</h6>
+                        <div class="form-group">
+                            <textarea class="form-control" name="incident_narrative" rows="4" placeholder="Incident Report Narrative"></textarea>
+                        </div>
+
+                        <!-- Supporting Documents -->
+                        <h6 class="mt-4 mb-3 font-weight-bold">Supporting Documents and Evidence</h6>
+                        <div class="form-group">
+                            <input type="file" class="form-control-file" name="supporting_documents" accept=".pdf,.jpg,.jpeg,.png,.mp4">
+                            <small class="form-text text-muted">
+                            Accepted formats: PDF, JPG, PNG, MP4 (Max size: 10MB)
+                            </small>
+                        </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" form="blotterForm" class="btn btn-success">Submit Blotter</button>
+                    </div>
+
+                    </div>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Form validation
-                        (function() {
-                            'use strict';
+                </div>
 
-                            // Fetch all forms to apply validation
-                            var forms = document.querySelectorAll('.needs-validation');
-
-                            // Loop and prevent submission
-                            Array.prototype.slice.call(forms).forEach(function(form) {
-                                form.addEventListener('submit', function(event) {
-                                    if (!form.checkValidity()) {
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                    }
-                                    form.classList.add('was-validated');
-                                }, false);
-                            });
-                        })();
-
-                        // Auto-fill today's date
-                        document.getElementById('dateToday').valueAsDate = new Date();
-
-                        // Resident selection change handling
-                        document.getElementById('resident_id').addEventListener('change', function() {
-                            var selectedOption = this.options[this.selectedIndex];
-                            document.getElementById('user_id').value = selectedOption.getAttribute('data-userid');
-                            document.getElementById('first_name').value = selectedOption.getAttribute('data-firstname');
-                            document.getElementById('last_name').value = selectedOption.getAttribute('data-lastname');
-                            document.getElementById('middle_name').value = selectedOption.getAttribute('data-middlename');
-                        });
-
-                        // Display file name when selected
-                        document.getElementById('document_path').addEventListener('change', function() {
-                            var fileName = this.files[0]?.name;
-                            if (fileName) {
-                                var fileInfo = document.createElement('p');
-                                fileInfo.className = 'mt-2 mb-0';
-                                fileInfo.innerHTML = '<i class="fas fa-check-circle text-success me-2"></i>Selected file: <strong>' + fileName + '</strong>';
-
-                                // Remove previous file info if exists
-                                var existingInfo = document.querySelector('.file-selected-info');
-                                if (existingInfo) {
-                                    existingInfo.remove();
-                                }
-
-                                fileInfo.className += ' file-selected-info';
-                                this.parentNode.appendChild(fileInfo);
-                            }
-                        });
-                    });
-                </script>
+                
                 <?php
                 include '../connection/config.php';
 
@@ -542,7 +614,7 @@ LIMIT ? OFFSET ?";
                                     <div class="container-fluid mt-3">
                                         <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                                             <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
-                                            <button class="btn btn-warning text-white font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
+                                            <button class="btn btn-warning text-black font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
                                                 Add Blotter
                                             </button>
                                         </div>
@@ -566,14 +638,15 @@ LIMIT ? OFFSET ?";
                                         <!-- Search Bar -->
                                         <form method="GET" action="" class="form-inline mb-3">
                                             <div class="input-group w-50">
-                                                <input type="text" name="search" class="form-control" placeholder="Search for Ongoing Blotter Cases">
+                                                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search for Ongoing Blotter Cases">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-success" type="submit">
-                                                        <i class="fas fa-search"></i>
-                                                    </button>
+                                                <button class="btn btn-success btn-sm" type="submit">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
                                                 </div>
                                             </div>
                                         </form>
+
                                     </div>
 
 
@@ -581,12 +654,13 @@ LIMIT ? OFFSET ?";
                                     <table class="table table-striped table-borderless" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Blotter ID</th>
+                                                <th>Blotter No</th>
                                                 <th>Complainant</th>
-                                                <th>Respondent</th>
-                                                <th>Nature of Case</th>
+                                                <th>Hearing type</th>
+                                                <th>Hearing Date</th>
+                                                <th>Hearing Time</th>
+                                                <th>Scheduled By</th>
                                                 <th>Status</th>
-                                                <th>Date Filed</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -637,223 +711,6 @@ LIMIT ? OFFSET ?";
                                                      
                                                         </td>
                                                     </tr>
-
-                                                    <!-- View Modal -->
-                                                    <div class="modal fade" id="viewComplainModal<?php echo $row['blotter_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                            <div class="modal-content shadow-lg border-0">
-                                                                <!-- Enhanced Header with gradient background -->
-                                                                <div class="modal-header bg-gradient-primary text-white py-3">
-                                                                    <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-                                                                        <i class="fas fa-file-alt mr-2"></i>Complain Request Details
-                                                                    </h5>
-                                                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-
-                                                                <div class="modal-body py-4">
-                                                                    <!-- Status badge at top -->
-                                                                    <div class="text-center mb-4">
-                                                                        <span class="badge badge-pill px-4 py-2 font-weight-bold text-white
-                                                    <?php
-                                                    if ($row['status'] == 'Approved') echo 'badge-warning';
-                                                    elseif ($row['status'] == 'On Going') echo 'badge-info';
-                                                    elseif ($row['status'] == 'Denied') echo 'badge-danger';
-                                                    elseif ($row['status'] == 'Settled') echo 'badge-success';
-                                                    else echo 'badge-warning';
-                                                    ?>">
-                                                                            <i class="fas 
-                                                        <?php
-                                                        if ($row['status'] == 'Approved') echo 'fa-check-circle';
-                                                        elseif ($row['status'] == 'On Going') echo 'fa-clock';
-                                                        elseif ($row['status'] == 'Denied') echo 'fa-times-circle';
-                                                        elseif ($row['status'] == 'Settled') echo 'fa-handshake';
-                                                        else echo 'fa-exclamation-circle';
-                                                        ?> mr-1"></i>
-                                                                            <?php echo htmlspecialchars(ucfirst($row['status'])); ?>
-                                                                        </span>
-                                                                    </div>
-
-                                                                    <!-- Card container for details -->
-                                                                    <div class="card border-0 shadow-sm mb-4">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-user mr-2"></i>Blotter Information
-                                                                            </h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Blotter ID</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($row['blotter_id']); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Complainant</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($row['complainant']); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Respondent</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($row['respondent']); ?></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Nature of Case</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($row['natureOfCase']); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Victim (if applicable)</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($row['victim']) ? htmlspecialchars($row['victim']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Witness (if applicable)</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($row['witness']) ? htmlspecialchars($row['witness']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="card border-0 shadow-sm mb-4">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-user mr-2"></i>Description
-                                                                            </h6>
-                                                                        </div>
-
-                                                                        <div class="card-body">
-                                                                            <div class="info-group mb-3">
-                                                                                <label class="text-muted small text-uppercase" for="comp_desc">Describe What Happened</label>
-                                                                                <p class="font-weight-bold mb-2">
-                                                                                    <?php echo !empty($row['comp_desc']) ? htmlspecialchars($row['comp_desc']) : 'No description provided.'; ?>
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Document Preview Section -->
-                                                                    <?php
-                                                                        // Assuming $row['document_path'] contains comma-separated file paths
-                                                                        $document_paths = explode(',', $row['document_path']);
-                                                                        
-                                                                        if (!empty($document_paths)): ?>
-                                                                            <div class="card border-0 shadow-sm">
-                                                                                <div class="card-header bg-light py-3">
-                                                                                    <h6 class="font-weight-bold text-primary mb-0">
-                                                                                        <i class="fas fa-file-alt mr-2"></i>Supporting Documents
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <div class="card-body">
-                                                                                    <div class="row">
-                                                                                        <?php foreach ($document_paths as $path):
-                                                                                            $path = trim($path);
-                                                                                            $file_ext = strtolower(pathinfo($path, PATHINFO_EXTENSION)); ?>
-                                                                                            
-                                                                                            <div class="col-md-4 mb-4 text-center">
-                                                                                                <?php if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                                                                                                    <div class="img-container border p-2 mb-2">
-                                                                                                        <img src="../dist/assets/images/uploads/blotter-documents/<?php echo $path; ?>"
-                                                                                                             class="img-fluid" alt="Document">
-                                                                                                    </div>
-                                                                                                    <a href="../dist/assets/images/uploads/blotter-documents/<?php echo $path; ?>"
-                                                                                                       target="_blank" class="btn btn-sm btn-outline-primary">
-                                                                                                        <i class="fas fa-external-link-alt mr-1"></i> View Full Size
-                                                                                                    </a>
-                                                                                                <?php else: ?>
-                                                                                                    <div class="border p-4">
-                                                                                                        <div class="display-4 text-muted mb-2">
-                                                                                                            <i class="far fa-file-<?php
-                                                                                                                echo $file_ext == 'pdf' ? 'pdf' :
-                                                                                                                    (in_array($file_ext, ['doc', 'docx']) ? 'word' :
-                                                                                                                    (in_array($file_ext, ['xls', 'xlsx']) ? 'excel' :
-                                                                                                                    (in_array($file_ext, ['ppt', 'pptx']) ? 'powerpoint' : 'alt')));
-                                                                                                            ?>"></i>
-                                                                                                        </div>
-                                                                                                        <p class="text-muted small mb-1"><?php echo strtoupper($file_ext); ?> Document</p>
-                                                                                                        <a href="../dist/assets/images/uploads/blotter-documents/<?php echo $path; ?>"
-                                                                                                           target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                                                                            <i class="fas fa-eye mr-1"></i> View Document
-                                                                                                        </a>
-                                                                                                    </div>
-                                                                                                <?php endif; ?>
-                                                                                            </div>
-                                                                                        <?php endforeach; ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        <?php endif; ?>
-
-
-
-                                                                </div>
-
-                                                                <div class="modal-footer bg-light">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                                        <i class="fas fa-times mr-1"></i> Close
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Edit Modal for Barangay Secretary only -->
-                                                    
-                                                        <div class="modal fade"
-                                                            id="editModal<?php echo $row['blotter_id']; ?>" tabindex="-1"
-                                                            role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content shadow-lg border-0">
-                                                                    <div class="modal-header bg-gradient-warning text-white py-3">
-                                                                        <h5 class="modal-title font-weight-bold"
-                                                                            id="editModalLabel">
-                                                                            <i class="fas fa-edit mr-2"></i>Update Complain
-                                                                            Request
-                                                                        </h5>
-                                                                        <button type="button" class="close text-white"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="update_blotter.php" method="POST">
-                                                                        <div class="modal-body py-4">
-                                                                            <input type="hidden" name="blotter_id"
-                                                                                value="<?php echo $row['blotter_id']; ?>">
-
-                                                                            <div class="form-group">
-                                                                                <label
-                                                                                    for="status<?php echo $row['blotter_id']; ?>">Update
-                                                                                    Status</label>
-                                                                                <select class="form-control" name="status"
-                                                                                    id="status<?php echo $row['blotter_id']; ?>"
-                                                                                    required>
-                                                                                    <option value="">Select Status</option>
-                                                                                    <option value="On Going" <?php echo ($row['status'] == 'On Going') ? 'selected' : ''; ?>>On Going</option>
-                                                                                    <option value="Approved" <?php echo ($row['status'] == 'Approved') ? 'selected' : ''; ?>>Completed</option>
-                                                                                    <option value="Denied" <?php echo ($row['status'] == 'Denied') ? 'selected' : ''; ?>>Denied</option>
-                                                                                </select>
-                                                                            </div>
-
-
-
-                                                                            <div class="alert alert-info">
-                                                                                <small><i class="fas fa-info-circle mr-1"></i> As
-                                                                                    Admin, you can update the status of
-                                                                                    this certificate request.</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer bg-light">
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">
-                                                                                <i class="fas fa-times mr-1"></i> Cancel
-                                                                            </button>
-                                                                            <button type="submit" class="btn btn-success">
-                                                                                <i class="fas fa-save mr-1"></i> Update Request
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                   
                                                 <?php endwhile; ?>
                                             <?php else: ?>
