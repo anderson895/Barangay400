@@ -380,7 +380,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
                     <!-- Modal Body -->
                     <div class="modal-body">
-                        <form id="blotterForm" enctype="multipart/form-data">
+                        <form id="blotterForm">
 
                         <!-- Complainant Information -->
                         <h6 class="mb-3 font-weight-bold">Complainant Information</h6>
@@ -786,7 +786,39 @@ LIMIT ? OFFSET ?";
     <!-- container-scroller -->
     <!-- plugins:js -->
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`
+
+
+    <script>
+        $('#blotterForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append('requestType', 'AddBlotter');
+
+        $.ajax({
+            type: "POST",
+            url: "Jcontroller.php",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "text",
+            success: function(response) {
+                console.log(response);
+            }
+        });
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2025 at 06:41 AM
+-- Generation Time: Oct 02, 2025 at 07:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,24 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `j_blotter` (
-  `blotter_no` int(11) NOT NULL,
-  `blotter_age` int(11) NOT NULL,
-  `blotter_resident_address` varchar(60) NOT NULL,
-  `blotter_email` varchar(60) DEFAULT NULL,
-  `blotter_phone_number` varchar(60) NOT NULL,
-  `blotter_complainant` varchar(60) NOT NULL,
-  `blotter_respondent_name` varchar(60) NOT NULL,
-  `blotter_respondent_age` int(11) NOT NULL,
-  `blotter_respondent_address` varchar(60) NOT NULL,
+  `blotter_id` int(11) NOT NULL,
+  `complainant_name` varchar(60) NOT NULL,
+  `complainant_age` int(11) NOT NULL,
+  `complainant_address` text NOT NULL,
+  `complainant_email` varchar(60) NOT NULL,
+  `complainant_phone` varchar(60) NOT NULL,
+  `respondent_name` varchar(60) NOT NULL,
+  `respondent_age` int(11) NOT NULL,
+  `respondent_address` text NOT NULL,
   `blotter_type` varchar(60) NOT NULL,
-  `blotter_location` text NOT NULL,
-  `blotter_date_reported` date NOT NULL,
-  `blotter_time_reported` time NOT NULL,
-  `blotter_narrative_report` text NOT NULL,
-  `blotter_hearing_schedule_date` date NOT NULL,
-  `blotter_hearing_schedule_time` time NOT NULL,
-  `blotter_evidence_document` varchar(255) NOT NULL,
-  `blotter_status` enum('ongoing','scheduled','resolved','dismissed') NOT NULL
+  `incident_location` text NOT NULL,
+  `date_reported` date NOT NULL,
+  `time_reported` time NOT NULL,
+  `incident_narrative` text NOT NULL,
+  `supporting_documents` varchar(255) NOT NULL,
+  `hearing_date` date DEFAULT NULL,
+  `hearing_time` time DEFAULT NULL,
+  `scheduled_by` varchar(60) DEFAULT NULL,
+  `blotter_status` enum('Ongoing','Scheduled Hearing','Resolved','Dismissed') NOT NULL DEFAULT 'Ongoing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1442,7 +1443,7 @@ INSERT INTO `web_services` (`id`, `title`, `description`, `requirements`, `creat
 -- Indexes for table `j_blotter`
 --
 ALTER TABLE `j_blotter`
-  ADD PRIMARY KEY (`blotter_no`);
+  ADD PRIMARY KEY (`blotter_id`);
 
 --
 -- Indexes for table `tbl_audit`
@@ -1612,7 +1613,7 @@ ALTER TABLE `web_services`
 -- AUTO_INCREMENT for table `j_blotter`
 --
 ALTER TABLE `j_blotter`
-  MODIFY `blotter_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_audit`
