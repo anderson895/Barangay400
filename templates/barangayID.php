@@ -9,95 +9,103 @@
 <body class="flex flex-col items-center min-h-screen bg-gray-200 p-6 gap-6">
 
   <!-- FRONT SIDE -->
-  <div class="w-[700px] border-2 border-black bg-white p-6">
-    
-    <!-- Header -->
-    <div class="text-center">
-      <h1 class="font-bold text-sm uppercase">Republic of the Philippines</h1>
-      <p class="text-xs">City of Manila</p>
-      <p class="text-xs">District IV</p>
-      <p class="text-xs font-bold uppercase">Barangay 400 Zone 41</p>
+<div class="w-[700px] border-2 border-black bg-white p-6 min-h-400px]">
+  
+  <!-- Header -->
+  <div class="text-center">
+    <h1 class="font-bold text-sm uppercase">Republic of the Philippines</h1>
+    <p class="text-xs">City of Manila</p>
+    <p class="text-xs">District IV</p>
+    <p class="text-xs font-bold uppercase">Barangay 400 Zone 41</p>
+  </div>
+
+  <!-- Logos -->
+  <div class="flex justify-between items-center mt-2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Manila_Seal.svg" alt="Seal" class="w-16 h-16">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Barangay_Logo.png" alt="Barangay Logo" class="w-16 h-16">
+  </div>
+
+  <!-- Title -->
+  <h2 class="text-center font-bold underline uppercase text-sm mt-2">
+    Barangay Identification Card
+  </h2>
+
+  <!-- Photo + Details -->
+  <div class="flex mt-4 gap-4">
+    <!-- Photo Box -->
+    <div class="w-24 h-28 border border-black flex items-center justify-center text-[10px]">
+      PHOTO
     </div>
 
-    <!-- Logos -->
-    <div class="flex justify-between items-center mt-2">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Manila_Seal.svg" alt="Seal" class="w-16 h-16">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Barangay_Logo.png" alt="Barangay Logo" class="w-16 h-16">
-    </div>
+    <!-- Details -->
+    <div class="flex-1 text-xs leading-5">
+      <p class="text-xs">
+        This is to certify that 
+        <span class="border-b border-black inline-block w-64 text-center">
+          <?=$row['first_name']?> <?=$row['middle_name']?> <?=$row['last_name']?>
+        </span>
+      </p>
 
-    <!-- Title -->
-    <h2 class="text-center font-bold  underline uppercase text-sm">
-      Barangay Identification Card
-    </h2>
+      <p class="mt-1 text-xs">
+        of 
+        <span class="border-b border-black inline-block w-64 text-center break-words">
+          <?=$row['user_address']?>
+        </span>
+      </p>
 
-    <!-- Certificate Text -->
-    <div class="mt-4 text-xs leading-5">
-      <p>This is to certify that</p>
-      <div class="border-b border-black w-full mt-2"></div>
-      <p class="mt-2">of <span class="border-b border-black inline-block w-64"></span></p>
       <p class="mt-2">
         Whose picture and signature appears hereon is a 
         <span class="font-bold uppercase">Registered Member</span> of this barangay.
       </p>
-      <p class="mt-2">
+      <p class="mt-1">
         This identification card is being issued for whatever purpose it may serve.
       </p>
-    </div>
 
-    <!-- ID + Signature -->
-    <div class="flex justify-between mt-6">
-      <!-- Photo Box -->
-     <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
-          PHOTO
+      <!-- ID & Date -->
+      <div class="flex justify-between mt-4 text-[10px]">
+        <div>
+          <p>ID No.: <span class="border-b border-black inline-block w-28"><?=$current_year?>-<?=$row['BID_id']?>-<?=$row['res_id']?></span></p>
+          <p class="mt-1">Date of issuance: <?=$today?></p>
+          <p class="mt-1 font-bold">VALID 1 YR UPON ISSUANCE</p>
         </div>
-      
-   
+
+        <!-- Signature -->
+        <div class="flex flex-col items-center mt-5"> 
+          <div class="border-b border-black w-32"></div>
+          <p class="mt-1">Signature</p>
+        </div>
+
+      </div>
     </div>
-
-  <!-- Footer -->
-<div class="mt-6 text-xs flex justify-between items-end">
-  <!-- ID & Date -->
-  <div class="flex flex-col">
-    <p>I.D. No.: <span class="border-b border-black inline-block w-40"></span></p>
-    <p class="mt-1 text-[10px]">ID Number</p>
-    <p class="mt-2">Date of issuance: <span class="font-bold">VALID 1 YR UPON ISSUANCE</span></p>
-  </div>
-
-  <!-- Signature -->
-  <div class="flex flex-col items-center">
-    <div class="border-b border-black w-40"></div>
-    <p class="text-[10px] mt-1">Signature</p>
   </div>
 </div>
 
 
-  </div>
-
   <!-- BACK SIDE -->
-<div class="w-[700px] h-[500px] border-2 border-black bg-white p-6 flex flex-col justify-between">
+<div class="w-[700px] border-2 border-black bg-white p-6 min-h-[400px]">
   <!-- Top content -->
   <div>
     <div class="grid grid-cols-2 gap-4 text-xs">
       <div>
-        <p>Precinct No.: <span class="border-b border-black inline-block w-32"></span></p>
-        <p class="mt-2">Date of Birth: <span class="border-b border-black inline-block w-32"></span></p>
-        <p class="mt-2">Height: <span class="border-b border-black inline-block w-16"></span>
-           Weight: <span class="border-b border-black inline-block w-16"></span></p>
-        <p class="mt-2">SSS / GSIS No.: <span class="border-b border-black inline-block w-32"></span></p>
+        <p>Precinct No.: <span class="border-b border-black inline-block w-32"><?=$row['precinctNumber']?></span></p>
+        <p class="mt-2">Date of Birth: <span class="border-b border-black inline-block w-32"><?=$row['birthday']?></span></p>
+        <p class="mt-2">Height: <span class="border-b border-black inline-block w-16"><?=$row['height']?></span>
+           Weight: <span class="border-b border-black inline-block w-16"><?=$row['weight']?></span></p>
+        <p class="mt-2">SSS / GSIS No.: <span class="border-b border-black inline-block w-32"><?=$row['SSSGSIS_Number']?></span></p>
       </div>
       <div>
-        <p>Blood Type: <span class="border-b border-black inline-block w-32"></span></p>
-        <p class="mt-2">Place of Birth: <span class="border-b border-black inline-block w-32"></span></p>
-        <p class="mt-2">Status: <span class="border-b border-black inline-block w-32"></span></p>
-        <p class="mt-2">TIN No.: <span class="border-b border-black inline-block w-32"></span></p>
+        <p>Blood Type: <span class="border-b border-black inline-block w-32"><?=$row['bloodType']?></span></p>
+        <p class="mt-2">Place of Birth: <span class="border-b border-black inline-block w-32"><?=$row['birthplace']?></span></p>
+        <p class="mt-2">Status: <span class="border-b border-black inline-block w-32"><?=$row['civilStatus']?></span></p>
+        <p class="mt-2">TIN No.: <span class="border-b border-black inline-block w-32"><?=$row['TIN_number']?></span></p>
       </div>
     </div>
 
     <div class="mt-6 text-xs">
       <p class="text-red-600 font-bold">IN CASE OF EMERGENCY, PLEASE NOTIFY:</p>
-      <p class="mt-2">Name: <span class="border-b border-black inline-block w-64"></span></p>
-      <p class="mt-2">Address: <span class="border-b border-black inline-block w-72"></span></p>
-      <p class="mt-2">Contact No.: <span class="border-b border-black inline-block w-64"></span></p>
+      <p class="mt-2">Name: <span class="border-b border-black inline-block w-64"><?=$row['personTwoName']?></span></p>
+      <p class="mt-2">Address: <span class="border-b border-black inline-block w-72"><?=$row['personTwoAddress']?></span></p>
+      <p class="mt-2">Contact No.: <span class="border-b border-black inline-block w-64"><?=$row['personTwoContactInfo']?></span></p>
     </div>
   </div>
 

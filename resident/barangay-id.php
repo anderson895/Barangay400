@@ -708,40 +708,6 @@ function getNotificationStyle($type) {
                 <?php
                 include '../connection/config.php';
 
-// Check for success messages
-if (isset($_GET['success'])) {
-    $successMessages = [
-        1 => "Barangay ID Request Submitted Successfully"
-    ];
-
-    if (isset($successMessages[$_GET['success']])) {
-        echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "success",
-        title: "' . $successMessages[$_GET['success']] . '",
-        showConfirmButton: false,
-        timer: 1500
-    });
-});
-</script>';
-    }
-}
-
-// Check for error messages
-if (isset($_GET['error'])) {
-    echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Something went wrong. Please try again.",
-        showConfirmButton: true
-    });
-});
-</script>';
-}
-
 // ✅ Always use active_user_id if switched, otherwise use user_id
 $user_id = isset($_SESSION['active_user_id']) ? $_SESSION['active_user_id'] : $_SESSION['user_id'];
 
@@ -754,8 +720,11 @@ $offset = ($page - 1) * $limit;
 $date_from = $_GET['date_from'] ?? '';
 $date_to = $_GET['date_to'] ?? '';
 
+// Define the table alias for tbl_bid
+$bid_alias = "c";
+
 // Build WHERE clause for both queries
-$where_conditions = ["b.user_id = ?"];
+$where_conditions = ["$bid_alias.user_id = ?"];
 $params = [$user_id];
 $types = "s"; // String for user_id (varchar in DB)
 
@@ -766,7 +735,7 @@ $searchFields = [];
 
 if ($columnsResult) {
     while ($column = $columnsResult->fetch_assoc()) {
-        $searchFields[] = "b." . $column['Field'];
+        $searchFields[] = "$bid_alias." . $column['Field']; // Use alias 'c'
     }
 }
 
@@ -784,7 +753,7 @@ if (!empty($search) && !empty($searchFields)) {
 $where_clause = implode(" AND ", $where_conditions);
 
 // Count total records for pagination
-$count_sql = "SELECT COUNT(*) as total FROM tbl_bid b
+$count_sql = "SELECT COUNT(*) as total FROM tbl_bid $bid_alias
 WHERE $where_clause";
 
 $count_stmt = $conn->prepare($count_sql);
@@ -796,12 +765,12 @@ $total_pages = ceil($total_rows / $limit);
 $count_stmt->close();
 
 // Fetch ID requests query
-$sql = "SELECT b.BID_id, b.user_id, b.last_name, b.first_name, b.middle_name, b.suffix, b.address, 
-b.ID_No, b.birthday, b.birthplace, b.status, b.created_at, b.dateApplied, b.dateIssued
-FROM tbl_bid b
-WHERE $where_clause
-ORDER BY b.created_at DESC 
-LIMIT ? OFFSET ?";
+$sql = "SELECT $bid_alias.*, u.*
+        FROM tbl_bid $bid_alias
+        LEFT JOIN tbl_residents u ON $bid_alias.user_id = u.user_id
+        WHERE $where_clause
+        ORDER BY $bid_alias.created_at DESC
+        LIMIT ? OFFSET ?";
 
 // Add limit and offset params
 $params[] = $limit;
@@ -814,6 +783,7 @@ $stmt->bind_param($types, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
+
                 ?>
 
                 <div class="row">

@@ -3,6 +3,10 @@ $bid_id = $_GET['bid_id'];
 
 include '../connection/config.php';
 
+// Get current year in Manila timezone
+date_default_timezone_set('Asia/Manila');
+$current_year = date('Y');
+$today = date('M. j, Y');  
 
 $view_certificate = $conn->query("
     SELECT 
@@ -17,10 +21,7 @@ $view_certificate = $conn->query("
     WHERE c.bid_id = '$bid_id'
 ");
 
-
 $row = $view_certificate->fetch_assoc();
-
-
 
 include '../templates/barangayID.php';
 ?>
