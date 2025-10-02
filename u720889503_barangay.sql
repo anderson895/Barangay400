@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2025 at 05:22 PM
+-- Generation Time: Oct 02, 2025 at 07:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,7 +54,7 @@ CREATE TABLE `j_blotter` (
 --
 
 INSERT INTO `j_blotter` (`blotter_id`, `complainant_name`, `complainant_age`, `complainant_address`, `complainant_email`, `complainant_phone`, `respondent_name`, `respondent_age`, `respondent_address`, `blotter_type`, `incident_location`, `date_reported`, `time_reported`, `incident_narrative`, `supporting_documents`, `hearing_date`, `hearing_time`, `scheduled_by`, `blotter_status`) VALUES
-(13, 'joshua', 12, 'sta.rosa 2 marilao', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'sta.rosa 2 marilao', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2ef789f602.14746924.png', NULL, NULL, NULL, 'Ongoing'),
+(13, 'joshua', 12, 'sta.rosa 2 marilao', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'sta.rosa 2 marilao', 'theft', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2ef789f602.14746924.png', NULL, NULL, NULL, 'Ongoing'),
 (14, 'joshua', 12, 'marilao bulacan', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'None', 'theft', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', '2025-10-02', '03:51:00', 'JOSHUA', 'Scheduled Hearing');
 
 -- --------------------------------------------------------
@@ -463,7 +463,8 @@ INSERT INTO `tbl_audit` (`audit_id`, `res_id`, `brgyOfficer_id`, `requestType`, 
 (1196, NULL, NULL, '', '3', 'Resident', 'Logged in', '', '2025-10-02 12:13:25', '', '2025-10-02 12:13:25'),
 (1197, NULL, NULL, '', '3', 'Resident', 'Logged out', '', '2025-10-02 12:17:36', '', '2025-10-02 12:17:36'),
 (1198, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 12:17:44', '', '2025-10-02 12:17:44'),
-(1199, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 22:12:23', '', '2025-10-02 22:12:23');
+(1199, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 22:12:23', '', '2025-10-02 22:12:23'),
+(1200, NULL, NULL, '', '1', 'Resident', 'Logged in', '', '2025-10-03 00:47:29', '', '2025-10-03 00:47:29');
 
 -- --------------------------------------------------------
 
@@ -496,7 +497,6 @@ CREATE TABLE `tbl_bid` (
   `first_name` varchar(255) NOT NULL,
   `middle_name` varchar(255) NOT NULL,
   `suffix` varchar(20) NOT NULL,
-  `address` varchar(255) NOT NULL,
   `civilStatus` varchar(50) NOT NULL,
   `ID_No` varchar(20) NOT NULL,
   `precinctNumber` varchar(20) DEFAULT NULL,
@@ -522,10 +522,9 @@ CREATE TABLE `tbl_bid` (
 -- Dumping data for table `tbl_bid`
 --
 
-INSERT INTO `tbl_bid` (`BID_id`, `res_id`, `user_id`, `remarks`, `last_name`, `first_name`, `middle_name`, `suffix`, `address`, `civilStatus`, `ID_No`, `precinctNumber`, `bloodType`, `birthday`, `birthplace`, `height`, `weight`, `status`, `SSSGSIS_Number`, `TIN_number`, `document_path`, `dateApplied`, `dateIssued`, `dateExpiration`, `personTwoName`, `personTwoAddress`, `personTwoContactInfo`, `created_at`) VALUES
-(9, 29, '2', '', 'Pompom', 'kath', '', '', 'Makati', 'Single', '', '', 'Unkno', '2004-02-04', '', 0.00, 0.00, 'Approved', '', '', '1754742296_68973e18e7948_08.40 - 09.40.png', '2025-08-09 12:24:56', NULL, NULL, '453323131231224234324324234', '3123123123124dfdgdfgdfgd', '13123232323', '2025-08-09 13:31:11'),
-(10, 46, '5', '', 'Lee', 'Felix', '', '', '12 Yba', 'Single', '', '', 'Unkno', '2000-07-03', '', 0.00, 0.00, 'To Be Approved', '', '', '1756560275_68b2fb93cdf47_Screenshot (2).png', '2025-08-30 13:24:35', NULL, NULL, 'Honey', '12 Barro', '09288888888', '2025-09-06 08:43:28'),
-(15, 49, '8', '', 'Padilla', 'James Reid', '', '', 'mexico pampanga', 'Single', '', '', 'Unkno', '2000-02-19', '', 0.00, 0.00, 'To Be Approved', '', '', '1757152755_68bc05f3304fa_padilla-resume.pdf', '2025-09-06 17:59:15', NULL, NULL, 'Joshua Anderson Padilla', 'None', '09454454741', '2025-09-06 09:59:15');
+INSERT INTO `tbl_bid` (`BID_id`, `res_id`, `user_id`, `remarks`, `last_name`, `first_name`, `middle_name`, `suffix`, `civilStatus`, `ID_No`, `precinctNumber`, `bloodType`, `birthday`, `birthplace`, `height`, `weight`, `status`, `SSSGSIS_Number`, `TIN_number`, `document_path`, `dateApplied`, `dateIssued`, `dateExpiration`, `personTwoName`, `personTwoAddress`, `personTwoContactInfo`, `created_at`) VALUES
+(9, 29, '2', '', 'Pompom', 'kath', '', '', 'Single', '', '', 'Unkno', '2004-02-04', '', 0.00, 0.00, 'Approved', '', '', '1754742296_68973e18e7948_08.40 - 09.40.png', '2025-08-09 12:24:56', NULL, NULL, '453323131231224234324324234', '3123123123124dfdgdfgdfgd', '13123232323', '2025-08-09 13:31:11'),
+(15, 49, '8', '', 'Padilla', 'James Reid', '', '', 'Single', '', '', 'Unkno', '2000-02-19', '', 0.00, 0.00, 'To Be Approved', '', '', '1757152755_68bc05f3304fa_padilla-resume.pdf', '2025-09-06 17:59:15', NULL, NULL, 'Joshua Anderson Padilla', 'None', '09454454741', '2025-09-06 09:59:15');
 
 -- --------------------------------------------------------
 
@@ -1235,7 +1234,7 @@ CREATE TABLE `tbl_residents` (
 --
 
 INSERT INTO `tbl_residents` (`res_id`, `user_id`, `household_id`, `first_name`, `middle_name`, `last_name`, `birthday`, `birthplace`, `civilStatus`, `mobile`, `gender`, `address`, `precinctNumber`, `residentStatus`, `voterStatus`, `bloodType`, `height`, `weight`, `typeOfID`, `IDNumber`, `SSSGSIS_Number`, `TIN_number`, `barangay_number`, `is_senior`, `is_pwd`, `is_4ps_member`, `suffix`, `is_household_head`, `household_head_name`, `relationship_to_head`, `senior_document`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency_document`, `residency_tenure`, `occupation`, `email`, `image`, `created_at`, `updated_at`) VALUES
-(51, '1', 0, 'john', '', 'doe', '2020-09-21', '', 'Single', '09454454744', 'Female', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'Yes', '', '', '', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', NULL, 'N/A', 'rodriguezryan325@gmail.com', NULL, '2025-09-21 14:34:32', '2025-09-21 16:27:24'),
+(51, '1', 0, 'john', '', 'doe', '2000-09-21', 'sta.maria', 'Single', '09454454744', 'Female', 'mexico pampanga', '', '', 'Not Registered', '', 0.00, 0.00, 'National ID Card', '555', '', '', '432423', 'No', 'No', 'No', '', 'Yes', '', '', '', '', '', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', '', 'N/A', 'rodriguezryan325@gmail.com', NULL, '2025-09-21 14:34:32', '2025-10-02 16:57:40'),
 (60, '2', 0, 'Joshua', 'Anderson', 'doe', '2000-09-21', '', 'Single', '09454454744', 'Male', 'mexico pampanga', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'No', 'No', 'No', '', 'No', '9', 'Relative', '', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', NULL, 'N/A', 'padillajoshuaanderson.pdm@gmail.com', NULL, '2025-09-21 15:19:44', '2025-09-21 16:27:55'),
 (61, '3', 0, 'cevin', '', 'garnet', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-09-21 16:27:26'),
 (62, '8', 0, 'kevin', '', 'quiambao', '2020-09-21', '', 'Married', '09454454744', 'Male', 'sta.rosa 2 marilao', NULL, '', 'Not Registered', 'Unknown', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', 'No', 'No', '', 'Yes', '', '', '', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', NULL, 'N/A', 'masterparj@gmail.com', NULL, '2025-09-21 15:24:11', '2025-10-02 15:22:20');
@@ -1293,8 +1292,8 @@ INSERT INTO `tbl_user` (`id`, `user_id`, `first_name`, `middle_name`, `last_name
 (135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(143, '1', 'john', '', 'doe', '$2y$10$VPQp5ETg9Yd06dUXPIpER.GjC0IkOEhro2iwt6t51l7RN7hQ.q4Ka', NULL, 'rodriguezryan325@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Female', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', 'N/A', '2025-09-11'),
-(153, '2', 'Joshua', 'Anderson', 'doe', '$2y$10$ohpLW.fZhfVG9wkSZhTMp.uv5gEIzTyJjk.FydGt3/2ZcMDMBRB..', NULL, 'padillajoshuaanderson.pdm@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'No', '9', 'Relative', 'No', '', 'No', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', 'N/A', '2025-09-21'),
+(143, '1', 'john', '', 'doe', '$2y$10$VPQp5ETg9Yd06dUXPIpER.GjC0IkOEhro2iwt6t51l7RN7hQ.q4Ka', NULL, 'rodriguezryan325@gmail.com', '09454454744', 'mexico pampanga', 'Active', 'Resident', 1, '2025-10-03 00:47:29', NULL, NULL, NULL, 0, '', 'Female', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', 'N/A', '2025-09-11'),
+(153, '2', 'Joshua', 'Anderson', 'doe', '$2y$10$ohpLW.fZhfVG9wkSZhTMp.uv5gEIzTyJjk.FydGt3/2ZcMDMBRB..', NULL, 'padillajoshuaanderson.pdm@gmail.com', '09454454744', 'mexico pampanga', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'No', '9', 'Relative', 'No', '', 'No', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', 'N/A', '2025-09-21'),
 (155, '3', 'cevin', '', 'garnet', '$2a$12$0lGGE4I8SLXUIjz8wGnFCOZUwSqsiW4k3tJPd1IM0GiSbhzgb08ee', NULL, 'masterparj@gmail.com', '09454454744', 'sta.rosa 2 marilao', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Married', 0, 'Yes', '', '', '', '', 'No', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', 'N/A', '2025-09-21');
 
 -- --------------------------------------------------------
@@ -1629,7 +1628,7 @@ ALTER TABLE `j_blotter`
 -- AUTO_INCREMENT for table `tbl_audit`
 --
 ALTER TABLE `tbl_audit`
-  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1200;
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1201;
 
 --
 -- AUTO_INCREMENT for table `tbl_banned_users`
