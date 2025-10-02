@@ -560,6 +560,58 @@ $_SESSION['status'] = $status;
   
     <script>
 
+
+
+
+
+$(document).on("click", ".btn-print", function () {
+  var target = $(this).data("target");
+  var printContents = document.querySelector(target).innerHTML;
+  var printWindow = window.open("", "", "width=900,height=650");
+
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Certificate</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <style>
+          body { padding: 20px; font-family: Arial, sans-serif; }
+          .d-flex { display: flex !important; }
+          .flex-column { flex-direction: column !important; }
+          .flex-md-row { flex-direction: row !important; }
+          .justify-content-between { justify-content: space-between !important; }
+          .align-items-center { align-items: center !important; }
+          .text-center { text-align: center !important; }
+          .certificate { page-break-after: always; }
+          .certificate:last-child { page-break-after: auto; }
+          .line-separator { border-top: 1px solid #000; margin: 10px 0; }
+          img.img-fluid { max-height: 70px; }
+          .header-center { flex: 1; padding: 0 10px; }
+          .office { font-size: 0.85rem; }
+        </style>
+      </head>
+      <body>
+        ${printContents}
+      </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+
+  printWindow.onload = function () {
+    printWindow.focus();
+    printWindow.print();
+  };
+});
+
+
+
+
+
+
+
+
     $(document).on('click', '.viewId', function(e) {
     e.preventDefault();
 
