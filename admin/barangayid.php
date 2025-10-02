@@ -265,310 +265,11 @@ $_SESSION['status'] = $status;
                         </div>
                     </div>
                 </div>
-                <!-- Barangay ID Request Modal -->
-                <div class="modal fade" id="IDRequestModal" tabindex="-1" role="dialog" aria-labelledby="IDRequestModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="IDRequestModalLabel">Submit Barangay ID Request</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form action="add_bid.php" method="POST" enctype="multipart/form-data" novalidate id="idRequestForm" class="needs-validation">
-                                <div class="modal-body">
-
-                                    <!-- Personal Information Section -->
-                                    <div class="mb-4">
-                                        <h5 class="border-bottom pb-2"><i class="fas fa-user-circle me-2"></i>Personal Information</h5>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="last_name">Last Name</label>
-                                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                                        value="<?= htmlspecialchars($last_name) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="first_name">First Name</label>
-                                                    <input type="text" class="form-control" id="first_name" name="first_name"
-                                                        value="<?= htmlspecialchars($first_name) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="middle_name">Middle Name</label>
-                                                    <input type="text" class="form-control" id="middle_name" name="middle_name"
-                                                        value="<?= htmlspecialchars($middle_name) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label for="suffix">Suffix</label>
-                                                    <input type="text" class="form-control" id="suffix" name="suffix"
-                                                        value="<?= htmlspecialchars($suffix) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="address">Address</label>
-                                                <input type="text" class="form-control" id="address" name="address"
-                                                    value="<?= htmlspecialchars($address) ?>" readonly>
-                                            </div>                       
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="birthday">Birthday</label>
-                                                    <input type="text" class="form-control" id="birthday" name="birthday"
-                                                        value="<?= htmlspecialchars($birthday) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="birthplace">Birthplace</label>
-                                                    <input type="text" class="form-control" id="birthplace" name="birthplace"
-                                                        value="<?= htmlspecialchars($birthplace) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="marital_status">Civil Status</label>
-                                                    <input type="text" class="form-control" id="marital_status" name="marital_status"
-                                                        value="<?= htmlspecialchars($marital_status) ?>" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="blood_type">Blood Type</label>
-                                                    <input type="text" class="form-control" id="blood_type" name="blood_type"
-                                                        value="<?= htmlspecialchars($blood_type) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="height">Height (cm)</label>
-                                                    <input type="text" class="form-control" id="height" name="height"
-                                                        value="<?= htmlspecialchars($height) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="weight">Weight (kg)</label>
-                                                    <input type="text" class="form-control" id="weight" name="weight"
-                                                        value="<?= htmlspecialchars($weight) ?>" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <!-- ID Information Section -->
-                                    <div class="mb-4">
-                                        <h5 class="border-bottom pb-2"><i class="fas fa-id-card me-2"></i>Valid ID Number</h5>
-                                        <div class="row">
-                                        
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="precint_number">Precinct Number</label>
-                                                    <input type="text" class="form-control" id="precint_number" name="precint_number"
-                                                        value="<?= htmlspecialchars($precint_number) ?>" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="SSSGSIS_Number">SSS/GSIS Number</label>
-                                                    <input type="text" class="form-control" id="SSSGSIS_Number" name="SSSGSIS_Number"
-                                                        value="<?= htmlspecialchars($SSSGSIS_Number) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="TIN_number">TIN Number</label>
-                                                    <input type="text" class="form-control" id="TIN_number" name="TIN_number"
-                                                        value="<?= htmlspecialchars($TIN_number) ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            
-                                        </div>
-                                    </div>
-
-                                    <!-- Emergency Contact Section -->
-                                    <div class="mb-4">
-                                        <h5 class="border-bottom pb-2"><i class="fas fa-phone-alt me-2"></i>Emergency Contact Information</h5>
-                                        <div class="form-group">
-                                            <label for="personTwoName">Contact Person Name</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="personTwoName" name="personTwoName" placeholder="Enter Contact Person Name" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text validation-icon" id="personTwoName_validation">
-                                                        <i class="fas fa-check text-success d-none"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="personTwoAddress">Contact Person Address</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="personTwoAddress" name="personTwoAddress" placeholder="Enter Contact Person Address" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text validation-icon" id="personTwoAddress_validation">
-                                                        <i class="fas fa-check text-success d-none"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="personTwoContactInfo">Contact Person Phone Number</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="personTwoContactInfo" name="personTwoContactInfo" maxlength="11" pattern="\d{11}" 
-                                                required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);" placeholder="Enter Contact Person Phone Number" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text validation-icon" id="personTwoContactInfo_validation">
-                                                        <i class="fas fa-check text-success d-none"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Document Upload Section -->
-                                    <div class="mb-4">
-                                        <h5 class="border-bottom pb-2"><i class="fas fa-file-upload me-2"></i>Supporting Documents</h5>
-                                        <div class="file-upload">
-                                            <i class="fas fa-cloud-upload-alt"></i>
-                                            <h5>Upload Supporting Document/Image</h5>
-                                            <p>Please upload any required documents (Valid ID, Proof of Residency, etc.)</p>
-                                            <input type="file" class="form-control" id="document_path" name="document_path[]" multiple>
-                                            <div class="file-upload-info mt-2">
-                                                <small><i class="fas fa-info-circle me-1"></i>Accepted formats: PDF, JPG, PNG (Max size: 5MB)</small> <br>
-                                                <small><i class="fas fa-info-circle me-1"></i>Hold Ctrl to select multiple files.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Terms and Submit -->
-                                    <div class="mb-3 d-flex justify-content-center">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="terms" required>
-                                            <label class="form-check-label" for="terms">I confirm that the information provided is accurate and complete</label>
-                                            <div class="invalid-feedback">
-                                                You must agree before submitting.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit ID Request</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Form validation
-                        (function() {
-                            'use strict';
-
-                            // Fetch all forms to apply validation
-                            var forms = document.querySelectorAll('.needs-validation');
-
-                            // Loop and prevent submission
-                            Array.prototype.slice.call(forms).forEach(function(form) {
-                                form.addEventListener('submit', function(event) {
-                                    if (!form.checkValidity()) {
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                    }
-                                    form.classList.add('was-validated');
-                                }, false);
-                            });
-                        })();
-
-                        // Auto-fill today's date
-                        document.getElementById('dateToday').valueAsDate = new Date();
-
-                        // Resident selection change handling
-                        document.getElementById('res_id').addEventListener('change', function() {
-                            var selectedOption = this.options[this.selectedIndex];
-                            document.getElementById('user_id').value = selectedOption.getAttribute('data-userid');
-                            document.getElementById('first_name').value = selectedOption.getAttribute('data-firstname');
-                            document.getElementById('last_name').value = selectedOption.getAttribute('data-lastname');
-                            document.getElementById('middle_name').value = selectedOption.getAttribute('data-middlename');
-                        });
-
-                        // Display file name when selected
-                        document.getElementById('document_path').addEventListener('change', function() {
-                            var fileName = this.files[0]?.name;
-                            if (fileName) {
-                                var fileInfo = document.createElement('p');
-                                fileInfo.className = 'mt-2 mb-0';
-                                fileInfo.innerHTML = '<i class="fas fa-check-circle text-success me-2"></i>Selected file: <strong>' + fileName + '</strong>';
-
-                                // Remove previous file info if exists
-                                var existingInfo = document.querySelector('.file-selected-info');
-                                if (existingInfo) {
-                                    existingInfo.remove();
-                                }
-
-                                fileInfo.className += ' file-selected-info';
-                                this.parentNode.appendChild(fileInfo);
-                            }
-                        });
-                    });
-                </script>
+               
                 <?php
                 include '../connection/config.php';
 
-                // Check for success messages
-                if (isset($_GET['success'])) {
-                    $successMessages = [
-                        1 => "Barangay ID Request Submitted Successfully",
-                        2 => "Barangay ID Request Updated Successfully"
-                    ];
-
-                    if (isset($successMessages[$_GET['success']])) {
-                        echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "success",
-        title: "' . $successMessages[$_GET['success']] . '",
-        showConfirmButton: false,
-        timer: 1500
-    });
-});
-</script>';
-                    }
-                }
-
-                // Check for error messages
-                if (isset($_GET['error'])) {
-                    echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Something went wrong. Please try again.",
-        showConfirmButton: true
-    });
-});
-</script>';
-                }
+              
 
                 // Initialize variables
                 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
@@ -577,24 +278,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 $limit = 10;
                 $offset = ($page - 1) * $limit;
 
-                // Get the officer position from tbl_brgyofficer
-                $position = 'Unknown'; // Default value
-                $canEdit = false;      // Default permission
-
-                if (!empty($user_id)) {
-                    $position_query = "SELECT position FROM tbl_brgyofficer WHERE user_id = ? AND status = 'Active'";
-                    $position_stmt = $conn->prepare($position_query);
-                    $position_stmt->bind_param("s", $user_id);
-                    $position_stmt->execute();
-                    $position_result = $position_stmt->get_result();
-
-                    if ($position_result->num_rows > 0) {
-                        $position = $position_result->fetch_assoc()['position'];
-                        // Only Barangay Secretary can edit/update requests
-                        $canEdit = ($position == 'Barangay Secretary');
-                    }
-                    $position_stmt->close();
-                }
 
                 // Date filter variables
                 $date_from = $_GET['date_from'] ?? '';
@@ -605,14 +288,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 $params = [];
                 $types = "";
 
-                // Get all column names from the tbl_clearance table for search
-                $columnsQuery = "SHOW COLUMNS FROM tbl_bid";
+                // Get all column names from the tbl_certification table for search
+                $columnsQuery = "SHOW COLUMNS FROM tbl_certification";
                 $columnsResult = $conn->query($columnsQuery);
                 $searchFields = [];
 
                 if ($columnsResult) {
                     while ($column = $columnsResult->fetch_assoc()) {
-                        $searchFields[] = "b." . $column['Field'];
+                        $searchFields[] = "c." . $column['Field'];
                     }
                 }
 
@@ -628,9 +311,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // Combine WHERE conditions
                 $where_clause = !empty($where_conditions) ? implode(" AND ", $where_conditions) : "1=1"; // 1=1 ensures valid SQL if no conditions
-
+                
                 // Count total records for pagination
-                $count_sql = "SELECT COUNT(*) as total FROM tbl_bid b WHERE $where_clause";
+                $count_sql = "SELECT COUNT(*) as total FROM tbl_certification c WHERE $where_clause";
 
                 if (!empty($params)) {
                     $count_stmt = $conn->prepare($count_sql);
@@ -646,16 +329,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 $total_pages = ceil($total_rows / $limit);
 
-               // Fetch clearance requests query
-$sql = "SELECT b.BID_id, b.res_id, b.user_id, b.first_name, b.middle_name, b.last_name, b.remarks, b.suffix,
-b.address, b.ID_No, b.precinctNumber, b.bloodType, 
-b.birthday, b.birthplace, b.document_path, b.height, b.weight,
-b.SSSGSIS_Number, b.TIN_number, b.dateApplied, b.personTwoName, b.personTwoContactInfo, b.personTwoAddress,
-b.status, b.created_at
-FROM tbl_bid b
-WHERE $where_clause
-ORDER BY b.created_at DESC 
-LIMIT ? OFFSET ?";
+                // Fetch certification requests query
+                $sql = "SELECT c.*,u.*
+        FROM tbl_bid c
+        left join tbl_residents u on c.user_id = u.user_id
+        WHERE $where_clause
+        ORDER BY c.created_at DESC 
+        LIMIT ? OFFSET ?";
 
                 // Add limit and offset params
                 $params[] = $limit;
@@ -671,7 +351,6 @@ LIMIT ? OFFSET ?";
                 $result = $stmt->get_result();
                 $stmt->close();
                 ?>
-
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
@@ -751,8 +430,10 @@ LIMIT ? OFFSET ?";
                                                         </td>
                                                         <td>
                                                             <!-- View button for all positions -->
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" title="View"
-                                                                data-target="#viewIDModal<?php echo $row['BID_id']; ?>">
+                                                            <button class="btn btn-info btn-sm viewId" data-toggle="modal" title="View"
+                                                                data-target="#viewIDModal"
+                                                                data-bid_id='<?=$row['BID_id']; ?>'
+                                                                >
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </button>
 
@@ -764,441 +445,6 @@ LIMIT ? OFFSET ?";
                                                         </td>
                                                     </tr>
 
-                                                   <!-- View Modal -->
-                                                   <div class="modal fade" id="viewIDModal<?php echo $row['BID_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                            <div class="modal-content shadow-lg border-0">
-                                                                <!-- Enhanced Header with gradient background -->
-                                                                <div class="modal-header bg-gradient-primary text-white py-3">
-                                                                    <h5 class="modal-title font-weight-bold" id="viewModalLabel">
-                                                                        <i class="fas fa-id-card mr-2"></i>View Barangay ID
-                                                                    </h5>
-                                                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-
-                                                                <div class="modal-body text-center">
-                                                                    <?php
-                                                                    $certification_id = $row['BID_id'];
-                                                                    $baseFolder = "generate_certificate";
-                                                                    $absoluteBasePath = __DIR__ . "/$baseFolder";
-
-                                                                    // Check if base folder exists
-                                                                    if (is_dir($absoluteBasePath)) {
-                                                                        $allImages = [];
-
-                                                                        // Search each subfolder inside generate_certificate
-                                                                        foreach (glob("$absoluteBasePath/*", GLOB_ONLYDIR) as $subfolder) {
-                                                                            $images = glob("$subfolder/*_{$certification_id}_*.jpg");
-                                                                            $allImages = array_merge($allImages, $images);
-                                                                        }
-
-                                                                        if (!empty($allImages)) {
-                                                                            // Sort all found images by modified time, descending
-                                                                            usort($allImages, fn($a, $b) => filemtime($b) - filemtime($a));
-                                                                            $latestImage = $allImages[0];
-                                                                            $relativePath = $baseFolder . '/' . basename(dirname($latestImage));
-                                                                            $filename = basename($latestImage);
-                                                                            ?>
-
-                                                                            <img src="<?php echo $relativePath . '/' . $filename; ?>" class="img-fluid mb-3" style="max-height: 500px;">
-                                                                            <br>
-                                                                            <a href="<?php echo $relativePath . '/' . $filename; ?>" download class="btn btn-success mt-2">
-                                                                                <i class="fas fa-download"></i> Download Certificate
-                                                                            </a>
-
-
-                                                                           <a href="<?php echo $relativePath . '/' . $filename; ?>" 
-                                                                            download 
-                                                                            class="btn btn-warning mt-2 generate-id" 
-                                                                            data-id="<?= $row['BID_id']; ?>">
-                                                                                <i class="fas fa-sync-alt"></i> Re-Generate ID
-                                                                            </a>
-
-                                                                          
-
-
-                                                                            <?php
-                                                                        } else {
-                                                                            echo "<p class='text-danger'>No certificate image found for this ID (BID_id: $certification_id).</p>";
-                                                                        }
-                                                                    } else {
-                                                                        echo "<p class='text-danger'>Base folder does not exist: $absoluteBasePath</p>";
-                                                                    }
-                                                                    ?>
-
-                                                                </div>
-
-                                                                
-                                                                <div class="modal-footer bg-light">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">
-                                                                        <i class="fas fa-times mr-1"></i> Close
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                   <!-- Edit Modal for Barangay Secretary only -->
-                                                  
-                                                        <div class="modal fade"
-                                                            id="editModal<?php echo $row['BID_id']; ?>" tabindex="-1"
-                                                            role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content shadow-lg border-0">
-                                                                    <div class="modal-header bg-gradient-warning text-white py-3">
-                                                                        <h5 class="modal-title font-weight-bold"
-                                                                            id="editModalLabel">
-                                                                            <i class="fas fa-edit mr-2"></i>Update Barangay ID
-                                                                            Request
-                                                                        </h5>
-                                                                        <button type="button" class="close text-white"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div class="modal-body py-4">
-                                                                    <!-- Status badge at top -->
-                                                                    <div class="text-center mb-4">
-                                                                        <span class="badge badge-pill px-4 py-2 font-weight-bold text-white
-                                            <?php
-                                                    if ($row['status'] == 'Approved') echo 'badge-warning';
-                                                    elseif ($row['status'] == 'Processed') echo 'badge-info';
-                                                    elseif ($row['status'] == 'Denied') echo 'badge-danger';
-                                                    elseif ($row['status'] == 'Released') echo 'badge-primary';
-                                                    else echo 'badge-warning';
-                                            ?>">
-                                                                            <i class="fas 
-                                                <?php
-                                                    if ($row['status'] == 'Approved') echo 'fa-check-circle';
-                                                    elseif ($row['status'] == 'Processed') echo 'fa-cog';
-                                                    elseif ($row['status'] == 'Denied') echo 'fa-times-circle';
-                                                    elseif ($row['status'] == 'Released') echo 'fa-paper-plane';
-                                                    else echo 'fa-exclamation-circle';
-                                                ?> mr-1"></i>
-                                                                            <?php echo htmlspecialchars(ucfirst($row['status'])); ?>
-                                                                        </span>
-                                                                    </div>
-
-                                                                    <?php
-                                                                    // Fetch complete details for the view modal
-                                                                    $detail_sql = "SELECT * FROM tbl_bid WHERE BID_id = ?";
-                                                                    $detail_stmt = $conn->prepare($detail_sql);
-                                                                    $detail_stmt->bind_param("i", $row['BID_id']);
-                                                                    $detail_stmt->execute();
-                                                                    $detail_result = $detail_stmt->get_result();
-                                                                    $detail = $detail_result->fetch_assoc();
-                                                                    $detail_stmt->close();
-                                                                    ?>
-
-                                                                    <!-- Personal Information Card -->
-                                                                    <div class="card border-0 shadow-sm mb-4">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-user mr-2"></i>Personal Information
-                                                                            </h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Full Name</label>
-                                                                                        <p class="font-weight-bold mb-2">
-                                                                                            <?php 
-                                                                                                echo htmlspecialchars($detail['first_name'] . ' ' . $detail['middle_name'] . ' ' . $detail['last_name']); 
-                                                                                            ?>
-                                                                                        </p>
-
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Address</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($detail['address']); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Birthday</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo date('F d, Y', strtotime($detail['birthday'])); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Birthplace</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($detail['birthplace']); ?></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">ID Number</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo htmlspecialchars($detail['ID_No']); ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Precinct Number</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['precinctNumber']) ? htmlspecialchars($detail['precinctNumber']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Blood Type</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['bloodType']) ? htmlspecialchars($detail['bloodType']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Height / Weight</label>
-                                                                                        <p class="font-weight-bold mb-2">
-                                                                                            <?php
-                                                                                            echo (!empty($detail['height']) ? htmlspecialchars($detail['height']) . ' cm' : 'N/A');
-                                                                                            echo ' / ';
-                                                                                            echo (!empty($detail['weight']) ? htmlspecialchars($detail['weight']) . ' kg' : 'N/A');
-                                                                                            ?>
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Additional Information Card -->
-                                                                    <div class="card border-0 shadow-sm mb-4">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-info-circle mr-2"></i>Additional Information
-                                                                            </h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">SSSGSIS Number</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['SSSGSIS_Number']) ? htmlspecialchars($detail['SSSGSIS_Number']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Tin Number</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['TIN_number']) ? htmlspecialchars($detail['TIN_number']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-
-                                                                           <!-- Display Profile Image-->
-                                                                            <?php if (!empty($detail['profileImage'])): ?>
-                                                                                <div class="row mt-3">
-                                                                                    <div class="col-12">
-                                                                                        <label class="text-muted small text-uppercase">Profile Image</label>
-                                                                                        <div class="text-center">
-                                                                                            <img 
-                                                                                                src="../dist/assets/images/uploads/id_images/<?php echo htmlspecialchars($detail['profileImage']); ?>" 
-                                                                                                alt="Profile Image" 
-                                                                                                class="img-thumbnail" 
-                                                                                                style="max-height: 200px;"
-                                                                                            >
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            <?php endif; ?>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <!-- Contact Information Card -->
-                                                                    <div class="card border-0 shadow-sm mb-4">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-address-card mr-2"></i>Contact Information
-                                                                            </h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Contact Person Name</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['personTwoName']) ? htmlspecialchars($detail['personTwoName']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Contact Person Address</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['personTwoAddress']) ? htmlspecialchars($detail['personTwoAddress']) : 'N/A'; ?></p>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="info-group mb-3">
-                                                                                        <label class="text-muted small text-uppercase">Contact Person Number</label>
-                                                                                        <p class="font-weight-bold mb-2"><?php echo !empty($detail['personTwoContactInfo']) ? htmlspecialchars($detail['personTwoContactInfo']) : 'N/A'; ?></p>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <!-- Document Preview Section -->
-                                                                    <?php
-                                                                        // Assuming $row['document_path'] contains comma-separated file paths
-                                                                        $document_paths = explode(',', $row['document_path']);
-                                                                        
-                                                                        if (!empty($document_paths)): ?>
-                                                                            <div class="card border-0 shadow-sm">
-                                                                                <div class="card-header bg-light py-3">
-                                                                                    <h6 class="font-weight-bold text-primary mb-0">
-                                                                                        <i class="fas fa-file-alt mr-2"></i>Supporting Documents
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <div class="card-body">
-                                                                                    <div class="row">
-                                                                                        <?php foreach ($document_paths as $path):
-                                                                                            $path = trim($path);
-                                                                                            $file_ext = strtolower(pathinfo($path, PATHINFO_EXTENSION)); ?>
-                                                                                            
-                                                                                            <div class="col-md-4 mb-4 text-center">
-                                                                                                <?php if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                                                                                                    <div class="img-container border p-2 mb-2">
-                                                                                                        <img src="../dist/assets/images/uploads/id-documents/<?php echo $path; ?>"
-                                                                                                             class="img-fluid" alt="Document">
-                                                                                                    </div>
-                                                                                                    <a href="../dist/assets/images/uploads/id-documents/<?php echo $path; ?>"
-                                                                                                       target="_blank" class="btn btn-sm btn-outline-primary">
-                                                                                                        <i class="fas fa-external-link-alt mr-1"></i> View Full Size
-                                                                                                    </a>
-                                                                                                <?php else: ?>
-                                                                                                    <div class="border p-4">
-                                                                                                        <div class="display-4 text-muted mb-2">
-                                                                                                            <i class="far fa-file-<?php
-                                                                                                                echo $file_ext == 'pdf' ? 'pdf' :
-                                                                                                                    (in_array($file_ext, ['doc', 'docx']) ? 'word' :
-                                                                                                                    (in_array($file_ext, ['xls', 'xlsx']) ? 'excel' :
-                                                                                                                    (in_array($file_ext, ['ppt', 'pptx']) ? 'powerpoint' : 'alt')));
-                                                                                                            ?>"></i>
-                                                                                                        </div>
-                                                                                                        <p class="text-muted small mb-1"><?php echo strtoupper($file_ext); ?> Document</p>
-                                                                                                        <a href="../dist/assets/images/uploads/id-documents/<?php echo $path; ?>"
-                                                                                                           target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                                                                            <i class="fas fa-eye mr-1"></i> View Document
-                                                                                                        </a>
-                                                                                                    </div>
-                                                                                                <?php endif; ?>
-                                                                                            </div>
-                                                                                        <?php endforeach; ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        <?php endif; ?>
-
-
-
-                                                                    
-                                                                    
-                                                                    
-                                                                    
-                                                                    <!-- Timeline Card -->
-                                                                    <div class="card border-0 shadow-sm">
-                                                                        <div class="card-header bg-light py-3">
-                                                                            <h6 class="font-weight-bold text-primary mb-0">
-                                                                                <i class="fas fa-history mr-2"></i>Request Timeline
-                                                                            </h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <ul class="timeline">
-                                                                                <li class="timeline-item">
-                                                                                    <div class="timeline-marker bg-success"></div>
-                                                                                    <div class="timeline-content">
-                                                                                        <h4 class="timeline-title font-weight-bold">Date Applied</h4>
-                                                                                        <p class="timeline-date">
-                                                                                            <i class="far fa-calendar-alt mr-1"></i>
-                                                                                            <?php echo date('F d, Y h:i A', strtotime($detail['dateApplied'])); ?>
-                                                                                        </p>
-                                                                                    </div>
-                                                                                </li>
-
-
-
-
-
-                                                                                <?php if (!empty($detail['dateIssued']) && $detail['status'] == 'Released'): ?>
-                                                                                    <li class="timeline-item">
-                                                                                        <div class="timeline-marker bg-success"></div>
-                                                                                        <div class="timeline-content">
-                                                                                            <h4 class="timeline-title font-weight-bold">Date Released</h4>
-                                                                                            <p class="timeline-date">
-                                                                                                <i class="far fa-calendar-alt mr-1"></i>
-                                                                                                <?php echo date('F d, Y h:i A', strtotime($detail['dateIssued'])); ?>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    </div>
-                                                                                    <?php endif; ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                
-
-
-
-
-
-
-
-                                                                    <!-- <form action="update_BID.php" method="POST"> -->
-                                                                    <form method="POST">
-                                                                        <div class="modal-body py-4">
-                                                                            <input type="hidden" name="BID_id"
-                                                                                value="<?php echo $row['BID_id']; ?>">
-
-                                                                            <div class="form-group">
-                                                                                <label
-                                                                                    for="status<?php echo $row['BID_id']; ?>">Update
-                                                                                    Status</label>
-                                                                                <select class="form-control" name="status"
-                                                                                    id="status<?php echo $row['BID_id']; ?>"
-                                                                                    required>
-                                                                                    <option value="">Select Status</option>
-                                                                                    <option value="Approved" <?php echo ($row['status'] == 'Approved') ? 'selected' : ''; ?>>Approved</option>
-                                                                                    <option value="Denied" <?php echo ($row['status'] == 'Denied') ? 'selected' : ''; ?>>Denied</option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label
-                                                                                    for="remarks<?php echo $row['BID_id']; ?>">Remarks/Comments</label>
-                                                                                <textarea class="form-control" name="remarks"
-                                                                                    id="remarks<?php echo $row['BID_id']; ?>"
-                                                                                    rows="4"><?php echo isset($row['remarks']) ? htmlspecialchars($row['remarks']) : ''; ?></textarea>
-                                                                            </div>
-
-                                                                            <div class="alert alert-info">
-                                                                                <small><i class="fas fa-info-circle mr-1"></i> As
-                                                                                    Admin, you can update the status of
-                                                                                    this certificate request.</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer bg-light">
-                                                                            <button type="submit" class="btn btn-success generate-id" data-id="<?= $row['BID_id']; ?>" >
-                                                                                <i class="fas fa-save mr-1"></i> Update Request
-                                                                            </button>
-
-                                                                            <!-- GENERATE ID  -->
-                                                                            <?php
-                                                                                $status = isset($row['status']) ? strtolower($row['status']) : '';
-                                                                                $isApproved = ($status === 'approved');
-                                                                                $isDenied = ($status === 'denied');
-                                                                            ?>
-                                                                            <!-- <button type="button" class="btn btn-success" 
-                                                                                onclick="generateCertificate(<?php echo $row['BID_id']; ?>)" 
-                                                                                <?php echo (!$isApproved || $isDenied) ? 'disabled' : ''; ?>>
-                                                                                <i class="fas fa-save mr-1"></i> 
-                                                                                <?php echo $isApproved ? 'Generate' : 'Waiting for Approval'; ?>
-                                                                            </button> -->
-
-
-                                                                           
-
-
-
-
-                                                                            <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">
-                                                                                <i class="fas fa-times mr-1"></i> Cancel
-                                                                            </button>
-                                                                           
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                   
                                                 <?php endwhile; ?>
                                             <?php else: ?>
                                                 <tr>
@@ -1273,59 +519,83 @@ LIMIT ? OFFSET ?";
     <!-- container-scroller -->
     <!-- plugins:js -->
     <!-- jQuery -->
+
+
+
+
+
+
+
+ <!-- Default Certificate Modal -->
+<div class="modal fade" id="viewIDModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 1200px;"> <!-- wider modal -->
+    <div class="modal-content shadow-lg border-0">
+
+      <!-- Header -->
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="certificateTypeModalLabel">Barangay ID</h5>
+        <button type="button" class="btn-close btn-close-modal" aria-label="Close"></button>
+      </div>
+
+        <div class="modal-body d-flex justify-content-center" style="max-height: 90vh; overflow-y: auto;"> 
+            <div id="barangay_id_content"  style="width: fit-content;">
+                <!-- Certificate content will be loaded here via AJAX -->
+            </div>
+        </div>
+
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-primary btn-print" data-target="#barangay_id_content">
+          <i class="fas fa-print mr-1"></i> Print
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="fas fa-times mr-1"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   
     <script>
 
-    
-                                                                                $('.generate-id').on("click",function (e) {
-                                                                                    e.preventDefault();
+    $(document).on('click', '.viewId', function(e) {
+    e.preventDefault();
 
-                                                                                    var $btn = $(this);
-                                                                                    var certification_id = $btn.data("id");
+    var $btn = $(this);
+    var bid_id = $btn.data('bid_id');
 
-                                                                                    // Get form values
-                                                                                    var status = $("#status" + certification_id).val();
-                                                                                    console.log(status);
+    // Show loading state
+    var originalText = $btn.html();
+    $btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Processing...');
+    $btn.prop('disabled', true);
 
-                                                                                    if(status=="Approved"){
+    // Load Barangay ID via AJAX
+    $.ajax({
+        url: 'generate_brgy_id.php',
+        type: 'GET',
+        data: { bid_id: bid_id },
+        success: function(response) {
+            $('#barangay_id_content').html(response);
 
-                                                                                         var originalText = $btn.html();
-                                                                                    $btn.html('<i class="fas fa-spinner fa-spin mr-1"></i> Processing...');
-                                                                                    $btn.prop("disabled", true);
+            // Show the modal after content is loaded
+            $('#viewIDModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            alert('Failed to load Barangay ID. Please try again.');
+        },
+        complete: function() {
+            // Restore button
+            $btn.html(originalText);
+            $btn.prop('disabled', false);
+        }
+    });
+});
+                                   
 
-                                                                                    // AJAX request
-                                                                                    $.ajax({
-                                                                                        url: "gen_id.php",
-                                                                                        type: "POST",
-                                                                                        dataType: "json", 
-                                                                                        data: {
-                                                                                            BID_id: certification_id,
-                                                                                        },
-                                                                                      success: function (response) {
-                                                                                        console.log(response); 
-                                                                                        if (response.success) {
-                                                                                            alert(response.message);
 
-                                                                                           location.reload(); 
-                                                                                        } else {
-                                                                                            alert("Error: " + response.message + 
-                                                                                                (response.error ? "\nDetails: " + response.error : ""));
-                                                                                        }
-                                                                                    },
-                                                                                        error: function (xhr, status, error) {
-                                                                                            alert("Network error: " + error);
-                                                                                        },
-                                                                                        complete: function () {
-                                                                                            // Reset button state kahit success or fail
-                                                                                            $btn.html(originalText);
-                                                                                            $btn.prop("disabled", false);
-                                                                                        }
-                                                                                    });
 
-                                                                                    }
-                                                                                    // Show loading state
-                                                                                   
-                                                                                });
 
         document.addEventListener('DOMContentLoaded', function() {
             var searchForm = document.getElementById('searchForm');

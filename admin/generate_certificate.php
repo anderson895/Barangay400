@@ -2,18 +2,7 @@
 $certification_id = $_GET['certification_id'];
 
 include '../connection/config.php';
-// $view_certificate = $conn->query("
-//     SELECT 
-//         c.*,
-//         u.address AS user_address,
-//         u.first_name, 
-//         u.middle_name, 
-//         u.last_name,
-//         u.birthday
-//     FROM tbl_certification c
-//     LEFT JOIN tbl_residents u ON u.user_id = c.user_id 
-//     WHERE c.certification_id = '$certification_id'
-// ");
+
 
 $view_certificate = $conn->query("
     SELECT 
