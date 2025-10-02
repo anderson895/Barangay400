@@ -173,7 +173,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                             <li class="nav-item"> <a class="nav-link" href="certificate.php"> Certificate Request </a></li>
                             <li class="nav-item"> <a class="nav-link" href="clearance.php"> Clearance Request </a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangayid.php"> Barangay ID Request </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="blotter.php"> Blotter Request </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="blotter.php"> Blotter </a></li>
                             <li class="nav-item"> <a class="nav-link" href="complains.php"> Complains Request </a></li>
                         </ul>
                     </div>

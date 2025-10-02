@@ -538,37 +538,44 @@ LIMIT ? OFFSET ?";
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <!-- Filter section for request button and validation -->
-                                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                                    <p class="card-title mb-0">Barangay Blotter Requests</p>
-                                    <div class="ml-auto">
-                                        
-                                            <!--<button class="btn btn-primary mb-3" data-toggle="modal"
-                                                data-target="#BlotterModal">Request</button>-->
-                                     
-                                    </div>
-                                </div>
+                                <!-- Blotter Report Management Section -->
+                                    <div class="container-fluid mt-3">
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                                            <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
+                                            <button class="btn btn-warning text-white font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
+                                                Add Blotter
+                                            </button>
+                                        </div>
 
+                                        <!-- Tabs -->
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a class="nav-link active font-weight-bold" href="#">Ongoing</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link font-weight-bold" href="#">Scheduled Hearings</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link font-weight-bold" href="#">Resolved</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link font-weight-bold" href="#">Dismissed</a>
+                                            </li>
+                                        </ul>
 
-                              
-
-                                <!-- Filter section -->
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <form method="GET" action="" class="form-inline" id="searchForm">
-                                            <div class="input-group mb-2 mr-sm-2">
-                                                <input type="text" name="search" id="searchInput" class="form-control"
-                                                    value="<?php echo htmlspecialchars($search); ?>"
-                                                    placeholder="Search Blotter Request">
+                                        <!-- Search Bar -->
+                                        <form method="GET" action="" class="form-inline mb-3">
+                                            <div class="input-group w-50">
+                                                <input type="text" name="search" class="form-control" placeholder="Search for Ongoing Blotter Cases">
                                                 <div class="input-group-append">
-                                                    <button type="button" class="btn btn-outline-secondary"
-                                                        id="clearButton" style="padding:10px;">&times;</button>
+                                                    <button class="btn btn-success" type="submit">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2">Search</button>
                                         </form>
                                     </div>
-                                </div>
+
 
                                 <div class="table-responsive">
                                     <table class="table table-striped table-borderless" style="width:100%">
