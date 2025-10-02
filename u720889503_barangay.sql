@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2025 at 07:12 AM
+-- Generation Time: Oct 02, 2025 at 09:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,6 +48,14 @@ CREATE TABLE `j_blotter` (
   `scheduled_by` varchar(60) DEFAULT NULL,
   `blotter_status` enum('Ongoing','Scheduled Hearing','Resolved','Dismissed') NOT NULL DEFAULT 'Ongoing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `j_blotter`
+--
+
+INSERT INTO `j_blotter` (`blotter_id`, `complainant_name`, `complainant_age`, `complainant_address`, `complainant_email`, `complainant_phone`, `respondent_name`, `respondent_age`, `respondent_address`, `blotter_type`, `incident_location`, `date_reported`, `time_reported`, `incident_narrative`, `supporting_documents`, `hearing_date`, `hearing_time`, `scheduled_by`, `blotter_status`) VALUES
+(13, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'None', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2d0110fd07.63914906.pdf', NULL, NULL, NULL, 'Ongoing'),
+(14, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'None', 'assault', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', NULL, NULL, NULL, 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -1613,7 +1621,7 @@ ALTER TABLE `web_services`
 -- AUTO_INCREMENT for table `j_blotter`
 --
 ALTER TABLE `j_blotter`
-  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `blotter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_audit`

@@ -483,276 +483,453 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 </div>
                 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form id="editBlotterForm" >
+        <div class="modal-header bg-warning">
+          <h5 class="modal-title">Edit Blotter Report</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" name="blotter_id" id="edit_id">
+
+          <h6 class="text-primary">Complainant Information</h6>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Name</label>
+              <input type="text" class="form-control" name="complainant_name" id="edit_complainant">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Age</label>
+              <input type="number" class="form-control" name="complainant_age" id="edit_complainantage">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Phone</label>
+              <input type="text" class="form-control" name="complainant_phone" id="edit_complainantphone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <textarea class="form-control" name="complainant_address" id="edit_complainantaddress"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" name="complainant_email" id="edit_complainantemail">
+          </div>
+
+          <h6 class="text-primary mt-3">Respondent Information</h6>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Name</label>
+              <input type="text" class="form-control" name="respondent_name" id="edit_respondent">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Age</label>
+              <input type="number" class="form-control" name="respondent_age" id="edit_respondentage">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Address</label>
+              <textarea class="form-control" name="respondent_address" id="edit_respondentaddress"></textarea>
+            </div>
+          </div>
+
+          <h6 class="text-primary mt-3">Blotter Details</h6>
+          <div class="form-group">
+            <label>Type</label>
+            <select class="form-control" name="blotter_type">
+                                <option value="">Select</option>
+                                <option value="theft">Theft</option>
+                                <option value="assault">Assault</option>
+                                <option value="harassment">Harassment</option>
+                            </select>
+          </div>
+          <div class="form-group">
+            <label>Incident Location</label>
+            <textarea class="form-control" name="incident_location" id="edit_incidentlocation"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Date Reported</label>
+              <input type="date" class="form-control" name="date_reported" id="edit_datereported">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Time Reported</label>
+              <input type="time" class="form-control" name="time_reported" id="edit_timereported">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Incident Narrative</label>
+            <textarea class="form-control" name="incident_narrative" id="edit_incidentnarrative"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Supporting Documents</label>
+            <input type="file" class="form-control" name="supporting_documents">
+            <small id="current_doc"></small>
+          </div>
+
+          <h6 class="text-primary mt-3">Hearing Information</h6>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Hearing Date</label>
+              <input type="date" class="form-control" name="hearing_date" id="edit_hearingdate">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Hearing Time</label>
+              <input type="time" class="form-control" name="hearing_time" id="edit_hearingtime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Scheduled By</label>
+            <input type="text" class="form-control" name="scheduled_by" id="edit_scheduledby">
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" name="blotter_status" id="edit_status">
+              <option value="Ongoing">Ongoing</option>
+              <option value="Scheduled Hearing">Scheduled Hearing</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Dismissed">Dismissed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Update</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- View Blotter Modal -->
+<div class="modal fade" id="viewComplainModal" tabindex="-1" role="dialog" aria-labelledby="viewComplainModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title font-weight-bold" id="viewComplainModalLabel">Blotter Details</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Blotter No:</strong> <span id="view_blotterid"></span></p>
+            <p><strong>Complainant:</strong> <span id="view_complainant"></span></p>
+            <p><strong>Age:</strong> <span id="view_complainantage"></span></p>
+            <p><strong>Address:</strong> <span id="view_complainantaddress"></span></p>
+            <p><strong>Email:</strong> <span id="view_complainantemail"></span></p>
+            <p><strong>Phone:</strong> <span id="view_complainantphone"></span></p>
+          </div>
+
+          <div class="col-md-6">
+            <p><strong>Respondent:</strong> <span id="view_respondent"></span></p>
+            <p><strong>Age:</strong> <span id="view_respondentage"></span></p>
+            <p><strong>Address:</strong> <span id="view_respondentaddress"></span></p>
+            <p><strong>Blotter Type:</strong> <span id="view_type"></span></p>
+            <p><strong>Incident Location:</strong> <span id="view_incidentlocation"></span></p>
+          </div>
+        </div>
+
+        <hr>
+
+        <p><strong>Date Reported:</strong> <span id="view_datereported"></span></p>
+        <p><strong>Time Reported:</strong> <span id="view_timereported"></span></p>
+        <p><strong>Status:</strong> <span id="view_status"></span></p>
+        
+        <p><strong>Hearing Date:</strong> <span id="view_hearingdate"></span></p>
+        <p><strong>Hearing Time:</strong> <span id="view_hearingtime"></span></p>
+        <p><strong>Scheduled By:</strong> <span id="view_scheduledby"></span></p>
+
+        <hr>
+
+        <p><strong>Incident Narrative:</strong></p>
+        <p id="view_incidentnarrative" class="border p-2 bg-light"></p>
+
+        <p><strong>Supporting Documents:</strong></p>
+        <div id="view_supportingdocuments"></div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
                 
-                <?php
-                include '../connection/config.php';
-
-                // Check for success messages
-                if (isset($_GET['success'])) {
-                    $successMessages = [
-                        1 => "Clearance Request Submitted Successfully",
-                        2 => "Clearance Request Updated Successfully"
-                    ];
-
-                    if (isset($successMessages[$_GET['success']])) {
-                        echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "success",
-        title: "' . $successMessages[$_GET['success']] . '",
-        showConfirmButton: false,
-        timer: 1500
-    });
-});
-</script>';
-                    }
-                }
-
-                // Check for error messages
-                if (isset($_GET['error'])) {
-                    echo '<script>
-document.addEventListener("DOMContentLoaded", function() {
-    Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Something went wrong. Please try again.",
-        showConfirmButton: true
-    });
-});
-</script>';
-                }
-
-                // Initialize variables
-                $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-                $search = $_GET['search'] ?? '';
-                $page = $_GET['page'] ?? 1;
-                $limit = 10;
-                $offset = ($page - 1) * $limit;
-
                 
+               <?php
+include '../connection/config.php';
 
-                // Date filter variables
-                $date_from = $_GET['date_from'] ?? '';
-                $date_to = $_GET['date_to'] ?? '';
+// ✅ SweetAlert messages
+if (isset($_GET['success'])) {
+    $successMessages = [
+        1 => "Blotter Report Submitted Successfully",
+        2 => "Blotter Report Updated Successfully"
+    ];
+    if (isset($successMessages[$_GET['success']])) {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "' . $successMessages[$_GET['success']] . '",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+        </script>';
+    }
+}
 
-                // Build WHERE clause based on search
-                $where_conditions = [];
-                $params = [];
-                $types = "";
+if (isset($_GET['error'])) {
+    echo '<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Something went wrong. Please try again.",
+            showConfirmButton: true
+        });
+    });
+    </script>';
+}
 
-                // Get all column names from the tbl_clearance table for search
-                $columnsQuery = "SHOW COLUMNS FROM tbl_blotter";
-                $columnsResult = $conn->query($columnsQuery);
-                $searchFields = [];
+// ✅ Pagination & Search
+$search = $_GET['search'] ?? '';
+$page   = $_GET['page'] ?? 1;
+$limit  = 10;
+$offset = ($page - 1) * $limit;
 
-                if ($columnsResult) {
-                    while ($column = $columnsResult->fetch_assoc()) {
-                        $searchFields[] = "b." . $column['Field'];
-                    }
-                }
+$where_clause = "1=1";
+$params = [];
+$types  = "";
 
-                if (!empty($search) && !empty($searchFields)) {
-                    $searchConditions = [];
-                    foreach ($searchFields as $field) {
-                        $searchConditions[] = "$field LIKE ?";
-                        $params[] = "%" . $search . "%";
-                        $types .= "s";
-                    }
-                    $where_conditions[] = "(" . implode(" OR ", $searchConditions) . ")";
-                }
+// ✅ Search across complainant/respondent/type
+if (!empty($search)) {
+    $where_clause = "(b.complainant_name LIKE ? OR b.respondent_name LIKE ? OR b.blotter_type LIKE ?)";
+    $params = ["%$search%", "%$search%", "%$search%"];
+    $types  = "sss";
+}
 
-                // Combine WHERE conditions
-                $where_clause = !empty($where_conditions) ? implode(" AND ", $where_conditions) : "1=1"; // 1=1 ensures valid SQL if no conditions
+// ✅ Count total rows
+$count_sql = "SELECT COUNT(*) as total FROM j_blotter b WHERE $where_clause";
+$count_stmt = $conn->prepare($count_sql);
+if (!empty($params)) {
+    $count_stmt->bind_param($types, ...$params);
+}
+$count_stmt->execute();
+$total_rows = $count_stmt->get_result()->fetch_assoc()['total'];
+$count_stmt->close();
+$total_pages = ceil($total_rows / $limit);
 
-                // Count total records for pagination
-                $count_sql = "SELECT COUNT(*) as total FROM tbl_blotter b WHERE $where_clause";
+// ✅ Fetch Blotters
+$sql = "SELECT b.*
+        FROM j_blotter b
+        WHERE $where_clause
+        ORDER BY b.date_reported DESC, b.time_reported DESC
+        LIMIT ? OFFSET ?";
+$params[] = $limit;
+$params[] = $offset;
+$types   .= "ii";
 
-                if (!empty($params)) {
-                    $count_stmt = $conn->prepare($count_sql);
-                    $count_stmt->bind_param($types, ...$params);
-                    $count_stmt->execute();
-                    $count_result = $count_stmt->get_result();
-                    $total_rows = $count_result->fetch_assoc()['total'];
-                    $count_stmt->close();
-                } else {
-                    $count_result = $conn->query($count_sql);
-                    $total_rows = $count_result->fetch_assoc()['total'];
-                }
+$stmt = $conn->prepare($sql);
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+?>
 
-                $total_pages = ceil($total_rows / $limit);
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <!-- Header -->
+                <div class="container-fluid mt-3">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+                        <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
+                        <button class="btn btn-warning text-black font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
+                            Add Blotter
+                        </button>
+                    </div>
 
-                // Fetch clearance requests query
-                $sql = "SELECT b.blotter_id, b.res_id, b.user_id, b.dateFiled, 
-b.caseNumber, b.complainant, b.respondent, b.victim, b.blotter_desc,
-b.witness, b.natureOfCase, b.document_path,
-b.status, b.created_at
-FROM tbl_blotter b
-WHERE $where_clause
-ORDER BY b.created_at DESC 
-LIMIT ? OFFSET ?";
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs mb-3">
+                        <li class="nav-item"><a class="nav-link active font-weight-bold" href="#">Ongoing</a></li>
+                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Scheduled Hearings</a></li>
+                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Resolved</a></li>
+                        <li class="nav-item"><a class="nav-link font-weight-bold" href="#">Dismissed</a></li>
+                    </ul>
 
-                // Add limit and offset params
-                $params[] = $limit;
-                $params[] = $offset;
-                $types .= "ii";
-
-                // Prepare and execute statement
-                $stmt = $conn->prepare($sql);
-                if (!empty($params)) {
-                    $stmt->bind_param($types, ...$params);
-                }
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $stmt->close();
-                ?>
-
-                <div class="row">
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Blotter Report Management Section -->
-                                    <div class="container-fluid mt-3">
-                                        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                                            <h5 class="text-primary font-weight-bold mb-2">Blotter Report Management</h5>
-                                            <button class="btn btn-warning text-black font-weight-bold" data-toggle="modal" data-target="#BlotterModal">
-                                                Add Blotter
-                                            </button>
-                                        </div>
-
-                                        <!-- Tabs -->
-                                        <ul class="nav nav-tabs mb-3">
-                                            <li class="nav-item">
-                                                <a class="nav-link active font-weight-bold" href="#">Ongoing</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link font-weight-bold" href="#">Scheduled Hearings</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link font-weight-bold" href="#">Resolved</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link font-weight-bold" href="#">Dismissed</a>
-                                            </li>
-                                        </ul>
-
-                                        <!-- Search Bar -->
-                                        <form method="GET" action="" class="form-inline mb-3">
-                                            <div class="input-group w-50">
-                                                <input type="text" name="search" class="form-control form-control-sm" placeholder="Search for Ongoing Blotter Cases">
-                                                <div class="input-group-append">
-                                                <button class="btn btn-success btn-sm" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
-
-
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-borderless" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Blotter No</th>
-                                                <th>Complainant</th>
-                                                <th>Hearing type</th>
-                                                <th>Hearing Date</th>
-                                                <th>Hearing Time</th>
-                                                <th>Scheduled By</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php if ($result->num_rows > 0): ?>
-                                                <?php while ($row = $result->fetch_assoc()): ?>
-                                                    <tr>
-                                                        <td><?php echo htmlspecialchars($row['blotter_id']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['complainant']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['respondent']); ?></td>
-                                                        <td><?php echo htmlspecialchars($row['natureOfCase']); ?></td>
-
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge 
-                                <?php
-                                                    if ($row['status'] == 'To Be Approved')
-                                                        echo 'badge-warning text-white font-weight-bold';
-                                                    elseif ($row['status'] == 'On Going')
-                                                        echo 'badge-info text-white font-weight-bold';
-                                                    elseif ($row['status'] == 'Denied')
-                                                        echo 'badge-danger text-white font-weight-bold';
-                                                    elseif ($row['status'] == 'Resubmit')
-                                                        echo 'badge-secondary text-white font-weight-bold';
-                                                    elseif ($row['status'] == 'Completed')
-                                                        echo 'badge-success text-white font-weight-bold';
-                                                    else
-                                                        echo 'badge-warning text-white font-weight-bold';
-                                ?>">
-                                                                <?php echo htmlspecialchars(ucfirst($row['status'])); ?>
-                                                            </span>
-                                                        </td>
-                                                        <td><?php echo date('F d, Y', strtotime($row['dateFiled'])); ?>
-                                                        </td>
-                                                        <td>
-                                                            <!-- View button for all positions -->
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" title="View"
-                                                                data-target="#viewComplainModal<?php echo $row['blotter_id']; ?>">
-                                                                <i class="fa-solid fa-eye"></i>
-                                                            </button>
-
-                                                            <!-- Edit/Update button only for Barangay Secretary -->
-                                                           
-                                                                <button class="btn btn-warning btn-sm" data-toggle="modal" title="Update"
-                                                                    data-target="#editModal<?php echo $row['blotter_id']; ?>">
-                                                                    <i class="fa-solid fa-edit"></i>
-                                                                </button>
-                                                     
-                                                        </td>
-                                                    </tr>
-                                                  
-                                                <?php endwhile; ?>
-                                            <?php else: ?>
-                                                <tr>
-                                                    <td colspan="9" class="text-center">No request found</td>
-                                                </tr>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <br>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
-                                            <a class="page-link"
-                                                href="?search=<?php echo htmlspecialchars($search); ?>&page=<?php echo $page - 1; ?>"
-                                                aria-label="Previous">
-                                                <span aria-hidden="true">&laquo; </span>
-                                            </a>
-                                        </li>
-                                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                                                <a class="page-link"
-                                                    href="?search=<?php echo htmlspecialchars($search); ?>&page=<?php echo $i; ?>"
-                                                    style="background-color: <?php echo ($i == $page) ? '#141E30' : ''; ?> !important;"><?php echo $i; ?></a>
-                                            </li>
-                                        <?php endfor; ?>
-                                        <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
-                                            <a class="page-link"
-                                                href="?search=<?php echo htmlspecialchars($search); ?>&page=<?php echo $page + 1; ?>"
-                                                aria-label="Next">
-                                                <span aria-hidden="true"> &raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                    <!-- Search -->
+                    <form method="GET" action="" class="form-inline mb-3">
+                        <div class="input-group w-50">
+                            <input type="text" name="search" class="form-control form-control-sm" placeholder="Search for Blotter Cases" value="<?= htmlspecialchars($search) ?>">
+                            <div class="input-group-append">
+                                <button class="btn btn-success btn-sm" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Blotter No</th>
+                                <th>Complainant</th>
+                                <th>Respondent</th>
+                                <th>Type</th>
+                                <th>Date Reported</th>
+                                <th>Hearing Date</th>
+                                <th>Hearing Time</th>
+                                <th>Scheduled By</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($row['blotter_id']) ?></td>
+                                    <td><?= htmlspecialchars($row['complainant_name']) ?></td>
+                                    <td><?= htmlspecialchars($row['respondent_name']) ?></td>
+                                    <td><?= htmlspecialchars($row['blotter_type']) ?></td>
+                                    <td><?= date('F d, Y', strtotime($row['date_reported'])) ?></td>
+                                    <td><?= $row['hearing_date'] ? date('F d, Y', strtotime($row['hearing_date'])) : '-' ?></td>
+                                    <td><?= $row['hearing_time'] ? date('h:i A', strtotime($row['hearing_time'])) : '-' ?></td>
+                                    <td><?= $row['scheduled_by'] ?? '-' ?></td>
+                                    <td>
+                                        <span class="badge 
+                                            <?php
+                                            switch ($row['blotter_status']) {
+                                                case 'Ongoing': echo 'badge-info'; break;
+                                                case 'Scheduled Hearing': echo 'badge-warning'; break;
+                                                case 'Resolved': echo 'badge-success'; break;
+                                                case 'Dismissed': echo 'badge-danger'; break;
+                                                default: echo 'badge-light';
+                                            }
+                                            ?> text-white font-weight-bold">
+                                            <?= htmlspecialchars($row['blotter_status']) ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                      <button class="btn btn-info btn-sm btnView" 
+                                            data-id="<?= $row['blotter_id'] ?>"
+                                            data-complainant="<?= htmlspecialchars($row['complainant_name']) ?>"
+                                            data-complainantage="<?= $row['complainant_age'] ?>"
+                                            data-complainantaddress="<?= htmlspecialchars($row['complainant_address']) ?>"
+                                            data-complainantemail="<?= htmlspecialchars($row['complainant_email']) ?>"
+                                            data-complainantphone="<?= htmlspecialchars($row['complainant_phone']) ?>"
+                                            data-respondent="<?= htmlspecialchars($row['respondent_name']) ?>"
+                                            data-respondentage="<?= $row['respondent_age'] ?>"
+                                            data-respondentaddress="<?= htmlspecialchars($row['respondent_address']) ?>"
+                                            data-type="<?= htmlspecialchars($row['blotter_type']) ?>"
+                                            data-incidentlocation="<?= htmlspecialchars($row['incident_location']) ?>"
+                                            data-datereported="<?= $row['date_reported'] ?>"
+                                            data-timereported="<?= $row['time_reported'] ?>"
+                                            data-incidentnarrative="<?= htmlspecialchars($row['incident_narrative']) ?>"
+                                            data-supportingdocuments="<?= htmlspecialchars($row['supporting_documents']) ?>"
+                                            data-hearingdate="<?= $row['hearing_date'] ?>"
+                                            data-hearingtime="<?= $row['hearing_time'] ?>"
+                                            data-scheduledby="<?= htmlspecialchars($row['scheduled_by']) ?>"
+                                            data-status="<?= htmlspecialchars($row['blotter_status']) ?>"
+                                            data-toggle="modal" data-target="#viewComplainModal">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+
+                                        <button class="btn btn-warning btn-sm btnEdit" 
+                                            data-id="<?= $row['blotter_id'] ?>"
+                                            data-complainant="<?= htmlspecialchars($row['complainant_name']) ?>"
+                                            data-complainantage="<?= $row['complainant_age'] ?>"
+                                            data-complainantaddress="<?= htmlspecialchars($row['complainant_address']) ?>"
+                                            data-complainantemail="<?= htmlspecialchars($row['complainant_email']) ?>"
+                                            data-complainantphone="<?= htmlspecialchars($row['complainant_phone']) ?>"
+                                            data-respondent="<?= htmlspecialchars($row['respondent_name']) ?>"
+                                            data-respondentage="<?= $row['respondent_age'] ?>"
+                                            data-respondentaddress="<?= htmlspecialchars($row['respondent_address']) ?>"
+                                            data-type="<?= htmlspecialchars($row['blotter_type']) ?>"
+                                            data-incidentlocation="<?= htmlspecialchars($row['incident_location']) ?>"
+                                            data-datereported="<?= $row['date_reported'] ?>"
+                                            data-timereported="<?= $row['time_reported'] ?>"
+                                            data-incidentnarrative="<?= htmlspecialchars($row['incident_narrative']) ?>"
+                                            data-supportingdocuments="<?= htmlspecialchars($row['supporting_documents']) ?>"
+                                            data-hearingdate="<?= $row['hearing_date'] ?>"
+                                            data-hearingtime="<?= $row['hearing_time'] ?>"
+                                            data-scheduledby="<?= htmlspecialchars($row['scheduled_by']) ?>"
+                                            data-status="<?= htmlspecialchars($row['blotter_status']) ?>"
+                                            data-toggle="modal" data-target="#editModal">
+                                            <i class="fa-solid fa-edit"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr><td colspan="10" class="text-center">No blotter reports found</td></tr>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $page - 1 ?>">&laquo;</a>
+                        </li>
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                            <a class="page-link" href="?search=<?= urlencode($search) ?>&page=<?= $page + 1 ?>">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -788,11 +965,228 @@ LIMIT ? OFFSET ?";
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`
 
+<script>
 
-    <script>
-        $('#blotterForm').on('submit', function(e) {
+$(document).on("click", ".btnView", function() {
+    $("#view_blotterid").text($(this).data("id"));
+    $("#view_complainant").text($(this).data("complainant"));
+    $("#view_complainantage").text($(this).data("complainantage"));
+    $("#view_complainantaddress").text($(this).data("complainantaddress"));
+    $("#view_complainantemail").text($(this).data("complainantemail"));
+    $("#view_complainantphone").text($(this).data("complainantphone"));
+    $("#view_respondent").text($(this).data("respondent"));
+    $("#view_respondentage").text($(this).data("respondentage"));
+    $("#view_respondentaddress").text($(this).data("respondentaddress"));
+    $("#view_type").text($(this).data("type"));
+    $("#view_incidentlocation").text($(this).data("incidentlocation"));
+    $("#view_datereported").text($(this).data("datereported"));
+    $("#view_timereported").text($(this).data("timereported"));
+    $("#view_incidentnarrative").text($(this).data("incidentnarrative"));
+    $("#view_status").text($(this).data("status"));
+
+    $("#view_hearingdate").text($(this).data("hearingdate") || "-");
+    $("#view_hearingtime").text($(this).data("hearingtime") || "-");
+    $("#view_scheduledby").text($(this).data("scheduledby") || "-");
+
+    // supporting documents
+    var doc = $(this).data("supportingdocuments");
+    var container = $("#view_supportingdocuments");
+    container.empty(); // clear previous content
+
+    if (doc) {
+        let ext = doc.split('.').pop().toLowerCase();
+        let filePath = "../uploads/blotter/" + doc;
+
+        if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
+            // show image preview
+            container.html(`
+                <a href="${filePath}" target="_blank">
+                    <img src="${filePath}" class="img-thumbnail" style="max-height:120px;">
+                </a>
+            `);
+        } else if (ext === "pdf") {
+            // PDF file
+            container.html(`
+                <a href="${filePath}" target="_blank">
+                    <i class="fas fa-file-pdf fa-3x text-danger"></i> View PDF
+                </a>
+            `);
+        } else if (["doc", "docx"].includes(ext)) {
+            // Word doc
+            container.html(`
+                <a href="${filePath}" target="_blank">
+                    <i class="fas fa-file-word fa-3x text-primary"></i> View Document
+                </a>
+            `);
+        } else if (["xls", "xlsx"].includes(ext)) {
+            // Excel file
+            container.html(`
+                <a href="${filePath}" target="_blank">
+                    <i class="fas fa-file-excel fa-3x text-success"></i> View Spreadsheet
+                </a>
+            `);
+        } else {
+            // other file types
+            container.html(`
+                <a href="${filePath}" target="_blank">
+                    <i class="fas fa-file fa-3x text-secondary"></i> Download File
+                </a>
+            `);
+        }
+    } else {
+        container.html(`<span class="text-muted">No supporting documents uploaded</span>`);
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+$('.btnEdit').on('click', function(){
+        $('#edit_id').val($(this).data('id'));
+        $('#edit_complainant').val($(this).data('complainant'));
+        $('#edit_complainantage').val($(this).data('complainantage'));
+        $('#edit_complainantaddress').val($(this).data('complainantaddress'));
+        $('#edit_complainantemail').val($(this).data('complainantemail'));
+        $('#edit_complainantphone').val($(this).data('complainantphone'));
+        $('#edit_respondent').val($(this).data('respondent'));
+        $('#edit_respondentage').val($(this).data('respondentage'));
+        $('#edit_respondentaddress').val($(this).data('respondentaddress'));
+        $('#edit_type').val($(this).data('type'));
+        $('#edit_incidentlocation').val($(this).data('incidentlocation'));
+        $('#edit_datereported').val($(this).data('datereported'));
+        $('#edit_timereported').val($(this).data('timereported'));
+        $('#edit_incidentnarrative').val($(this).data('incidentnarrative'));
+        $('#current_doc').text("Current File: " + $(this).data('supportingdocuments'));
+        $('#edit_hearingdate').val($(this).data('hearingdate'));
+        $('#edit_hearingtime').val($(this).data('hearingtime'));
+        $('#edit_scheduledby').val($(this).data('scheduledby'));
+        $('#edit_status').val($(this).data('status'));
+    });
+
+
+    $("#editBlotterForm").on("submit", function(e) {
+    e.preventDefault();
+
+    var status       = $("#edit_status").val();
+    var hearingDate  = $("#edit_hearingdate").val();
+    var hearingTime  = $("#edit_hearingtime").val();
+    var scheduledBy  = $("#edit_scheduledby").val();
+
+    // 🔍 Validation kapag Scheduled Hearing
+    if (status === "Scheduled Hearing") {
+        if (!hearingDate || !hearingTime || !scheduledBy.trim()) {
+            Swal.fire({
+                icon: "warning",
+                title: "Validation Error",
+                text: "Please set Hearing Date, Hearing Time, and Scheduled By when status is Scheduled Hearing."
+            });
+            return; // stop submission
+        }
+    }
+
+    var formData = new FormData(this);
+    formData.append("requestType", "UpdateBlotter"); 
+
+    $.ajax({
+        type: "POST",
+        url: "Jcontroller.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function(response) {
+            if (response.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Blotter Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    $("#editModal").modal("hide");
+                    location.reload();
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Update Failed",
+                    text: response.message
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Server Error",
+                text: "Unable to update the record."
+            });
+            console.error(error);
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+    $('#blotterForm').on('submit', function(e) {
         e.preventDefault();
 
+        // Basic validation
+        let complainant_name    = $('input[name="complainant_name"]').val().trim();
+        let complainant_age     = $('input[name="complainant_age"]').val().trim();
+        let complainant_address = $('input[name="complainant_address"]').val().trim();
+        let complainant_phone   = $('input[name="complainant_phone"]').val().trim();
+        let respondent_name     = $('input[name="respondent_name"]').val().trim();
+        let respondent_unknown  = $('#unknownRespondent').is(':checked');
+        let blotter_type        = $('select[name="blotter_type"]').val();
+        let incident_location   = $('input[name="incident_location"]').val().trim();
+        let date_reported       = $('input[name="date_reported"]').val();
+        let time_reported       = $('input[name="time_reported"]').val();
+        let incident_narrative  = $('textarea[name="incident_narrative"]').val().trim();
+
+        // Check complainant info
+        if (complainant_name === "" || complainant_age === "" || complainant_address === "" || complainant_phone === "") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing Fields',
+                text: 'Please fill in all complainant information.'
+            });
+            return;
+        }
+
+        // Check respondent (allow Unknown if checked)
+        if (!respondent_unknown && respondent_name === "") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing Respondent',
+                text: 'Please enter respondent name or check "Unknown".'
+            });
+            return;
+        }
+
+        // Check incident details
+        if (blotter_type === "" || incident_location === "" || date_reported === "" || time_reported === "" || incident_narrative === "") {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Incomplete Incident Details',
+                text: 'Please complete all incident details before submitting.'
+            });
+            return;
+        }
+
+        // If validation passes, send via AJAX
         var formData = new FormData(this);
         formData.append('requestType', 'AddBlotter');
 
@@ -802,14 +1196,36 @@ LIMIT ? OFFSET ?";
             data: formData,
             contentType: false,
             processData: false,
-            dataType: "text",
+            dataType: "json",
             success: function(response) {
-                console.log(response);
+                if (response.status === 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Blotter Successfully Recorded',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Server Error',
+                    text: 'Unable to process your request at the moment.'
+                });
             }
         });
-        });
+    });
+</script>
 
-    </script>
 
 
 
