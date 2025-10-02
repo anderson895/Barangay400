@@ -231,7 +231,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->close();
                 exit;
 
-        }else {
+        }else if($_POST['requestType'] == "UpdateSchedule"){
+                $id            = $_POST['blotter_id'];
+                $hearing_date  = trim($_POST['hearing_date']) !== '' ? $_POST['hearing_date'] : null;
+                $hearing_time  = trim($_POST['hearing_time']) !== '' ? $_POST['hearing_time'] : null;
+                $scheduled_by  = trim($_POST['scheduled_by']) !== '' ? $_POST['scheduled_by'] : null;
+                $blotter_status = $_POST['blotter_status'];
+
+                $sql = "UPDATE j_blotter SET 
+                            hearing_date = ?, 
+                            hearing_time = ?, 
+                            scheduled_by = ?, 
+                            blotter_status = ?
+                        WHERE blotter_id = ?";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssssi", $hearing_date, $hearing_time, $scheduled_by, $blotter_status, $id);
+
+                if ($stmt->execute()) {
+                    echo json_encode([
+                        "status" => 200,
+                        "message" => "Hearing schedule updated successfully."
+                    ]);
+                } else {
+                    echo json_encode([
+                        "status" => 500,
+                        "message" => "Error updating schedule: " . $stmt->error
+                    ]);
+                }
+
+                $stmt->close();
+                exit;
+            }else {
             echo '404';
         }
     } else {

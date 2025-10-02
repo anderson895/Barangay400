@@ -601,7 +601,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
             <input type="text" class="form-control" name="scheduled_by" id="edit_scheduledby">
           </div>
 
-          <div class="form-group">
+          <div class="form-group" hidden>
             <label>Status</label>
             <select class="form-control" name="blotter_status" id="edit_status">
               <option value="Ongoing">Ongoing</option>
@@ -625,66 +625,173 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
 
 
 
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="max-width:900px;">
 
-
-
-<!-- View Blotter Modal -->
-<div class="modal fade" id="viewComplainModal" tabindex="-1" role="dialog" aria-labelledby="viewComplainModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header bg-info text-white">
-        <h5 class="modal-title font-weight-bold" id="viewComplainModalLabel">Blotter Details</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">View Blotter Report</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body">
-        
-        <div class="row">
-          <div class="col-md-6">
-            <p><strong>Blotter No:</strong> <span id="view_blotterid"></span></p>
-            <p><strong>Complainant:</strong> <span id="view_complainant"></span></p>
-            <p><strong>Age:</strong> <span id="view_complainantage"></span></p>
-            <p><strong>Address:</strong> <span id="view_complainantaddress"></span></p>
-            <p><strong>Email:</strong> <span id="view_complainantemail"></span></p>
-            <p><strong>Phone:</strong> <span id="view_complainantphone"></span></p>
-          </div>
 
-          <div class="col-md-6">
-            <p><strong>Respondent:</strong> <span id="view_respondent"></span></p>
-            <p><strong>Age:</strong> <span id="view_respondentage"></span></p>
-            <p><strong>Address:</strong> <span id="view_respondentaddress"></span></p>
-            <p><strong>Blotter Type:</strong> <span id="view_type"></span></p>
-            <p><strong>Incident Location:</strong> <span id="view_incidentlocation"></span></p>
+      <div class="modal-body">
+        <input type="hidden" id="view_id">
+
+        <h6 class="text-primary">Complainant Information</h6>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Name</label>
+            <input type="text" class="form-control" id="view_complainant" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Age</label>
+            <input type="number" class="form-control" id="view_complainantage" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Phone</label>
+            <input type="text" class="form-control" id="view_complainantphone" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea class="form-control" id="view_complainantaddress" readonly></textarea>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" id="view_complainantemail" readonly>
+        </div>
+
+        <h6 class="text-primary mt-3">Respondent Information</h6>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Name</label>
+            <input type="text" class="form-control" id="view_respondent" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Age</label>
+            <input type="number" class="form-control" id="view_respondentage" readonly>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Address</label>
+            <input type="text" class="form-control" id="view_respondentaddress" readonly>
           </div>
         </div>
 
-        <hr>
+        <h6 class="text-primary mt-3">Blotter Details</h6>
+        <div class="form-group">
+          <label>Type</label>
+          <input type="text" class="form-control" id="view_blottertype" readonly>
+        </div>
+        <div class="form-group">
+          <label>Incident Location</label>
+          <textarea class="form-control" id="view_incidentlocation" readonly></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Date Reported</label>
+            <input type="date" class="form-control" id="view_datereported" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Time Reported</label>
+            <input type="time" class="form-control" id="view_timereported" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Incident Narrative</label>
+          <textarea class="form-control" id="view_incidentnarrative" readonly></textarea>
+        </div>
+        <div class="form-group">
+          <label>Supporting Documents</label>
+          <input type="text" class="form-control" id="view_supportingdoc" readonly>
+        </div>
 
-        <p><strong>Date Reported:</strong> <span id="view_datereported"></span></p>
-        <p><strong>Time Reported:</strong> <span id="view_timereported"></span></p>
-        <p><strong>Status:</strong> <span id="view_status"></span></p>
-        
-        <p><strong>Hearing Date:</strong> <span id="view_hearingdate"></span></p>
-        <p><strong>Hearing Time:</strong> <span id="view_hearingtime"></span></p>
-        <p><strong>Scheduled By:</strong> <span id="view_scheduledby"></span></p>
-
-        <hr>
-
-        <p><strong>Incident Narrative:</strong></p>
-        <p id="view_incidentnarrative" class="border p-2 bg-light"></p>
-
-        <p><strong>Supporting Documents:</strong></p>
-        <div id="view_supportingdocuments"></div>
-
-
+        <h6 class="text-primary mt-3">Hearing Information</h6>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Hearing Date</label>
+            <input type="date" class="form-control" id="view_hearingdate" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Hearing Time</label>
+            <input type="time" class="form-control" id="view_hearingtime" readonly>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Scheduled By</label>
+          <input type="text" class="form-control" id="view_scheduledby" readonly>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <input type="text" class="form-control" id="view_status" readonly>
+        </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="scheduleModalLabel">Set Hearing Schedule</h5>
+        <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="scheduleForm">
+
+      <input type="hidden" id="schedule_complainant_email" name="complainant_email">
+
+
+        <div class="modal-body">
+            <input type="hidden" id="schedule_id" name="blotter_id">
+
+            <div class="mb-3">
+                <label>Complainant</label>
+                <input type="text" id="schedule_complainant" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label>Hearing Date</label>
+                <input type="date" id="schedule_hearingdate" name="hearing_date" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Hearing Time</label>
+                <input type="time" id="schedule_hearingtime" name="hearing_time" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Scheduled By</label>
+                <input type="text" id="schedule_scheduledby" name="scheduled_by" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Status</label>
+                <select id="schedule_status" name="blotter_status" class="form-control text-black" required>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Scheduled Hearing">Scheduled Hearing</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Dismissed">Dismissed</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Schedule</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 
 
 
@@ -872,7 +979,7 @@ $stmt->close();
                                             data-hearingtime="<?= $row['hearing_time'] ?>"
                                             data-scheduledby="<?= htmlspecialchars($row['scheduled_by']) ?>"
                                             data-status="<?= htmlspecialchars($row['blotter_status']) ?>"
-                                            data-toggle="modal" data-target="#viewComplainModal">
+                                            data-toggle="modal" data-target="#viewModal">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
 
@@ -899,6 +1006,21 @@ $stmt->close();
                                             data-toggle="modal" data-target="#editModal">
                                             <i class="fa-solid fa-edit"></i>
                                         </button>
+
+
+                                        <!-- Set Schedule Button -->
+                                        <button class="btn btn-success btn-sm btnSchedule" 
+                                            data-id="<?= $row['blotter_id'] ?>"
+                                            data-complainant="<?= htmlspecialchars($row['complainant_name']) ?>"
+                                            data-hearingdate="<?= $row['hearing_date'] ?>"
+                                            data-hearingtime="<?= $row['hearing_time'] ?>"
+                                            data-scheduledby="<?= htmlspecialchars($row['scheduled_by']) ?>"
+                                            data-status="<?= htmlspecialchars($row['blotter_status']) ?>"
+                                            data-toggle="modal" data-target="#scheduleModal">
+                                            <i class="fa-solid fa-calendar"></i> 
+                                        </button>
+
+
 
                                     </td>
                                 </tr>
@@ -968,73 +1090,82 @@ $stmt->close();
 <script>
 
 $(document).on("click", ".btnView", function() {
-    $("#view_blotterid").text($(this).data("id"));
-    $("#view_complainant").text($(this).data("complainant"));
-    $("#view_complainantage").text($(this).data("complainantage"));
-    $("#view_complainantaddress").text($(this).data("complainantaddress"));
-    $("#view_complainantemail").text($(this).data("complainantemail"));
-    $("#view_complainantphone").text($(this).data("complainantphone"));
-    $("#view_respondent").text($(this).data("respondent"));
-    $("#view_respondentage").text($(this).data("respondentage"));
-    $("#view_respondentaddress").text($(this).data("respondentaddress"));
-    $("#view_type").text($(this).data("type"));
-    $("#view_incidentlocation").text($(this).data("incidentlocation"));
-    $("#view_datereported").text($(this).data("datereported"));
-    $("#view_timereported").text($(this).data("timereported"));
-    $("#view_incidentnarrative").text($(this).data("incidentnarrative"));
-    $("#view_status").text($(this).data("status"));
+    $("#view_id").val($(this).data("id"));
+    $("#view_complainant").val($(this).data("complainant"));
+    $("#view_complainantage").val($(this).data("complainantage"));
+    $("#view_complainantaddress").val($(this).data("complainantaddress"));
+    $("#view_complainantemail").val($(this).data("complainantemail"));
+    $("#view_complainantphone").val($(this).data("complainantphone"));
+    $("#view_respondent").val($(this).data("respondent"));
+    $("#view_respondentage").val($(this).data("respondentage"));
+    $("#view_respondentaddress").val($(this).data("respondentaddress"));
+    $("#view_blottertype").val($(this).data("type"));
+    $("#view_incidentlocation").val($(this).data("incidentlocation"));
+    $("#view_datereported").val($(this).data("datereported"));
+    $("#view_timereported").val($(this).data("timereported"));
+    $("#view_incidentnarrative").val($(this).data("incidentnarrative"));
+    $("#view_status").val($(this).data("status"));
 
-    $("#view_hearingdate").text($(this).data("hearingdate") || "-");
-    $("#view_hearingtime").text($(this).data("hearingtime") || "-");
-    $("#view_scheduledby").text($(this).data("scheduledby") || "-");
+    $("#view_hearingdate").val($(this).data("hearingdate") || "-");
+    $("#view_hearingtime").val($(this).data("hearingtime") || "-");
+    $("#view_scheduledby").val($(this).data("scheduledby") || "-");
 
     // supporting documents
     var doc = $(this).data("supportingdocuments");
-    var container = $("#view_supportingdocuments");
-    container.empty(); // clear previous content
+    var container = $("#view_supportingdoc");
+    container.val(''); // clear previous value
 
     if (doc) {
         let ext = doc.split('.').pop().toLowerCase();
         let filePath = "../uploads/blotter/" + doc;
 
         if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
-            // show image preview
-            container.html(`
-                <a href="${filePath}" target="_blank">
-                    <img src="${filePath}" class="img-thumbnail" style="max-height:120px;">
-                </a>
+            container.replaceWith(`
+                <div id="view_supportingdoc">
+                    <a href="${filePath}" target="_blank">
+                        <img src="${filePath}" class="img-thumbnail" style="max-height:120px;">
+                    </a>
+                </div>
             `);
         } else if (ext === "pdf") {
-            // PDF file
-            container.html(`
-                <a href="${filePath}" target="_blank">
-                    <i class="fas fa-file-pdf fa-3x text-danger"></i> View PDF
-                </a>
+            container.replaceWith(`
+                <div id="view_supportingdoc">
+                    <a href="${filePath}" target="_blank">
+                        <i class="fas fa-file-pdf fa-3x text-danger"></i> View PDF
+                    </a>
+                </div>
             `);
         } else if (["doc", "docx"].includes(ext)) {
-            // Word doc
-            container.html(`
-                <a href="${filePath}" target="_blank">
-                    <i class="fas fa-file-word fa-3x text-primary"></i> View Document
-                </a>
+            container.replaceWith(`
+                <div id="view_supportingdoc">
+                    <a href="${filePath}" target="_blank">
+                        <i class="fas fa-file-word fa-3x text-primary"></i> View Document
+                    </a>
+                </div>
             `);
         } else if (["xls", "xlsx"].includes(ext)) {
-            // Excel file
-            container.html(`
-                <a href="${filePath}" target="_blank">
-                    <i class="fas fa-file-excel fa-3x text-success"></i> View Spreadsheet
-                </a>
+            container.replaceWith(`
+                <div id="view_supportingdoc">
+                    <a href="${filePath}" target="_blank">
+                        <i class="fas fa-file-excel fa-3x text-success"></i> View Spreadsheet
+                    </a>
+                </div>
             `);
         } else {
-            // other file types
-            container.html(`
-                <a href="${filePath}" target="_blank">
-                    <i class="fas fa-file fa-3x text-secondary"></i> Download File
-                </a>
+            container.replaceWith(`
+                <div id="view_supportingdoc">
+                    <a href="${filePath}" target="_blank">
+                        <i class="fas fa-file fa-3x text-secondary"></i> Download File
+                    </a>
+                </div>
             `);
         }
     } else {
-        container.html(`<span class="text-muted">No supporting documents uploaded</span>`);
+        container.replaceWith(`
+            <div id="view_supportingdoc">
+                <span class="text-muted">No supporting documents uploaded</span>
+            </div>
+        `);
     }
 
 });
@@ -1042,6 +1173,81 @@ $(document).on("click", ".btnView", function() {
 
 
 
+
+
+
+
+$('.btnSchedule').on('click', function() {
+    $('#schedule_id').val($(this).data('id'));
+    $('#schedule_complainant').val($(this).data('complainant'));
+    $('#schedule_hearingdate').val($(this).data('hearingdate'));
+    $('#schedule_hearingtime').val($(this).data('hearingtime'));
+    $('#schedule_scheduledby').val($(this).data('scheduledby'));
+    $('#schedule_status').val($(this).data('status'));
+    $('#schedule_complainant_email').val($(this).data('complainantemail')); // hidden email
+});
+
+
+
+$('#scheduleForm').on('submit', function(e) {
+    e.preventDefault();
+
+    var status = $('#schedule_status').val(); // make sure you add a hidden/select input for status in your modal
+    var formData = $(this).serialize();
+    formData += '&requestType=UpdateSchedule';
+
+    $.ajax({
+        type: "POST",
+        url: "Jcontroller.php",
+        data: formData,
+        dataType: "json",
+        success: function(response) {
+            if (response.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Schedule Updated Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    $("#scheduleModal").modal("hide");
+                    location.reload();
+                });
+
+                // 🔔 Only send email if status is "Scheduled Hearing"
+                if(status === "Scheduled Hearing") {
+                    $.ajax({
+                        type: "POST",
+                        url: "blotter_mailer.php",
+                        data: {
+                            blotter_id: $('#schedule_id').val()
+                        },
+                        success: function(mailResponse) {
+                            console.log("Email notification sent:", mailResponse);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Email could not be sent:", error);
+                        }
+                    });
+                }
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Update Failed",
+                    text: response.message
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Server Error",
+                text: "Unable to update the schedule."
+            });
+            console.error(error);
+        }
+    });
+});
 
 
 
@@ -1079,6 +1285,8 @@ $('.btnEdit').on('click', function(){
     var hearingDate  = $("#edit_hearingdate").val();
     var hearingTime  = $("#edit_hearingtime").val();
     var scheduledBy  = $("#edit_scheduledby").val();
+    var email        = $("#edit_complainantemail").val(); // email from form
+    var blotterId    = $("#edit_id").val();
 
     // 🔍 Validation kapag Scheduled Hearing
     if (status === "Scheduled Hearing") {
@@ -1095,6 +1303,7 @@ $('.btnEdit').on('click', function(){
     var formData = new FormData(this);
     formData.append("requestType", "UpdateBlotter"); 
 
+    // 1️⃣ First, update blotter in database
     $.ajax({
         type: "POST",
         url: "Jcontroller.php",
@@ -1104,6 +1313,7 @@ $('.btnEdit').on('click', function(){
         dataType: "json",
         success: function(response) {
             if (response.status === 200) {
+
                 Swal.fire({
                     icon: "success",
                     title: "Blotter Updated Successfully",
@@ -1113,6 +1323,7 @@ $('.btnEdit').on('click', function(){
                     $("#editModal").modal("hide");
                     location.reload();
                 });
+
             } else {
                 Swal.fire({
                     icon: "error",
@@ -1131,6 +1342,7 @@ $('.btnEdit').on('click', function(){
         }
     });
 });
+
 
 
 

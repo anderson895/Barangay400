@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2025 at 09:44 AM
+-- Generation Time: Oct 02, 2025 at 05:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,8 +54,8 @@ CREATE TABLE `j_blotter` (
 --
 
 INSERT INTO `j_blotter` (`blotter_id`, `complainant_name`, `complainant_age`, `complainant_address`, `complainant_email`, `complainant_phone`, `respondent_name`, `respondent_age`, `respondent_address`, `blotter_type`, `incident_location`, `date_reported`, `time_reported`, `incident_narrative`, `supporting_documents`, `hearing_date`, `hearing_time`, `scheduled_by`, `blotter_status`) VALUES
-(13, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'None', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2d0110fd07.63914906.pdf', NULL, NULL, NULL, 'Ongoing'),
-(14, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'None', 'assault', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', NULL, NULL, NULL, 'Ongoing');
+(13, 'joshua', 12, 'sta.rosa 2 marilao', 'joshua@gmail.com', '09454454741', 'joshua', 12, 'sta.rosa 2 marilao', '', 'sfsfse', '2025-10-02', '15:29:00', 'ffesfsefse', 'doc_68de2ef789f602.14746924.png', NULL, NULL, NULL, 'Ongoing'),
+(14, 'joshua', 12, 'None\r\nNone', 'andersonandy046@gmail.com', '09454454741', 'joshua', 12, 'None', '', 'sfsfse', '2025-10-02', '15:44:00', 'awda', 'doc_68de2d457b57a0.86614430.jpg', '2025-10-02', '03:51:00', 'JOSHUA', 'Ongoing');
 
 -- --------------------------------------------------------
 
@@ -462,7 +462,8 @@ INSERT INTO `tbl_audit` (`audit_id`, `res_id`, `brgyOfficer_id`, `requestType`, 
 (1195, NULL, NULL, '', '0', 'admin', 'Logged out', '', '2025-10-02 12:09:43', '', '2025-10-02 12:09:43'),
 (1196, NULL, NULL, '', '3', 'Resident', 'Logged in', '', '2025-10-02 12:13:25', '', '2025-10-02 12:13:25'),
 (1197, NULL, NULL, '', '3', 'Resident', 'Logged out', '', '2025-10-02 12:17:36', '', '2025-10-02 12:17:36'),
-(1198, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 12:17:44', '', '2025-10-02 12:17:44');
+(1198, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 12:17:44', '', '2025-10-02 12:17:44'),
+(1199, NULL, NULL, '', '0', 'admin', 'Logged in', '', '2025-10-02 22:12:23', '', '2025-10-02 22:12:23');
 
 -- --------------------------------------------------------
 
@@ -1286,11 +1287,11 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `password`, `image`, `email`, `mobile`, `address`, `account_status`, `role`, `is_logged_in`, `is_logged_in_time`, `remember_token`, `reset_token`, `reset_token_expiry`, `terms`, `suffix`, `gender`, `civilStatus`, `household_head_id`, `is_household_head`, `household_head_name`, `relationship_to_head`, `is_senior`, `senior_document`, `is_pwd`, `pwd_document`, `is_registered_voter`, `voter_document`, `proof_of_residency`, `occupation`, `birthday`) VALUES
-(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-10-02 12:17:44', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 1, '2025-10-02 12:17:44', NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 12:17:44', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 12:17:44', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
-(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-10-02 12:17:44', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(131, 'admin_689747ed65a8b', 'Chris', '', 'Pompom', '$2y$10$i9gTkQf3NpS0TBJQmewS7eZbNdX/nSxZD3gig0JYU2xwLvvtjSCqG', 'default.png', 'paniskathleen@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(133, 'U001', 'Chris', 'A', 'Karenina', '$2y$10$V41atPylhHr1qCssFBZkEeFZD4SHEl3lmDsLu8zQ6OGCRAhImIqtO', 'U001_profile_1756441999.png', 'shelfmind508@gmail.com', '32456789765', 'fdgghj,dgfhgh', 'Active', 'resident', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 1, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(135, 'officer_68b154ea14f76', 'Chris', '', 'Karenina', '$2y$10$p.MZw0jFTHtbwnRvPO2VquxIHEt77JMhx3NlkDxnTlCZbYxQdK1uW', 'default.png', 'calitarte421@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(136, 'officer_68b165b5b0925', 'Winter', '', 'Esteban', '$2y$10$uxc64jcEteBn1/SpTHkY2OKZIITdx.2VpmnVUJocI/2FaeQNJnr9y', 'default.png', 'sample@gmail.com', NULL, '', 'Active', 'barangay_official', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'No', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
+(138, 'admin_68b2f995c6cde', 'Dorothy', '', 'Jian', '$2y$10$.GUn5Is/WM/VI5ne8Zv3NuRawi3IK5I4HNteJPUHmEq/LaZmNtdOq', 'default.png', 'dorothy@gmail.com', NULL, '', 'Active', 'admin', 1, '2025-10-02 22:12:23', NULL, NULL, NULL, 0, NULL, 'Male', 'Single', 0, 'Yes', NULL, NULL, 'No', NULL, 'No', NULL, 'No', NULL, NULL, 'N/A', '2000-01-01'),
 (143, '1', 'john', '', 'doe', '$2y$10$VPQp5ETg9Yd06dUXPIpER.GjC0IkOEhro2iwt6t51l7RN7hQ.q4Ka', NULL, 'rodriguezryan325@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Female', 'Single', 0, 'Yes', '', '', 'No', '', 'No', '', 'Yes', 'uploads/68d00cad6aa87__colo__naruto_coloring_normal___2016_by_naruttebayo67_d9vjdsx-pre.jpg', 'uploads/68d00cad6a841_492151840_3128831320602859_4159043562509539743_n.jpg', 'N/A', '2025-09-11'),
 (153, '2', 'Joshua', 'Anderson', 'doe', '$2y$10$ohpLW.fZhfVG9wkSZhTMp.uv5gEIzTyJjk.FydGt3/2ZcMDMBRB..', NULL, 'padillajoshuaanderson.pdm@gmail.com', '09454454744', 'mexico pampanga', 'Pending', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Single', 0, 'No', '9', 'Relative', 'No', '', 'No', '', 'No', '', 'uploads/68d017802f252_image-w856.webp', 'N/A', '2025-09-21'),
 (155, '3', 'cevin', '', 'garnet', '$2a$12$0lGGE4I8SLXUIjz8wGnFCOZUwSqsiW4k3tJPd1IM0GiSbhzgb08ee', NULL, 'masterparj@gmail.com', '09454454744', 'sta.rosa 2 marilao', 'Active', 'Resident', 0, NULL, NULL, NULL, NULL, 0, '', 'Male', 'Married', 0, 'Yes', '', '', '', '', 'No', '', 'No', '', 'uploads/68d0188971c90_494820713_532984179748342_8788347790273388241_n.png', 'N/A', '2025-09-21');
@@ -1627,7 +1628,7 @@ ALTER TABLE `j_blotter`
 -- AUTO_INCREMENT for table `tbl_audit`
 --
 ALTER TABLE `tbl_audit`
-  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1199;
+  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1200;
 
 --
 -- AUTO_INCREMENT for table `tbl_banned_users`
