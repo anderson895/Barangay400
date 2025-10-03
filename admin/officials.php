@@ -19,7 +19,7 @@ $sql = "SELECT * FROM tbl_user WHERE user_id = '$id'";
 $result = $conn->query($sql);
 
 // Initialize the variables with default values
-$image = "default_image.jpg"; // Assuming default image name
+// $image = "default_image.jpg"; // Assuming default image name
 $first_name = "";
 $middle_name = "";
 $last_name = "";
@@ -33,7 +33,11 @@ $profile_title = "My Profile";
 // Check if the query was successful and populate variables
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = "../uploads/profile/" . $row["image"] ?: $image;
+    if (!empty($row["image"])) {
+        $image = "../uploads/profile/" . $row["image"];
+    } else {
+        $image = "../dist/assets/images/default_image.png";
+    }
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
