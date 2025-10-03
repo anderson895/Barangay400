@@ -22,7 +22,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize the variables with default values
-$image = "../dist/assets/images/default_image.png"; 
+// $image = "../dist/assets/images/default_image.png"; 
 $first_name = $middle_name = $last_name = $suffix = "";
 $mobile = $email = $address = $birthday = $birthplace = $civilStatus = "";
 $gender = $precinctNumber = $residency_tenure = $voterStatus = "";
@@ -34,7 +34,12 @@ $is_logged_in = 0; // Default to not logged in
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = "../uploads/profile/" . $row["image"] ?: $image;
+     // Check if image is not empty, else use default
+    if (!empty($row["image"])) {
+        $image = "../uploads/profile/" . $row["image"];
+    } else {
+        $image = "../dist/assets/images/default_image.png";
+    }
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];

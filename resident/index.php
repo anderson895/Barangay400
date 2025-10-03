@@ -21,8 +21,7 @@ $stmt->bind_param("s", $active_user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Initialize default values
-$image = "../dist/assets/images/default_image.png"; 
+
 $first_name = "";
 $last_name = "";
 $email = "";
@@ -32,7 +31,13 @@ $is_logged_in = 0;
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
 
-     $image = "../uploads/profile/" . $row["image"] ?: $image;
+   // Check if image is not empty, else use default
+    if (!empty($row["image"])) {
+        $image = "../uploads/profile/" . $row["image"];
+    } else {
+        $image = "../dist/assets/images/default_image.png";
+    }
+
     $first_name = $row["first_name"];
     $last_name = $row["last_name"];
     $email = $row["email"];

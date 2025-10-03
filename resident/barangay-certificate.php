@@ -21,7 +21,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize variables
-$image = "../dist/assets/images/default_image.png"; 
+
 $email = "";
 $is_logged_in = 0;
 
@@ -30,7 +30,12 @@ $address = "";
 
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = "../uploads/profile/" . $row["image"] ?: $image;
+     // Check if image is not empty, else use default
+    if (!empty($row["image"])) {
+        $image = "../uploads/profile/" . $row["image"];
+    } else {
+        $image = "../dist/assets/images/default_image.png";
+    }
     $email = $row["email"];
     $is_logged_in = $row["is_logged_in"];
 
