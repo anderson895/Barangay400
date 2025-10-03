@@ -17,7 +17,7 @@ $sql = "SELECT u.email, u.mobile, u.image, u.is_logged_in,
                r.first_name, r.middle_name, r.last_name, r.suffix, r.birthday, r.birthplace, 
                r.civilStatus, r.address, r.gender, r.precinctNumber, r.residency_tenure, 
                r.is_registered_voter, r.bloodType, r.height, r.weight, r.typeOfID, 
-               r.IDNumber, r.barangay_number, r.SSSGSIS_Number, r.TIN_number, r.is_senior, r.is_pwd, r.is_4ps_member,
+               r.IDNumber, r.barangay_number, r.SSSGSIS_Number, r.TIN_number, r.is_senior, r.is_pwd, r.is_4ps_member,r.residentStatus,
                TIMESTAMPDIFF(YEAR, r.birthday, CURDATE()) as age
         FROM tbl_user u
         JOIN tbl_residents r ON u.user_id = r.user_id
@@ -28,7 +28,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize the variables with default values
-$image = "https://barangay400.com/dist/assets/images/default_image.png"; // Default image
+$image = "../dist/assets/images/default_image.png"; 
 $first_name = $middle_name = $last_name = $suffix = "";
 $mobile = $email = $address = $birthday = $birthplace = $civilStatus = "";
 $gender = $precinctNumber = $residency_tenure = $is_registered_voter = "";
@@ -40,7 +40,7 @@ $is_logged_in = 0; // Default to not logged in
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"] ?: "https://barangay400.com/dist/assets/images/default_image.png";
+    $image = $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
@@ -333,7 +333,7 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
@@ -508,7 +508,7 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                                         <div class="d-flex justify-content-center mb-3">
                                             <div class="position-relative">
                                                 <img id="profileImagePreview"
-                                                    src="../dist/assets/images/user/<?php echo htmlspecialchars($image); ?>"
+                                                    src="<?php echo htmlspecialchars($image); ?>"
                                                     class="rounded-circle img-thumbnail"
                                                     style="width: 150px; height: 150px; object-fit: cover;"
                                                     alt="Profile Image">
