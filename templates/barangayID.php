@@ -33,9 +33,10 @@
   <!-- Photo + Details -->
   <div class="flex mt-4 gap-4">
     <!-- Photo Box -->
-    <div class="w-24 h-28 border border-black flex items-center justify-center text-[10px]">
-      PHOTO
-    </div>
+   <div class="w-24 h-28 border border-black flex items-center justify-center overflow-hidden bg-gray-100">
+  <img src="<?=$image?>" alt="ID Photo" class="w-full h-full object-contain" />
+</div>
+
 
     <!-- Details -->
     <div class="flex-1 text-xs leading-5">
@@ -117,9 +118,10 @@
     </div>
 
     <div class="flex flex-col items-center">
-      <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
+      <!-- <div class="w-20 h-20 border border-black mb-2 flex items-center justify-center text-[10px]">
         PHOTO
-      </div>
+      </div> -->
+      <div class="h-20"></div>
       <p class="font-bold underline">Hon. FELIX C. TAGUBA</p>
       <p class="text-red-600 text-xs">Punong Barangay</p>
     </div>

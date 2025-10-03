@@ -15,13 +15,20 @@ $view_certificate = $conn->query("
         r.first_name, 
         r.middle_name, 
         r.last_name,
-        r.birthday
+        r.birthday,
+        r.image
     FROM tbl_bid c
     LEFT JOIN tbl_residents r ON r.user_id = c.user_id 
     WHERE c.bid_id = '$bid_id'
 ");
 
+
 $row = $view_certificate->fetch_assoc();
+
+
+
+$image = "../uploads/profile/" . ($row["image"] ?? "default_image.png");
+
 
 include '../templates/barangayID.php';
 ?>
