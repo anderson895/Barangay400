@@ -33,7 +33,7 @@ $profile_title = "My Profile";
 // Check if the query was successful and populate variables
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"] ?? "default_image.jpg";
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
@@ -104,7 +104,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                 <?php echo !empty($event['dateCreated']) ? date('F d, Y', strtotime($event['dateCreated'])) : ''; ?>
                                                             </small>
                                                             <small class="text-muted">
-                                                                <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" class="mr-3 rounded-circle" alt="User Avatar" width="50" height="50" />
+                                                                <img src="<?php echo $_SESSION['image']; ?>" class="mr-3 rounded-circle" alt="User Avatar" width="50" height="50" />
                                                                 <?php echo htmlspecialchars($event['author_name'] ?? ''); ?>
                                                                 <?php if (!empty($event['position'])): ?>
                                                                     <span class="badge badge-info text-white font-weight-bold"><?php echo htmlspecialchars($event['position']); ?></span>

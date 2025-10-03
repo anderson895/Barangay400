@@ -29,7 +29,7 @@ $profile_title = "My Profile";
 // Check if the query was successful and populate variables
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"] ?? "default_image.jpg";
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
@@ -100,7 +100,7 @@ $_SESSION['full_name'] = $first_name . ' ' . $last_name;
                 
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
