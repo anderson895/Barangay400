@@ -13,11 +13,9 @@ $active_user_id = $_SESSION['active_user_id'] ?? $_SESSION['user_id'];
 include '../connection/config.php';
 
 // ✅ Fetch user data using active_user_id
-$sql = "SELECT u.email, u.image, u.is_logged_in,
-               r.first_name, r.middle_name, r.last_name
-        FROM tbl_user u
-        JOIN tbl_residents r ON u.user_id = r.user_id
-        WHERE u.user_id = ?";
+$sql = "SELECT r.*
+        FROM tbl_residents r
+        WHERE r.user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $active_user_id);
 $stmt->execute();
@@ -34,7 +32,7 @@ $is_logged_in = 0;
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
 
-    $image = $row["image"] ?: $image;
+     $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $last_name = $row["last_name"];
     $email = $row["email"];
@@ -380,7 +378,7 @@ function getNotificationStyle($type)
                             <li class="nav-item"> <a class="nav-link" href="barangay-clearance.php">Clearance Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-id.php">ID Request</a></li>
                             <!-- <li class="nav-item"> <a class="nav-link" href="blotter.php">Blotter</a></li> -->
-                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li> -->
                         </ul>
                     </div>
                 </li>

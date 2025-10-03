@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     logActivity($_SESSION['user_id'], $_SESSION['role'], 'Logged out');
 
     // Update is_logged_in status
-    $updateStatus = "UPDATE tbl_user SET is_logged_in = 0, is_logged_in_time = NULL WHERE user_id = ?";
+    $updateStatus = "UPDATE tbl_residents SET is_logged_in = 0, is_logged_in_time = NULL WHERE user_id = ?";
     $stmt = $conn->prepare($updateStatus);
     $stmt->bind_param("i", $_SESSION['user_id']);
     $stmt->execute();

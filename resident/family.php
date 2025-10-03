@@ -347,7 +347,7 @@ $canShowSwitchButtons = $isRealHead && $actingAsHead;
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
@@ -410,7 +410,7 @@ $canShowSwitchButtons = $isRealHead && $actingAsHead;
                             <li class="nav-item"> <a class="nav-link" href="barangay-certificate.php">Certificate Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-clearance.php">Clearance Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-id.php">ID Request</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li> -->
                         </ul>
                     </div>
                 </li>

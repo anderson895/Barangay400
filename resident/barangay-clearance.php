@@ -12,12 +12,9 @@ include '../connection/config.php';
 // Use active_user_id if switching, otherwise default to user_id
 $id = isset($_SESSION['active_user_id']) ? $_SESSION['active_user_id'] : $_SESSION['user_id'];
 
-$sql = "SELECT u.email, u.image, u.is_logged_in,
-               r.first_name, r.middle_name, r.last_name, r.suffix, r.address,
-               r.is_registered_voter, r.residency_tenure
-        FROM tbl_user u
-        JOIN tbl_residents r ON u.user_id = r.user_id
-        WHERE u.user_id = ?";
+$sql = "SELECT r.*
+        FROM tbl_residents r
+        WHERE r.user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -25,7 +22,7 @@ $result = $stmt->get_result();
 
 // Initialize the variables with default values
 $username = "Guest";
-$image = "https://barangay400.com/default_image.png"; // Default image
+$image = "../dist/assets/images/default_image.png"; // fallback image
 $email = "";
 $is_logged_in = 0;
 
@@ -40,7 +37,7 @@ $residency_tenure = "";
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
 
-    $image = $row["image"];
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $email = $row["email"];
     $is_logged_in = $row["is_logged_in"];
 
@@ -335,7 +332,7 @@ function getNotificationStyle($type) {
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">

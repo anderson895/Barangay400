@@ -15,18 +15,16 @@ include '../connection/config.php';
 // Fetch the active user's data from the database
 $id = $active_user_id;
 
-$sql = "SELECT u.email, u.image, u.is_logged_in,
-               r.first_name, r.middle_name, r.last_name
-        FROM tbl_user u
-        JOIN tbl_residents r ON u.user_id = r.user_id
-        WHERE u.user_id = ?";
+$sql = "SELECT r.*
+        FROM tbl_residents r
+        WHERE r.user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize defaults
-$image = "https://barangay400.com/default_image.png"; 
+$image = "../dist/assets/images/default_image.png"; // fallback image
 $first_name = "";
 $last_name = "";
 $full_name = "";
@@ -36,7 +34,7 @@ $is_logged_in = 0;
 // If found, override defaults
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"] ?? $image;
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"] ?? "";
     $last_name = $row["last_name"];
@@ -317,7 +315,7 @@ function getNotificationStyle($type) {
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">
@@ -371,7 +369,7 @@ function getNotificationStyle($type) {
                             <li class="nav-item"> <a class="nav-link" href="barangay-clearance.php">Clearance Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-id.php">ID Request</a></li>
                             <!-- <li class="nav-item"> <a class="nav-link" href="blotter.php">Blotter Request</a></li> -->
-                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li> -->
                         </ul>
                     </div>
                 </li>

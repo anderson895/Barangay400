@@ -12,13 +12,9 @@ include '../connection/config.php';
 // ✅ Use active_user_id if switched, otherwise fallback to user_id
 $id = isset($_SESSION['active_user_id']) ? $_SESSION['active_user_id'] : $_SESSION['user_id'];
 
-$sql = "SELECT u.first_name, u.middle_name, u.last_name, u.suffix, 
-        u.email, u.image, u.is_logged_in, r.address, r.birthday, r.birthplace,
-        r.civilStatus, r.bloodType, r.height, r.weight,
-        r.precinctNumber, r.SSSGSIS_Number, r.TIN_number
-        FROM tbl_user u
-        JOIN tbl_residents r ON u.user_id = r.user_id
-        WHERE u.user_id = ?";
+$sql = "SELECT r.*
+        FROM tbl_residents r
+        WHERE r.user_id = ?";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $id);
@@ -26,7 +22,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 // Initialize variables
-$image = "https://400.com/default_image.png";
+$image = "../dist/assets/images/default_image.png"; // fallback image
 $first_name = $middle_name = $last_name = $suffix = $email = "";
 $address = $birthday = $birthplace = $civilStatus = "";
 $bloodType = $height = $weight = "";
@@ -35,7 +31,7 @@ $is_logged_in = 0;
 
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"];
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
@@ -323,7 +319,7 @@ function getNotificationStyle($type) {
                 </script>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <img src="../dist/assets/images/user/<?php echo $_SESSION['image']; ?>" alt="profile" />
+                        <img src="<?php echo $_SESSION['image']; ?>" alt="profile" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="profile-management.php">

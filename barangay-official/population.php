@@ -173,7 +173,7 @@ $_SESSION['is_logged_in'] = $is_logged_in; // Using the initialized variable
                             <li class="nav-item"> <a class="nav-link" href="clearance.php"> Clearance Request </a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangayid.php"> Barangay ID Request </a></li>
                             <li class="nav-item"> <a class="nav-link" href="blotter.php"> Blotter Request </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="complains.php"> Complains Request </a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="complains.php"> Complains Request </a></li> -->
                         </ul>
                     </div>
                 </li>

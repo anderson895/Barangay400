@@ -27,12 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $conn->real_escape_string($_POST['gender'] ?? '');
     $precinctNumber = $conn->real_escape_string($_POST['precinctNumber'] ?? '');
     $residency_tenure = $conn->real_escape_string($_POST['residency_tenure'] ?? '');
-    $is_registered_voter = $conn->real_escape_string($_POST['is_registered_voter'] ?? '');
+    $voterStatus = $conn->real_escape_string($_POST['voterStatus'] ?? '');
     $bloodType = $conn->real_escape_string($_POST['bloodType'] ?? '');
     $height = $conn->real_escape_string($_POST['height'] ?? '');
     $weight = $conn->real_escape_string($_POST['weight'] ?? '');
     $typeOfID = $conn->real_escape_string($_POST['typeOfID'] ?? '');
     $IDNumber = $conn->real_escape_string($_POST['IDNumber'] ?? '');
+    $residentStatus = $conn->real_escape_string($_POST['residentStatus'] ?? '');
     $barangay_number = $conn->real_escape_string($_POST['barangay_number'] ?? '');
     $SSSGSIS_Number = $conn->real_escape_string($_POST['SSSGSIS_Number'] ?? '');
     $TIN_number = $conn->real_escape_string($_POST['TIN_number'] ?? '');
@@ -66,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             gender = '$gender',
             precinctNumber = '$precinctNumber',
             residency_tenure = '$residency_tenure',
-            is_registered_voter = '$is_registered_voter',
+            voterStatus = '$voterStatus',
             bloodType = '$bloodType',
             height = '$height',
             weight = '$weight',
@@ -77,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             TIN_number = '$TIN_number',
             is_senior = '$is_senior',
             is_pwd = '$is_pwd',
+            residentStatus = '$residentStatus',
             is_4ps_member = '$is_4ps_member'
             
             WHERE user_id = '$id'";
@@ -92,13 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
         $file_tmp = $_FILES['image']['tmp_name'];
         $file_name = uniqid() . '_' . basename($_FILES['image']['name']); // Generate unique filename
-        $upload_dir = '../dist/assets/images/user/';
+        $upload_dir = '../uploads/profile/';
         $upload_file = $upload_dir . $file_name;
 
         // Move the uploaded file to the destination directory
         if (move_uploaded_file($file_tmp, $upload_file)) {
             // Update the database with the new profile image
-            $sql = "UPDATE tbl_user SET image = '$file_name' WHERE user_id = '$id'";
+            $sql = "UPDATE tbl_residents SET image = '$file_name' WHERE user_id = '$id'";
             if ($conn->query($sql) === FALSE) {
                 echo "Error updating profile image: " . $conn->error;
             }

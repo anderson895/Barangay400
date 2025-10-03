@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             logActivity($_SESSION['user_id'], $_SESSION['role'], 'Logged in');
 
             // Update is_logged_in status and time
-            $updateStatus = "UPDATE tbl_user SET is_logged_in = 1, is_logged_in_time = NOW() WHERE user_id = ?";
+            $updateStatus = "UPDATE tbl_residents SET is_logged_in = 1, is_logged_in_time = NOW() WHERE user_id = ?";
             $stmtUpdate = $conn->prepare($updateStatus);
             $stmtUpdate->bind_param("i", $row['user_id']);
             $stmtUpdate->execute();

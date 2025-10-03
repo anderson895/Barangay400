@@ -13,15 +13,9 @@ if (!$active_user_id) {
 }
 
 // Fetch the user's data from the database based on the active user ID
-$sql = "SELECT u.email, u.mobile, u.image, u.is_logged_in,
-               r.first_name, r.middle_name, r.last_name, r.suffix, r.birthday, r.birthplace, 
-               r.civilStatus, r.address, r.gender, r.precinctNumber, r.residency_tenure, 
-               r.is_registered_voter, r.bloodType, r.height, r.weight, r.typeOfID, 
-               r.IDNumber, r.barangay_number, r.SSSGSIS_Number, r.TIN_number, r.is_senior, r.is_pwd, r.is_4ps_member,r.residentStatus,
-               TIMESTAMPDIFF(YEAR, r.birthday, CURDATE()) as age
-        FROM tbl_user u
-        JOIN tbl_residents r ON u.user_id = r.user_id
-        WHERE u.user_id = ?";
+$sql = "SELECT r.*
+        FROM tbl_residents r
+        WHERE r.user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $active_user_id);
 $stmt->execute();
@@ -31,7 +25,7 @@ $result = $stmt->get_result();
 $image = "../dist/assets/images/default_image.png"; 
 $first_name = $middle_name = $last_name = $suffix = "";
 $mobile = $email = $address = $birthday = $birthplace = $civilStatus = "";
-$gender = $precinctNumber = $residency_tenure = $is_registered_voter = "";
+$gender = $precinctNumber = $residency_tenure = $voterStatus = "";
 $bloodType = $height = $weight = $typeOfID = $IDNumber = $barangay_number = "";
 $SSSGSIS_Number = $TIN_number = $age = "";
 $is_senior = $is_pwd = $is_4ps_member = "";
@@ -40,7 +34,7 @@ $is_logged_in = 0; // Default to not logged in
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $image = $row["image"] ?: $image;
+    $image = "../uploads/profile/" . $row["image"] ?: $image;
     $first_name = $row["first_name"];
     $middle_name = $row["middle_name"];
     $last_name = $row["last_name"];
@@ -55,7 +49,7 @@ if ($result && $result->num_rows > 0) {
     $gender = $row["gender"];
     $precinctNumber = $row["precinctNumber"];
     $residency_tenure = $row["residency_tenure"];
-    $is_registered_voter = $row["is_registered_voter"];
+    $voterStatus = $row["voterStatus"];
     $bloodType = $row["bloodType"];
     $height = $row["height"];
     $weight = $row["weight"];
@@ -64,7 +58,6 @@ if ($result && $result->num_rows > 0) {
     $barangay_number = $row["barangay_number"];
     $SSSGSIS_Number = $row["SSSGSIS_Number"];
     $TIN_number = $row["TIN_number"];
-    $age = $row["age"];
     $is_senior = $row["is_senior"];
     $is_pwd = $row["is_pwd"];
     $is_4ps_member = $row["is_4ps_member"];
@@ -394,8 +387,8 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                             <li class="nav-item"> <a class="nav-link" href="barangay-certificate.php">Certificate Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-clearance.php">Clearance Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-id.php">ID Request</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="blotter.php">Blotter Request</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="blotter.php">Blotter Request</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li> -->
                         </ul>
                     </div>
                 </li>
@@ -525,7 +518,7 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                                     <!-- Personal Information -->
                                     <div class="card mb-4">
                                         <div class="card-header bg-primary text-white">
-                                            <h5 class="mb-0">Personal Information</h5>
+                                            <h5 class="mb-0">Personal Information </h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="row mb-3">
@@ -578,18 +571,13 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                                                 </div>
                                             </div>
                                             
-                                            <?php
-                                                // Calculate the latest birthday allowed (18 years ago from today)
-                                                $maxBirthday = date('Y-m-d', strtotime('-18 years'));
-                                            ?>
+                                          
                                             
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label for="birthday" class="form-label">Birthday</label>
                                                     <input type="date" id="birthday" name="birthday" 
                                                         value="<?php echo htmlspecialchars($birthday); ?>" 
-                                                        value="<?php echo htmlspecialchars($birthday); ?>" 
-                                                        max="<?php echo $maxBirthday; ?>"
                                                         class="form-control" required>
                                                 </div>
                                                 <div class="col-md-6">
@@ -726,11 +714,11 @@ $_SESSION['full_name'] = trim($first_name . ' ' . $last_name);
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="is_registered_voter" class="form-label">Voter Status</label>
-                                                    <select id="is_registered_voter" name="is_registered_voter" class="form-control" required>
+                                                    <label for="voterStatus" class="form-label">Voter Status</label>
+                                                    <select id="voterStatus" name="voterStatus" class="form-control" required>
                                                         <option value="">Select Status</option>
-                                                        <option value="Registered" <?php echo ($is_registered_voter == 'Registered') ? 'selected' : ''; ?>>Registered</option>
-                                                        <option value="Not Registered" <?php echo ($is_registered_voter == 'Not Registered') ? 'selected' : ''; ?>>Not Registered</option>
+                                                        <option value="Registered" <?php echo ($voterStatus == 'Registered') ? 'selected' : ''; ?>>Registered</option>
+                                                        <option value="Not Registered" <?php echo ($voterStatus == 'Not Registered') ? 'selected' : ''; ?>>Not Registered</option>
                                                     </select>
                                                 </div>
                                             </div>
