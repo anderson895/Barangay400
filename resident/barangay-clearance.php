@@ -395,7 +395,7 @@ function getNotificationStyle($type) {
                             <li class="nav-item"> <a class="nav-link" href="barangay-certificate.php">Certificate Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-clearance.php">Clearance Request</a></li>
                             <li class="nav-item"> <a class="nav-link" href="barangay-id.php">ID Request</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="barangay-complain.php">Complain Request</a></li> -->
                         </ul>
                     </div>
                 </li>
